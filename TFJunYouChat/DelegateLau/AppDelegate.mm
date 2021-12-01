@@ -54,6 +54,7 @@
 static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS %ld_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/%ld.0 Mobile/14A300 Safari/602.1";
 @interface AppDelegate () <BuglyDelegate,WXApiDelegate>
 @property (nonatomic, assign) NSInteger pasteboardChangeCount;
+//@property (nonatomic,strong) SystemPlugin *sysPlugin;
 @end
 @implementation AppDelegate
 #if TAR_IM
@@ -70,8 +71,7 @@ static  BMKMapManager* _baiduMapManager;
 #endif
    //  [Notifier removeObserver:self name:UIPasteboardChangedNotification object:nil];
 }
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     application.statusBarStyle = UIStatusBarStyleDefault;
     _navigation = [[TFJunYou_Navigation alloc] init];

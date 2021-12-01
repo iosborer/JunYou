@@ -64,8 +64,7 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
 
 
 @implementation TFJunYou_PSMyViewController
-- (id)init
-{
+- (id)init{
     self = [super init];
     if (self) {
         self.isRefresh = NO;
@@ -96,7 +95,7 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
 
                 h+=iv.frame.size.height+MY_INSET;
         }
-       
+        
         if (OPEN_DYNAMIC) {
             iv = [self createButton:@"我的相册" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"my_space_simple" : @"my_space" click:@selector(onMyBlog)];
             iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
@@ -170,14 +169,14 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
 #endif
         
         
-        if (OPEN_SHARE_QRCODE) {
-            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
-            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
-            [_setBaseView addSubview:line1];
-            iv = [self createButton:@"分享二维码" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"icon-fenx" : @"icon-fenx" click:@selector(realNameCer)];
-            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
-            h+=iv.frame.size.height+MY_INSET;
-        }
+//        if (OPEN_SHARE_QRCODE) {
+//            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
+//            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
+//            [_setBaseView addSubview:line1];
+//            iv = [self createButton:@"分享二维码" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"icon-fenx" : @"icon-fenx" click:@selector(realNameCer)];
+//            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
+//            h+=iv.frame.size.height+MY_INSET;
+//        }
         if (OPEN_ACCOUN_SECURITY) {
             UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
             line1.backgroundColor = HEXCOLOR(0xF2F2F2);
@@ -187,14 +186,14 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
             h+=iv.frame.size.height+MY_INSET;
         }
         
-        if (OPEN_ACCOUN_SECURITY) {
-            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
-            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
-            [_setBaseView addSubview:line1];
-            iv = [self createButton:@"快讯团队" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"账号安全" : @"账号安全" click:@selector(team)];
-            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
-            h+=iv.frame.size.height+MY_INSET;
-        }
+//        if (OPEN_ACCOUN_SECURITY) {
+//            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
+//            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
+//            [_setBaseView addSubview:line1];
+//            iv = [self createButton:@"快讯团队" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"账号安全" : @"账号安全" click:@selector(team)];
+//            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
+//            h+=iv.frame.size.height+MY_INSET;
+//        }
 
         
         if (OPEN_THIRD_SERVICE) {

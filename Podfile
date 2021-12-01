@@ -60,5 +60,4 @@ target 'TFJunYouChat' do
 #   pod 'QBPopupMenu'
   pod 'IQKeyboardManager', '~> 3.2.0.3'
   pod 'HXPhotoPicker', '~> 3.1.8'
-#  pod 'OpenSSL-Universal'
 end

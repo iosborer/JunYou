@@ -873,7 +873,7 @@
     [leftIM addSubview:titleLable];
     
     UILabel *subtitle=[[UILabel alloc]init];
-    subtitle.text=@"        欢迎使用易群免费聊天，为了更好地保护您的隐私和个人信息安全，根据国家相关法律规定拟定了";
+    subtitle.text=@"        欢迎使用eBay免费聊天，为了更好地保护您的隐私和个人信息安全，根据国家相关法律规定拟定了";
     subtitle.numberOfLines=3;
     subtitle.frame=CGRectMake(10, 64, SCREEN_WIDTH-60,66);
     [leftIM addSubview:subtitle];

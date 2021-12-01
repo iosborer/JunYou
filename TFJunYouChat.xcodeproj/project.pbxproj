@@ -1110,6 +1110,9 @@
 		4932B70A27564B3000013887 /* TFJunYou_VerifyPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932B2BA27564B2C00013887 /* TFJunYou_VerifyPayVC.m */; };
 		49DCE21227575F8C005B6462 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DCE21027575F8C005B6462 /* libcrypto.a */; };
 		49DCE21327575F8C005B6462 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DCE21127575F8C005B6462 /* libssl.a */; };
+		49DCE21727577C0A005B6462 /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DCE21527577C0A005B6462 /* WKWebViewController.m */; };
+		49DCE21827577C0A005B6462 /* WKWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49DCE21627577C0A005B6462 /* WKWebViewController.xib */; };
+		49DCE36D2757AB0D005B6462 /* LXFloaintButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DCE36C2757AB0D005B6462 /* LXFloaintButton.m */; };
 		49F44B752757428600745155 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B742757427B00745155 /* libstdc++.tbd */; };
 		49F44B772757436A00745155 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B762757436A00745155 /* Accelerate.framework */; };
 		49F44B7A2757437D00745155 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B782757437C00745155 /* AddressBookUI.framework */; };
@@ -3129,6 +3132,12 @@
 		4932B8A227572A8600013887 /* asn1err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1err.h; sourceTree = "<group>"; };
 		49DCE21027575F8C005B6462 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		49DCE21127575F8C005B6462 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		49DCE21427577C0A005B6462 /* WKWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKWebViewController.h; sourceTree = "<group>"; };
+		49DCE21527577C0A005B6462 /* WKWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKWebViewController.m; sourceTree = "<group>"; };
+		49DCE21627577C0A005B6462 /* WKWebViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WKWebViewController.xib; sourceTree = "<group>"; };
+		49DCE21A275786EB005B6462 /* TFJunYouChat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TFJunYouChat-Bridging-Header.h"; sourceTree = "<group>"; };
+		49DCE36B2757AB0D005B6462 /* LXFloaintButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFloaintButton.h; sourceTree = "<group>"; };
+		49DCE36C2757AB0D005B6462 /* LXFloaintButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFloaintButton.m; sourceTree = "<group>"; };
 		49F44B742757427B00745155 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libstdc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		49F44B762757436A00745155 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		49F44B782757437C00745155 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -3248,6 +3257,7 @@
 		4932AA7C2756489800013887 /* TFJunYouChat */ = {
 			isa = PBXGroup;
 			children = (
+				49DCE21927578699005B6462 /* 新加内容 */,
 				4932AA9627564A7200013887 /* TFJunYouChat.entitlements */,
 				4932B28627564B2B00013887 /* ViewController.h */,
 				4932AF0F27564B2A00013887 /* ViewController.m */,
@@ -5920,16 +5930,16 @@
 		4932B14E27564B2B00013887 /* JTJunYou_WebVc */ = {
 			isa = PBXGroup;
 			children = (
+				4932B15827564B2B00013887 /* TFJunYou_MainViewController.h */,
+				4932B15227564B2B00013887 /* TFJunYou_MainViewController.m */,
 				4932B14F27564B2B00013887 /* CYWebCustomerServiceVC.m */,
 				4932B15027564B2B00013887 /* CYWebAddPointVC.m */,
 				4932B15127564B2B00013887 /* TFJunYou_WebCustomer.h */,
-				4932B15227564B2B00013887 /* TFJunYou_MainViewController.m */,
 				4932B15327564B2B00013887 /* CYWebBettingVC.m */,
 				4932B15427564B2B00013887 /* CYWebAddPointVC.h */,
 				4932B15527564B2B00013887 /* CYWebCustomerServiceVC.h */,
 				4932B15627564B2B00013887 /* TFJunYou_WebCustomer.m */,
 				4932B15727564B2B00013887 /* CYWebBettingVC.h */,
-				4932B15827564B2B00013887 /* TFJunYou_MainViewController.h */,
 			);
 			path = JTJunYou_WebVc;
 			sourceTree = "<group>";
@@ -6491,6 +6501,27 @@
 			path = openssl;
 			sourceTree = "<group>";
 		};
+		49DCE21927578699005B6462 /* 新加内容 */ = {
+			isa = PBXGroup;
+			children = (
+				49DCE36A2757AB0D005B6462 /* FloatingButton */,
+				49DCE21A275786EB005B6462 /* TFJunYouChat-Bridging-Header.h */,
+				49DCE21427577C0A005B6462 /* WKWebViewController.h */,
+				49DCE21527577C0A005B6462 /* WKWebViewController.m */,
+				49DCE21627577C0A005B6462 /* WKWebViewController.xib */,
+			);
+			path = "新加内容";
+			sourceTree = "<group>";
+		};
+		49DCE36A2757AB0D005B6462 /* FloatingButton */ = {
+			isa = PBXGroup;
+			children = (
+				49DCE36B2757AB0D005B6462 /* LXFloaintButton.h */,
+				49DCE36C2757AB0D005B6462 /* LXFloaintButton.m */,
+			);
+			path = FloatingButton;
+			sourceTree = "<group>";
+		};
 		49F44BBB27574A4D00745155 /* webp(未使用) */ = {
 			isa = PBXGroup;
 			children = (
@@ -6588,6 +6619,7 @@
 				TargetAttributes = {
 					4932AA792756489800013887 = {
 						CreatedOnToolsVersion = 13.1;
+						LastSwiftMigration = 1310;
 					};
 				};
 			};
@@ -6979,6 +7011,7 @@
 				4932B52127564B2E00013887 /* ele_sunnyNightMeteor1.png in Resources */,
 				4932B40827564B2D00013887 /* f001.png in Resources */,
 				4932B38B27564B2D00013887 /* FileListCell.xib in Resources */,
+				49DCE21827577C0A005B6462 /* WKWebViewController.xib in Resources */,
 				4932B40D27564B2D00013887 /* f021@2x.png in Resources */,
 				4932B43D27564B2D00013887 /* f099.png in Resources */,
 				4932B46D27564B2D00013887 /* f042.png in Resources */,
@@ -7114,6 +7147,7 @@
 				4932B59B27564B2E00013887 /* BMChineseSort.m in Sources */,
 				4932B36327564B2C00013887 /* TFJunYou_ReadListCell.m in Sources */,
 				4932B6D627564B3000013887 /* XMG_AddrBookCell.m in Sources */,
+				49DCE21727577C0A005B6462 /* WKWebViewController.m in Sources */,
 				4932B34327564B2C00013887 /* TFJunYou_BlogRemind.m in Sources */,
 				4932B5DD27564B2E00013887 /* ATMHudView.m in Sources */,
 				4932B2C527564B2C00013887 /* PwdDialogView.m in Sources */,
@@ -7722,6 +7756,7 @@
 				4932B30627564B2C00013887 /* TFJunYou_TalkModel.m in Sources */,
 				4932B6F727564B3000013887 /* selectCountryVC.m in Sources */,
 				4932B62D27564B2F00013887 /* LLSegmentBarConfig.m in Sources */,
+				49DCE36D2757AB0D005B6462 /* LXFloaintButton.m in Sources */,
 				4932B5D527564B2E00013887 /* JSONModel.m in Sources */,
 				4932B2F127564B2C00013887 /* TFJunYou_CaptureMedia.m in Sources */,
 				4932B32C27564B2C00013887 /* base64.m in Sources */,
@@ -7924,9 +7959,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TFJunYouChat/TFJunYouChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = N4LA69Q3DG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7969,6 +8006,7 @@
 					"\"$(SRCROOT)/TFJunYouChat/3rd\"",
 				);
 				INFOPLIST_FILE = TFJunYouChat/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = eBay;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "允许应用程序在您使用该应用程序时访问您的日历吗？用来记录当前时间";
 				INFOPLIST_KEY_NSCameraUsageDescription = "允许应用程序在您使用该应用程序时访问您的相机吗？用来拍照发送图片/保存图片使用，您是否允许访问？";
 				INFOPLIST_KEY_NSContactsUsageDescription = "允许上传通讯录数据到服务器，以便发现共同使用此APP的好友，您是否同意使用?";
@@ -8003,6 +8041,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.liaounYouChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TFJunYouChat/新加内容/TFJunYouChat-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)";
 			};
@@ -8015,9 +8056,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TFJunYouChat/TFJunYouChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = N4LA69Q3DG;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8060,6 +8103,7 @@
 					"\"$(SRCROOT)/TFJunYouChat/3rd\"",
 				);
 				INFOPLIST_FILE = TFJunYouChat/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = eBay;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "允许应用程序在您使用该应用程序时访问您的日历吗？用来记录当前时间";
 				INFOPLIST_KEY_NSCameraUsageDescription = "允许应用程序在您使用该应用程序时访问您的相机吗？用来拍照发送图片/保存图片使用，您是否允许访问？";
 				INFOPLIST_KEY_NSContactsUsageDescription = "允许上传通讯录数据到服务器，以便发现共同使用此APP的好友，您是否同意使用?";
@@ -8091,9 +8135,11 @@
 					"\"$(SRCROOT)/TFJunYouChat/TFJunYouALLP/Util\"",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tt.liaoxin.TFJunYouChat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.liaounYouChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TFJunYouChat/新加内容/TFJunYouChat-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)";
 			};

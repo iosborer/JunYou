@@ -34,7 +34,7 @@
 #import "TFJunYou_AddrBookVc.h"
 #import "TFJunYou_FriendCirleVc.h"
 
-
+#import "WKWebViewController.h"
 
 @interface TFJunYou_MainViewController()
 
@@ -51,8 +51,9 @@
 @synthesize btn=_btn,mainView=_mainView;
 @synthesize IS_HR_MODE;
 @synthesize psMyviewVC=_psMyviewVC;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.isLoadFriendAndGroup = [g_server.myself fetchAllFriends].count < 6;
@@ -96,6 +97,7 @@
         _bottomView.backgroundColor = HEXCOLOR(0xF1F1F1);
         [self.view addSubview:_bottomView];
         [self buildTop];
+        
 #ifdef IS_SHOW_MENU
         _squareVC = [[TFJunYou_SquareViewController alloc] init];
 #else
@@ -208,19 +210,20 @@
 }
 -(void)buildTop{
     _tb = [TFJunYou_TabMenuView alloc];
+
     if (self.vcnum == 0) {
-            _tb.items = [NSArray arrayWithObjects:Localized(@"JXMainViewController_Message"),Localized(@"JX_MailList"),@"发现",Localized(@"JX_My"),nil];
-            _tb.imagesNormal = [NSArray arrayWithObjects:@"news_normal",@"group_chat_normal",@"find_normal",@"me_normal",nil];
-            _tb.imagesSelect = [NSArray arrayWithObjects:@"news_press_gray",@"group_chat_press_gray",@"find_press_gray",@"me_press_gray",nil];
-        }else if(self.vcnum == 1){
-            _tb.items = [NSArray arrayWithObjects:Localized(@"JXMainViewController_Message"),Localized(@"JX_MailList"),_linkName1,@"发现",Localized(@"JX_My"),nil];
-            _tb.imagesNormal = [NSArray arrayWithObjects:@"news_normal",@"group_chat_normal",@"find_normal",@"find_normal",@"me_normal",nil];
-            _tb.imagesSelect = [NSArray arrayWithObjects:@"news_press_gray",@"group_chat_press_gray",@"find_press_gray",@"find_press_gray",@"me_press_gray",nil];
-        }else if (self.vcnum == 2){
-            _tb.items = [NSArray arrayWithObjects:Localized(@"JXMainViewController_Message"),Localized(@"JX_MailList"),_linkName1,_linkName2,Localized(@"JX_My"),nil];
-            _tb.imagesNormal = [NSArray arrayWithObjects:@"news_normal",@"group_chat_normal",@"find_normal",@"find_normal",@"me_normal",nil];
-            _tb.imagesSelect = [NSArray arrayWithObjects:@"news_press_gray",@"group_chat_press_gray",@"find_press_gray",@"find_press_gray",@"me_press_gray",nil];
-        }
+        _tb.items = [NSArray arrayWithObjects:Localized(@"JXMainViewController_Message"),Localized(@"JX_MailList"),@"发现",Localized(@"JX_My"),nil];
+        _tb.imagesNormal = [NSArray arrayWithObjects:@"news_normal",@"group_chat_normal",@"find_normal",@"me_normal",nil];
+        _tb.imagesSelect = [NSArray arrayWithObjects:@"news_press_gray",@"group_chat_press_gray",@"find_press_gray",@"me_press_gray",nil];
+    }else if(self.vcnum == 1){
+        _tb.items = [NSArray arrayWithObjects:Localized(@"JXMainViewController_Message"),Localized(@"JX_MailList"),_linkName1,@"发现",Localized(@"JX_My"),nil];
+        _tb.imagesNormal = [NSArray arrayWithObjects:@"news_normal",@"group_chat_normal",@"find_normal",@"find_normal",@"me_normal",nil];
+        _tb.imagesSelect = [NSArray arrayWithObjects:@"news_press_gray",@"group_chat_press_gray",@"find_press_gray",@"find_press_gray",@"me_press_gray",nil];
+    }else if (self.vcnum == 2){
+        _tb.items = [NSArray arrayWithObjects:Localized(@"JXMainViewController_Message"),Localized(@"JX_MailList"),_linkName1,_linkName2,Localized(@"JX_My"),nil];
+        _tb.imagesNormal = [NSArray arrayWithObjects:@"news_normal",@"group_chat_normal",@"find_normal",@"find_normal",@"me_normal",nil];
+        _tb.imagesSelect = [NSArray arrayWithObjects:@"news_press_gray",@"group_chat_press_gray",@"find_press_gray",@"find_press_gray",@"me_press_gray",nil];
+    }
     _tb.delegate  = self;
     _tb.onDragout = @selector(onDragout:);
     [_tb setBackgroundImageName:@"MessageListCellBkg"];
@@ -238,6 +241,13 @@
     [self doSelected:(int)sender.tag];
 }
 -(void)doSelected:(int)n{
+    if (n == 2) {
+        WKWebViewController *nextVC = [WKWebViewController new];
+        nextVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self showViewController:nextVC sender:nil];
+        return;
+    }
+    
     [_selectVC.view removeFromSuperview];
     switch (n){
         case 0:
