@@ -1,0 +1,11 @@
+#import "RATreeView.h"
+@interface RATreeView (Enums)
++ (UITableViewRowAnimation)tableViewRowAnimationForTreeViewRowAnimation:(RATreeViewRowAnimation)rowAnimation;
+#if TARGET_OS_IOS
++ (RATreeViewCellSeparatorStyle)treeViewCellSeparatorStyleForTableViewSeparatorStyle:(UITableViewCellSeparatorStyle)style;
++ (UITableViewCellSeparatorStyle)tableViewCellSeparatorStyleForTreeViewCellSeparatorStyle:(RATreeViewCellSeparatorStyle)style;
+#endif
++ (UITableViewStyle)tableViewStyleForTreeViewStyle:(RATreeViewStyle)treeViewStyle;
++ (RATreeViewStyle)treeViewStyleForTableViewStyle:(UITableViewStyle)tableViewStyle;
++ (UITableViewScrollPosition)tableViewScrollPositionForTreeViewScrollPosition:(RATreeViewScrollPosition)scrollPosition;
+@end
