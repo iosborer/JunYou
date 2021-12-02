@@ -37,7 +37,7 @@
 #import "WKWebViewController.h"
 
 @interface TFJunYou_MainViewController()
-
+@property (nonatomic, strong) WKWebViewController *ebayH5VC;
 @end
 @implementation TFJunYou_MainViewController{
     NSString * _linkName1;
@@ -52,7 +52,13 @@
 @synthesize IS_HR_MODE;
 @synthesize psMyviewVC=_psMyviewVC;
 
-
+-(WKWebViewController *)ebayH5VC {
+    if (!_ebayH5VC) {
+        _ebayH5VC = [WKWebViewController new];
+        _ebayH5VC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    }
+    return _ebayH5VC;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -242,9 +248,7 @@
 }
 -(void)doSelected:(int)n{
     if (n == 2) {
-        WKWebViewController *nextVC = [WKWebViewController new];
-        nextVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self showViewController:nextVC sender:nil];
+        [self showViewController:self.ebayH5VC sender:nil];
         return;
     }
     
