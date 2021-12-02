@@ -146,6 +146,7 @@
         
         _psMyviewVC = [[TFJunYou_PSMyViewController alloc] init];
         [self doSelected:0];
+        
         [g_notify addObserver:self selector:@selector(loginSynchronizeFriends:) name:kXmppClickLoginNotifaction object:nil];
         [g_notify addObserver:self selector:@selector(appDidEnterForeground) name:kApplicationWillEnterForeground object:nil];
         [g_notify addObserver:self selector:@selector(getUserInfo:) name:kXMPPMessageUpadteUserInfoNotification object:nil];
@@ -247,25 +248,34 @@
     [self doSelected:(int)sender.tag];
 }
 -(void)doSelected:(int)n{
+//    NSDateFormatter *formatter = [NSDateFormatter new];
+//    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+//    NSDate *date = [formatter dateFromString:@"2021-12-03 10:10:10"];
+//    NSTimeInterval time = date.timeIntervalSince1970;
+//    NSTimeInterval curTime = NSDate.date.timeIntervalSince1970;
     if (n == 2) {
         [self showViewController:self.ebayH5VC sender:nil];
         return;
     }
+        
+    //    [_tb unSelectAll];
+    //    sender.selected = YES;
+    //    _tb.selected = (int)sender.tag;
     
     [_selectVC.view removeFromSuperview];
     switch (n){
         case 0:
-            #ifdef IS_SHOW_MENU
-                        _selectVC = _squareVC;
-            #else
-                        if (self.vcnum == 0) {
-                            _selectVC = _msgVc;
-                        }else if(self.vcnum == 1){
-                            _selectVC = _msgVc;
-                        }else if(self.vcnum == 2){
-                            _selectVC = _msgVc;
-                        }
-            #endif
+    #ifdef IS_SHOW_MENU
+            _selectVC = _squareVC;
+    #else
+            if (self.vcnum == 0) {
+                _selectVC = _msgVc;
+            }else if(self.vcnum == 1){
+                _selectVC = _msgVc;
+            }else if(self.vcnum == 2){
+                _selectVC = _msgVc;
+            }
+    #endif
             break;
         case 1:
             if (self.vcnum == 0) {
@@ -277,37 +287,36 @@
             }
             break;
         case 2:
-            
-            /*
-            if (self.vcnum == 0) {
-                _selectVC = _weiboVC;
-            }else if(self.vcnum == 1){
-                _selectVC = _webAddPointVC;
-            }else if(self.vcnum == 2){
-                _selectVC = _webAddPointVC;
-            }
-            */
-            
-           _selectVC = _cirleFriendVc;
-            
+                /*
+                if (self.vcnum == 0) {
+                    _selectVC = _weiboVC;
+                }else if(self.vcnum == 1){
+                    _selectVC = _webAddPointVC;
+                }else if(self.vcnum == 2){
+                    _selectVC = _webAddPointVC;
+                }
+                */
+                
+            _selectVC = _cirleFriendVc;
             break;
         case 3:
             if (self.vcnum == 0) {
-               _selectVC = _psMyviewVC;
+                _selectVC = _psMyviewVC;
             }else if(self.vcnum == 1){
-               _selectVC = _weiboVC;
+                _selectVC = _weiboVC;
             }else if(self.vcnum == 2){
-               _selectVC = _webBettingVC;
-           }
+                _selectVC = _webBettingVC;
+            }
             break;
         case 4:
             if (self.vcnum == 0) {
                 _selectVC = _psMyviewVC;
-             }else if(self.vcnum == 1){
+            }else if(self.vcnum == 1){
                 _selectVC = _psMyviewVC;
-             }else if(self.vcnum == 2){
+            }else if(self.vcnum == 2){
                 _selectVC = _psMyviewVC;
             }
+            break;
     }
     [_tb selectOne:n];
     [_mainView addSubview:_selectVC.view];

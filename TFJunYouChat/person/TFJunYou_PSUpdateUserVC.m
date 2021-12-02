@@ -96,9 +96,9 @@
         h+=iv.frame.size.height;
     }
     if (!self.isRegister) {
-        iv = [self createButton:Localized(@"JX_MyQRImage") drawTop:NO drawBottom:YES must:NO click:@selector(showUserQRCode)];
-        iv.frame = CGRectMake(0, h, TFJunYou__SCREEN_WIDTH, HEIGHT);
-        h+=iv.frame.size.height;
+//        iv = [self createButton:Localized(@"JX_MyQRImage") drawTop:NO drawBottom:YES must:NO click:@selector(showUserQRCode)];
+//        iv.frame = CGRectMake(0, h, TFJunYou__SCREEN_WIDTH, HEIGHT);
+//        h+=iv.frame.size.height;
         iv = [self createButton:Localized(@"JX_MyPhoneNumber") drawTop:NO drawBottom:YES must:NO click:nil];
         iv.frame = CGRectMake(0, h, TFJunYou__SCREEN_WIDTH, HEIGHT);
         [self createLabel:iv default:g_myself.telephone];

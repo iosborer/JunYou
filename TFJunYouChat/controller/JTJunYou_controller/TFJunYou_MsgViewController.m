@@ -398,7 +398,7 @@
             if (image) {
                 imageView2.image = image;
             }else {
-                imageView2.image = [UIImage imageNamed:@"im_10000"];
+                imageView2.image = [UIImage imageNamed:@"ALOGO_120"];
             }
             
             [customerView addSubview:imageView2];
@@ -407,7 +407,7 @@
             if (self.customerArr[i][@"name"]) {
                 [customerBtn setTitle:self.customerArr[i][@"name"] forState:UIControlStateNormal];
             }else {
-                //                imageView2.image = [UIImage imageNamed:@"im_10000"];
+                //                imageView2.image = [UIImage imageNamed:@"ALOGO_120"];
                 [customerBtn setTitle:@"--" forState:UIControlStateNormal];
             }
             //    [customerBtn ]
@@ -1995,7 +1995,7 @@
                if (image) {
                    imageView2.image = image;
                }else {
-                   imageView2.image = [UIImage imageNamed:@"im_10000"];
+                   imageView2.image = [UIImage imageNamed:@"ALOGO_120"];
                }
                
                [customerView addSubview:imageView2];
@@ -2004,7 +2004,7 @@
                if (array1[i][@"name"]) {
                    [customerBtn setTitle:array1[i][@"name"] forState:UIControlStateNormal];
                }else {
-                   //                imageView2.image = [UIImage imageNamed:@"im_10000"];
+                   //                imageView2.image = [UIImage imageNamed:@"ALOGO_120"];
                    [customerBtn setTitle:@"--" forState:UIControlStateNormal];
                }
                //    [customerBtn ]

@@ -27,7 +27,7 @@
     self.tableBody.backgroundColor = THEMEBACKCOLOR;
     
     UIImageView *iconImg = [[UIImageView alloc]init];
-    iconImg.image = [UIImage imageNamed:@"im_10000"];
+    iconImg.image = [UIImage imageNamed:@"ALOGO_120"];
     [self.tableBody addSubview:iconImg];
     [iconImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.tableBody.mas_centerX);

@@ -378,7 +378,7 @@
     
     //    系统公告头像
     if([userId intValue]<10100 && [userId intValue]>=10000){
-        iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"im_10000"]];
+        iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"ALOGO_120"]];
         return;
     }
   
@@ -441,7 +441,7 @@
     
     //    客服头像
     if([userId intValue]<10100 && [userId intValue]>=10000){
-        iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"im_10000"]];
+        iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"ALOGO_120"]];
         return;
     }
     // 支付公众号
