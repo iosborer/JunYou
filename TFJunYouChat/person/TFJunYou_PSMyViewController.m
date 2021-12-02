@@ -112,13 +112,13 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
             h+=iv.frame.size.height+MY_INSET;
         }
         
-        if ([g_App.isShowApplyForWithdrawal intValue] == 0) {
-            if (OPEN_WITHDRAWAL) {
-             iv = [self createButton:@"申请提现" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"balance_recharge_simple" : @"balance_recharge" click:@selector(onApplyForWithdrawal)];
-             iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
-             h+=iv.frame.size.height+MY_INSET;
-            }
-        }
+//        if ([g_App.isShowApplyForWithdrawal intValue] == 0) {
+//            if (OPEN_WITHDRAWAL) {
+//             iv = [self createButton:@"申请提现" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"balance_recharge_simple" : @"balance_recharge" click:@selector(onApplyForWithdrawal)];
+//             iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
+//             h+=iv.frame.size.height+MY_INSET;
+//            }
+//        }
      
         
 //       if ([g_App.videoMeeting intValue] == 1) {
@@ -196,15 +196,15 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
 //        }
 
         
-        if (OPEN_THIRD_SERVICE) {
-            // 第三方服务
-            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
-            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
-            [_setBaseView addSubview:line1];
-            iv = [self createButton:@"第三方服务" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"collection_me_simple" : @"collection_me_simple" click:@selector(onThirdService)];
-            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
-            h+=iv.frame.size.height+MY_INSET;
-        }
+//        if (OPEN_THIRD_SERVICE) {
+//            // 第三方服务
+//            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
+//            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
+//            [_setBaseView addSubview:line1];
+//            iv = [self createButton:@"第三方服务" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"collection_me_simple" : @"collection_me_simple" click:@selector(onThirdService)];
+//            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
+//            h+=iv.frame.size.height+MY_INSET;
+//        }
         
         
         
