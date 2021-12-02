@@ -114,26 +114,26 @@
     membHeight = CGRectGetMaxY(label.frame) + 10;
     
     // 允许普通群成员上传文件
-    iv = [self createButton:Localized(@"JX_AllowMemberToUpload") drawTop:NO drawBottom:NO must:NO click:nil];
-    iv.frame = CGRectMake(0, membHeight, TFJunYou__SCREEN_WIDTH, HEIGHT);
-    [self createSwitchWithParent:iv tag:2462 isOn:self.room.allowUploadFile];
-    label =[self createLabelWithParent:self.tableBody frameY:CGRectGetMaxY(iv.frame) + 10 text:Localized(@"JX_AllowMemberNotUpload")];
-    membHeight = CGRectGetMaxY(label.frame) + 10;
+//    iv = [self createButton:Localized(@"JX_AllowMemberToUpload") drawTop:NO drawBottom:NO must:NO click:nil];
+//    iv.frame = CGRectMake(0, membHeight, TFJunYou__SCREEN_WIDTH, HEIGHT);
+//    [self createSwitchWithParent:iv tag:2462 isOn:self.room.allowUploadFile];
+//    label =[self createLabelWithParent:self.tableBody frameY:CGRectGetMaxY(iv.frame) + 10 text:Localized(@"JX_AllowMemberNotUpload")];
+//    membHeight = CGRectGetMaxY(label.frame) + 10;
     
     
     // 允许普通群成员召开会议
-    iv = [self createButton:Localized(@"JX_InitiateMeeting") drawTop:NO drawBottom:NO must:NO click:nil];
-    iv.frame = CGRectMake(0, membHeight, TFJunYou__SCREEN_WIDTH, HEIGHT);
-    [self createSwitchWithParent:iv tag:2463 isOn:self.room.allowConference];
-    label =[self createLabelWithParent:self.tableBody frameY:CGRectGetMaxY(iv.frame) + 10 text:Localized(@"JX_NotInitiateMeeting")];
-    membHeight = CGRectGetMaxY(label.frame) + 10;
-    
-    // 允许普通群成员发起讲课
-    iv = [self createButton:Localized(@"JX_InitiateLectures") drawTop:NO drawBottom:NO must:NO click:nil];
-    iv.frame = CGRectMake(0, membHeight, TFJunYou__SCREEN_WIDTH, HEIGHT);
-    [self createSwitchWithParent:iv tag:2464 isOn:self.room.allowSpeakCourse];
-    label =[self createLabelWithParent:self.tableBody frameY:CGRectGetMaxY(iv.frame) + 10 text:Localized(@"JX_NotInitiateLectures")];
-    membHeight = CGRectGetMaxY(label.frame) + 10;
+//    iv = [self createButton:Localized(@"JX_InitiateMeeting") drawTop:NO drawBottom:NO must:NO click:nil];
+//    iv.frame = CGRectMake(0, membHeight, TFJunYou__SCREEN_WIDTH, HEIGHT);
+//    [self createSwitchWithParent:iv tag:2463 isOn:self.room.allowConference];
+//    label =[self createLabelWithParent:self.tableBody frameY:CGRectGetMaxY(iv.frame) + 10 text:Localized(@"JX_NotInitiateMeeting")];
+//    membHeight = CGRectGetMaxY(label.frame) + 10;
+//    
+//    // 允许普通群成员发起讲课
+//    iv = [self createButton:Localized(@"JX_InitiateLectures") drawTop:NO drawBottom:NO must:NO click:nil];
+//    iv.frame = CGRectMake(0, membHeight, TFJunYou__SCREEN_WIDTH, HEIGHT);
+//    [self createSwitchWithParent:iv tag:2464 isOn:self.room.allowSpeakCourse];
+//    label =[self createLabelWithParent:self.tableBody frameY:CGRectGetMaxY(iv.frame) + 10 text:Localized(@"JX_NotInitiateLectures")];
+//    membHeight = CGRectGetMaxY(label.frame) + 10;
     
     
     // 群组减员发送通知
