@@ -55,9 +55,9 @@
         NSString *input;
         if (self.type == TFJunYou_SearchTypeUser) {
             if ([g_config.nicknameSearchUser intValue] != 0 && [g_config.regeditPhoneOrName intValue] == 0) {
-                name = @"快讯号";
+                name = @"eBay号";
                 phoneN = Localized(@"JX_OrPhoneNumber");
-                input = @"请输入快讯号";
+                input = @"请输入eBay号";
             }else if([g_config.nicknameSearchUser intValue] == 0 && [g_config.regeditPhoneOrName intValue] == 0) {
                 name = Localized(@"JX_SearchPhoneNumber");
                 phoneN = @"";
@@ -67,9 +67,9 @@
                 phoneN = @"";
                 input = Localized(@"JX_InputUserAccount");
             }else {
-                name = @"快讯号";
+                name = @"eBay号";
                 phoneN = Localized(@"JX_SearchOrUserName");
-                input = @"请输入快讯号";
+                input = @"请输入eBay号";
             }
         }else {
             name = @"";
@@ -278,7 +278,7 @@
             }else if ([g_config.nicknameSearchUser intValue] == 0 && [g_config.regeditPhoneOrName intValue] == 1){
                 [g_App showAlert:Localized(@"JX_InputUserAccount")];
             }else {
-                [g_App showAlert:@"请输入快讯号"];
+                [g_App showAlert:@"请输入eBay号"];
             }
         }else {
             [g_App showAlert:Localized(@"JX_PleaseEnterTheServerNo.")];

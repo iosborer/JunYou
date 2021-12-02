@@ -23,7 +23,7 @@
     
     [self createHeadAndFoot];
     
-    self.title = @"解冻快讯号";
+    self.title = @"解冻eBay号";
     self.tableBody.backgroundColor = THEMEBACKCOLOR;
     
     UIImageView *iconImg = [[UIImageView alloc]init];
@@ -35,7 +35,7 @@
     }];
     
     UILabel *titleLabel = [[UILabel alloc]init];
-    titleLabel.text = @"安全问题解决后，您可以申请解冻快讯账号";
+    titleLabel.text = @"安全问题解决后，您可以申请解冻eBay账号";
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor grayColor];
     titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];

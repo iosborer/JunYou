@@ -78,6 +78,7 @@
         [_rechargeBtn setBackgroundImage:[UIImage createImageWithColor:THEMECOLOR] forState:UIControlStateNormal];
         _rechargeBtn.layer.cornerRadius = 7;
         _rechargeBtn.clipsToBounds = YES;
+        _rechargeBtn.hidden = YES;
     }
     return _rechargeBtn;
 }

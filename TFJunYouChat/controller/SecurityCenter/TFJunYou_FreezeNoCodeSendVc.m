@@ -50,7 +50,7 @@
     self.isGotoBack   = YES;
     
     [self createHeadAndFoot];
-    self.title = _type == FreezeTypeBlocking ? @"冻结快讯号" :  @"解冻快讯号";
+    self.title = _type == FreezeTypeBlocking ? @"冻结eBay号" :  @"解冻eBay号";
 //    self.tableBody.frame = CGRectZero;
 //    self.view.backgroundColor = RGB(229, 229, 234);
 //    _constraintHHH.constant = 44;
@@ -167,7 +167,7 @@
     
     
     // 冻结按钮
-    UIButton * _btn = [UIFactory createCommonButton:@"冻结快讯号" target:self action:@selector(nextBtnClick:)];
+    UIButton * _btn = [UIFactory createCommonButton:@"冻结eBay号" target:self action:@selector(nextBtnClick:)];
     [_btn.titleLabel setFont:g_factory.font16];
     _btn.frame = CGRectMake(40, CGRectGetMaxY(cotainerView.frame) + 50,TFJunYou__SCREEN_WIDTH-40*2, 40);
     _btn.layer.masksToBounds = YES;

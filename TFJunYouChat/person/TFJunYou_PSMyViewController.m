@@ -190,7 +190,7 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
 //            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
 //            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
 //            [_setBaseView addSubview:line1];
-//            iv = [self createButton:@"快讯团队" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"账号安全" : @"账号安全" click:@selector(team)];
+//            iv = [self createButton:@"eBay团队" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"账号安全" : @"账号安全" click:@selector(team)];
 //            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
 //            h+=iv.frame.size.height+MY_INSET;
 //        }

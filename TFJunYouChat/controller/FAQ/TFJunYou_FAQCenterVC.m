@@ -37,7 +37,7 @@
     [self.tableBody addSubview:tipsLabel];
     y += CGRectGetMaxY(tipsLabel.frame) + 10;
     
-    TFJunYou_ImageView *iv = [self createButton:@"快讯号设置" icon:@"icon_question" drawTop:NO drawBottom:YES must:NO click:@selector(action1:) superView:self.tableBody];
+    TFJunYou_ImageView *iv = [self createButton:@"eBay号设置" icon:@"icon_question" drawTop:NO drawBottom:YES must:NO click:@selector(action1:) superView:self.tableBody];
     iv.frame = CGRectMake(0,y, TFJunYou__SCREEN_WIDTH, HEIGHT);
     y += iv.frame.size.height;
     
@@ -49,15 +49,15 @@
     iv.frame = CGRectMake(0,y, TFJunYou__SCREEN_WIDTH, HEIGHT);
     y += iv.frame.size.height;
     
-    iv = [self createButton:@"快讯群聊" icon:@"icon_question" drawTop:NO drawBottom:YES must:NO click:@selector(action4:) superView:self.tableBody];
+    iv = [self createButton:@"eBay群聊" icon:@"icon_question" drawTop:NO drawBottom:YES must:NO click:@selector(action4:) superView:self.tableBody];
     iv.frame = CGRectMake(0,y, TFJunYou__SCREEN_WIDTH, HEIGHT);
     y += iv.frame.size.height;
     
-    iv = [self createButton:@"快讯" icon:@"icon_question" drawTop:NO drawBottom:YES must:NO click:@selector(action5:) superView:self.tableBody];
+    iv = [self createButton:@"eBay" icon:@"icon_question" drawTop:NO drawBottom:YES must:NO click:@selector(action5:) superView:self.tableBody];
     iv.frame = CGRectMake(0,y, TFJunYou__SCREEN_WIDTH, HEIGHT);
     y += iv.frame.size.height;
     
-    iv = [self createButton:@"快讯支付" icon:@"icon_question" drawTop:NO drawBottom:YES must:NO click:@selector(action6:) superView:self.tableBody];
+    iv = [self createButton:@"eBay支付" icon:@"icon_question" drawTop:NO drawBottom:YES must:NO click:@selector(action6:) superView:self.tableBody];
     iv.frame = CGRectMake(0,y, TFJunYou__SCREEN_WIDTH, HEIGHT);
     y += iv.frame.size.height;
     

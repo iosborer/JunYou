@@ -10,7 +10,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
      self.imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    self.imgView.image = [UIImage imageNamed:@"launch2688"];
+    self.imgView.image = [UIImage imageNamed:@"launch"];
     [self.view addSubview:self.imgView];
    [g_server getCompanyAuto:self];
     AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];

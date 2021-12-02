@@ -935,7 +935,7 @@
     
     _launchImageView = [[UIImageView alloc] init];
     _launchImageView.frame = [UIScreen mainScreen].bounds;
-    _launchImageView.image = [UIImage imageNamed:@"launch2688"];// [UIImage imageNamed:[self getLaunchImageName]];
+    _launchImageView.image = [UIImage imageNamed:@"launch"];// [UIImage imageNamed:[self getLaunchImageName]];
     [[UIApplication sharedApplication].keyWindow addSubview:_launchImageView];
 
     

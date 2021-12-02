@@ -28,7 +28,7 @@
     self.isGotoBack   = YES;
     
     [self createHeadAndFoot];
-    self.title = @"注销快讯号";
+    self.title = @"注销eBay号";
     self.tableBody.frame = CGRectZero;
     self.view.backgroundColor = RGB(229, 229, 234);
     _cancleBtn.layer.cornerRadius = 4;
