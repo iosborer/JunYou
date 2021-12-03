@@ -34,8 +34,7 @@
 @property (nonatomic,weak) UIView *backView;
 @end
 @implementation TFJunYou_loginVC
-- (id)init
-{
+- (id)init{
     self = [super init];
     if (self) {
         _user = [[TFJunYou_UserObject alloc] init];

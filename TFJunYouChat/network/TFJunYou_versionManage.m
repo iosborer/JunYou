@@ -169,13 +169,20 @@
 }
 
 - (void)getDataWithDict:(NSDictionary *)dict {
+    if (dict.count > 0) {
+        NSLog(@"");
+    }
     g_App.isShowRedPacket = [dict objectForKey:@"displayRedPacket"];
     g_App.isShowApplyForWithdrawal = [dict objectForKey:@"isOpenWithdrawlApply"];
     g_App.isOpenActivity = [dict objectForKey:@"isOpenActivity"];
     g_App.activityUrl = [dict objectForKey:@"activityUrl"];
     g_App.activityName = [dict objectForKey:@"activityName"];
     //        g_App.isShowRedPacket = [NSString stringWithFormat:@"0"];
-     
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:dict[@"c2CUrl"] forKey:@"kEBayH5URL"];
+    [userDefaults setValue:dict[@"isOpenUI"] forKey:@"kShowEBay"];
+    
     NSDictionary* p = [dict objectForKey:@"ios"];
     
     self.theNewVersion = [dict objectForKey:@"iosVersion"];
@@ -337,6 +344,7 @@
     if ([p objectForKey:@"enablePayModule"]) {
         self.enablePayModule = [p objectForKey:@"enablePayModule"];
     }
+    
 }
 
 -(void)didReceive:(NSDictionary*)dict{
@@ -387,9 +395,7 @@
     if (array.firstObject) {
         self.apiUrl = array.firstObject;
     }else {
-        
         self.apiUrl = [NSString stringWithFormat:@"http://%@:/config", APIURL];  // 新socket
-        
         
         array = [[NSMutableArray alloc] initWithObjects:self.apiUrl, nil];
         [array writeToFile:SERVER_LIST_DATA atomically:YES];

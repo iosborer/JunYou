@@ -18,7 +18,7 @@
     if (self) {
         for(int i=0;i<MAX_MENU_ITEM;i++)
             _showMore[i] = 0;
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
         int width=frame.size.width/[items count];
         self.userInteractionEnabled = YES;
         

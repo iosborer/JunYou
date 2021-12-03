@@ -10,7 +10,6 @@
 
 @interface TFJunYou_TabMenuView : UIImageView{
     NSMutableArray*    _arrayBtns;
-    
 }
 //@property (nonatomic,strong)  NSArray* arrayBtns;
 @property (nonatomic,strong)  NSArray* items;

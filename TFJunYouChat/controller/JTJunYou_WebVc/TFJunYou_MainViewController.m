@@ -55,15 +55,15 @@
 -(WKWebViewController *)ebayH5VC {
     if (!_ebayH5VC) {
         _ebayH5VC = [WKWebViewController new];
-        _ebayH5VC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     }
     return _ebayH5VC;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.view.backgroundColor = [UIColor whiteColor];
         self.isLoadFriendAndGroup = [g_server.myself fetchAllFriends].count < 6;
-        self.view.backgroundColor = [UIColor clearColor];
+        
         if(AppStore == 1){
         } else {
             self.vcnum = (int)g_App.linkArray.count;
@@ -100,7 +100,7 @@
         [self.view addSubview:_mainView];
         _bottomView = [[UIImageView alloc] initWithFrame:CGRectMake(0, TFJunYou__SCREEN_HEIGHT-TFJunYou__SCREEN_BOTTOM, TFJunYou__SCREEN_WIDTH, TFJunYou__SCREEN_BOTTOM)];
         _bottomView.userInteractionEnabled = YES;
-        _bottomView.backgroundColor = HEXCOLOR(0xF1F1F1);
+        _bottomView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:_bottomView];
         [self buildTop];
         
@@ -192,6 +192,14 @@
     [g_server getCurrentTimeToView:self];
     [g_server getUser:MY_USER_ID toView:self];
 }
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGRect rect = self.view.frame;
+    UIEdgeInsets insets = self.view.safeAreaInsets;
+    rect.size.height = self.view.bounds.size.height - insets.top - insets.bottom;
+    self.ebayH5VC.view.frame = rect;
+}
 - (void)appDidEnterForeground {
     [g_server getCurrentTimeToView:self];
 }
@@ -233,7 +241,7 @@
     }
     _tb.delegate  = self;
     _tb.onDragout = @selector(onDragout:);
-    [_tb setBackgroundImageName:@"MessageListCellBkg"];
+//    [_tb setBackgroundImageName:@"MessageListCellBkg"];
     _tb.onClick  = @selector(actionSegment:);
     _tb = [_tb initWithFrame:CGRectMake(0, 0, TFJunYou__SCREEN_WIDTH, TFJunYou__SCREEN_BOTTOM)];
     [_bottomView addSubview:_tb];
@@ -248,20 +256,6 @@
     [self doSelected:(int)sender.tag];
 }
 -(void)doSelected:(int)n{
-//    NSDateFormatter *formatter = [NSDateFormatter new];
-//    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-//    NSDate *date = [formatter dateFromString:@"2021-12-03 10:10:10"];
-//    NSTimeInterval time = date.timeIntervalSince1970;
-//    NSTimeInterval curTime = NSDate.date.timeIntervalSince1970;
-    if (n == 2) {
-        [self showViewController:self.ebayH5VC sender:nil];
-        return;
-    }
-        
-    //    [_tb unSelectAll];
-    //    sender.selected = YES;
-    //    _tb.selected = (int)sender.tag;
-    
     [_selectVC.view removeFromSuperview];
     switch (n){
         case 0:
@@ -286,7 +280,7 @@
                 _selectVC = _friendVC;
             }
             break;
-        case 2:
+        case 2:{
                 /*
                 if (self.vcnum == 0) {
                     _selectVC = _weiboVC;
@@ -297,8 +291,12 @@
                 }
                 */
                 
-            _selectVC = _cirleFriendVc;
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            BOOL isShowH5 = [[userDefaults valueForKey:@"kShowEBay"] boolValue];
+            
+            _selectVC = isShowH5 ? self.ebayH5VC : self.cirleFriendVc;
             break;
+        }
         case 3:
             if (self.vcnum == 0) {
                 _selectVC = _psMyviewVC;

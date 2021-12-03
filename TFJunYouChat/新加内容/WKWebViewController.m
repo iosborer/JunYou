@@ -20,7 +20,7 @@
 -(LXFloaintButton *)floatBtn{
     if(!_floatBtn){
         _floatBtn = [LXFloaintButton buttonWithType:0];
-        [self.view addSubview:_floatBtn];
+//        [self.view addSubview:_floatBtn];
         
         [_floatBtn setBackgroundImage:[UIImage imageNamed:@"btn_float_fresh"] forState:0];
         [_floatBtn addTarget:self action:@selector(floatBTNAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -55,7 +55,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSURL *ebURL = [NSURL URLWithString: @"https://mallplaza.vip"];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *URLStr = [userDefaults valueForKey:@"kEBayH5URL"];
+    URLStr = [URLStr stringByAppendingString:@"?type=ios"];
+    NSURL *ebURL = [NSURL URLWithString: URLStr];
     NSURLRequest *req = [NSURLRequest requestWithURL:ebURL];
     [_webView loadRequest:req];
 }
