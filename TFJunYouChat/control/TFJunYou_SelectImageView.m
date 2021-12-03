@@ -109,24 +109,24 @@
 #if TAR_IM
 #ifdef Meeting_Version
        
-//        if ([g_App.videoMeeting intValue] == 1) {
-//         if (!self.isGroupMessages && !self.isDevice) {
-//            // 语音通话 or 视频会议  视频通话
-//            n = (n + 1) >= 4 ? 0 : n + 1;
-//            m += 1;
-//            X = m >8 ? SELECTIMAGE_WIDTH *n + (n+1)*inset+TFJunYou__SCREEN_WIDTH : SELECTIMAGE_WIDTH *n + (n+1)*inset;
-//            Y = m > 4 && m <=8 ? h+margeY*2 : margeY;
-//
-//            NSString *str;
-//            if (_isGroup) {
-//                str = Localized(@"JXSettingVC_VideoMeeting");
-//            }else {
-//                str = Localized(@"JX_VideoChat");
-//            }
-//            button = [self createButtonWithImage:@"im_audio_button_normal" highlight:@"im_audio_button_press" target:delegate selector:self.onAudioChat title:str];
-//            button.frame = CGRectMake(X, Y, SELECTIMAGE_WIDTH, h);
-//         }
-//      }
+        if ([g_App.videoMeeting intValue] == 1 && !_isGroup) {
+            if (!self.isGroupMessages && !self.isDevice) {
+                // 语音通话 or 视频会议  视频通话
+                n = (n + 1) >= 4 ? 0 : n + 1;
+                m += 1;
+                X = m >8 ? SELECTIMAGE_WIDTH *n + (n+1)*inset+TFJunYou__SCREEN_WIDTH : SELECTIMAGE_WIDTH *n + (n+1)*inset;
+                Y = m > 4 && m <=8 ? h+margeY*2 : margeY;
+
+                NSString *str;
+                if (_isGroup) {
+                    str = Localized(@"JXSettingVC_VideoMeeting");
+                } else {
+                    str = Localized(@"JX_VideoChat");
+                }
+                button = [self createButtonWithImage:@"im_audio_button_normal" highlight:@"im_audio_button_press" target:delegate selector:self.onAudioChat title:str];
+                button.frame = CGRectMake(X, Y, SELECTIMAGE_WIDTH, h);
+            }
+        }
        
 #endif
 #endif
