@@ -197,7 +197,7 @@
     
     CGRect rect = self.view.frame;
     UIEdgeInsets insets = self.view.safeAreaInsets;
-    rect.size.height = self.view.bounds.size.height - insets.top - insets.bottom;
+    rect.size.height -= (insets.bottom + 49);
     self.ebayH5VC.view.frame = rect;
 }
 - (void)appDidEnterForeground {
