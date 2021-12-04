@@ -169,9 +169,6 @@
 }
 
 - (void)getDataWithDict:(NSDictionary *)dict {
-    if (dict.count > 0) {
-        NSLog(@"");
-    }
     g_App.isShowRedPacket = [dict objectForKey:@"displayRedPacket"];
     g_App.isShowApplyForWithdrawal = [dict objectForKey:@"isOpenWithdrawlApply"];
     g_App.isOpenActivity = [dict objectForKey:@"isOpenActivity"];

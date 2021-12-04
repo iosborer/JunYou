@@ -52,15 +52,15 @@ static const BOOL OPEN_COLLECTION = NO;
 /**我的课件 */
 static const BOOL OPEN_MYCOURSEWARE = NO;
 /**申请提现 */
-static const BOOL OPEN_WITHDRAWAL = YES;
+static const BOOL OPEN_WITHDRAWAL = NO;
 /**视频会议 */
 static const BOOL OPEN_VIDEO_CONFERENCE = NO;
 /**分享二维码 */
-static const BOOL OPEN_SHARE_QRCODE = YES;
+static const BOOL OPEN_SHARE_QRCODE = NO;
 /**账号与安全 */
 static const BOOL OPEN_ACCOUN_SECURITY = YES;
 /** 第三方服务 */
-static const BOOL OPEN_THIRD_SERVICE = YES;
+static const BOOL OPEN_THIRD_SERVICE = NO;
 
 
 @implementation TFJunYou_PSMyViewController
@@ -112,15 +112,15 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
             h+=iv.frame.size.height+MY_INSET;
         }
         
-//        if ([g_App.isShowApplyForWithdrawal intValue] == 0) {
-//            if (OPEN_WITHDRAWAL) {
-//             iv = [self createButton:@"申请提现" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"balance_recharge_simple" : @"balance_recharge" click:@selector(onApplyForWithdrawal)];
-//             iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
-//             h+=iv.frame.size.height+MY_INSET;
-//            }
-//        }
-     
-        
+        if ([g_App.isShowApplyForWithdrawal intValue] == 0) {
+            if (OPEN_WITHDRAWAL) {
+             iv = [self createButton:@"申请提现" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"balance_recharge_simple" : @"balance_recharge" click:@selector(onApplyForWithdrawal)];
+             iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
+             h+=iv.frame.size.height+MY_INSET;
+            }
+        }
+//
+//
 //       if ([g_App.videoMeeting intValue] == 1) {
 //           iv = [self createButton:g_App.activityName drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"my_space_simple" : @"my_space" click:@selector(onActivity)];
 //           iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
@@ -169,14 +169,14 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
 #endif
         
         
-//        if (OPEN_SHARE_QRCODE) {
-//            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
-//            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
-//            [_setBaseView addSubview:line1];
-//            iv = [self createButton:@"分享二维码" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"icon-fenx" : @"icon-fenx" click:@selector(realNameCer)];
-//            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
-//            h+=iv.frame.size.height+MY_INSET;
-//        }
+        if (OPEN_SHARE_QRCODE) {
+            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
+            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
+            [_setBaseView addSubview:line1];
+            iv = [self createButton:@"分享二维码" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"icon-fenx" : @"icon-fenx" click:@selector(realNameCer)];
+            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
+            h+=iv.frame.size.height+MY_INSET;
+        }
         if (OPEN_ACCOUN_SECURITY) {
             UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
             line1.backgroundColor = HEXCOLOR(0xF2F2F2);
@@ -196,17 +196,15 @@ static const BOOL OPEN_THIRD_SERVICE = YES;
 //        }
 
         
-//        if (OPEN_THIRD_SERVICE) {
-//            // 第三方服务
-//            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
-//            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
-//            [_setBaseView addSubview:line1];
-//            iv = [self createButton:@"第三方服务" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"collection_me_simple" : @"collection_me_simple" click:@selector(onThirdService)];
-//            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
-//            h+=iv.frame.size.height+MY_INSET;
-//        }
-        
-        
+        if (OPEN_THIRD_SERVICE) {
+            // 第三方服务
+            UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
+            line1.backgroundColor = HEXCOLOR(0xF2F2F2);
+            [_setBaseView addSubview:line1];
+            iv = [self createButton:@"第三方服务" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"collection_me_simple" : @"collection_me_simple" click:@selector(onThirdService)];
+            iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
+            h+=iv.frame.size.height+MY_INSET;
+        }
         
         // 关于我们
         UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(iv.frame), TFJunYou__SCREEN_WIDTH, marginHei)];
