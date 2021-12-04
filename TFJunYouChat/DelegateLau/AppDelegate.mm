@@ -144,11 +144,11 @@ static  BMKMapManager* _baiduMapManager;
      ret = [_baiduMapManager start:@"IM8c4lkgVyHG2R5FjLHiaEmL7UNaVRgN"  generalDelegate:nil];
     if (!ret)
         NSLog(@"BMKMapManager start faild!");
+    
     JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
     entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound|JPAuthorizationOptionProvidesAppNotificationSettings;
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-    }
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    
     
     [JPUSHService setupWithOption:launchOptions appKey:JPUSHAPPKEY
                           channel:@"App Store"  apsForProduction:YES    advertisingIdentifier:@""];
@@ -393,12 +393,9 @@ static  BMKMapManager* _baiduMapManager;
     }
     [[TFJunYou_UserObject sharedInstance] deleteUserChatRecordTimeOutMsg];
 }
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
    
     //跳转支付宝钱包进行支付，处理支付结果
-   
-    
     return  [WXApi handleOpenURL:url delegate:self];
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -552,12 +549,10 @@ static  BMKMapManager* _baiduMapManager;
 #endif
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-{
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     [application registerForRemoteNotifications];
 }
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"test:%@",deviceToken);
     NSString * token = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<" withString:@""] stringByReplacingOccurrencesOfString:@">" withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""];
     [g_default setObject:token forKey:@"apnsToken"];
@@ -577,17 +572,11 @@ static  BMKMapManager* _baiduMapManager;
 {
     NSLog(@"DeviceToken 获取失败，原因：%@",error);
 }
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [BPush handleNotification:userInfo];
     [JPUSHService handleRemoteNotification:userInfo];
     [g_default setObject:userInfo forKey:kDidReceiveRemoteDic];
     [g_default synchronize];
-    if (application.applicationState == UIApplicationStateActive || application.applicationState == UIApplicationStateBackground) {
-    }
-    else
-    {
-    }
 }
 #pragma mark- JPUSHRegisterDelegate
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center openSettingsForNotification:(UNNotification *)notification{

@@ -33,7 +33,7 @@
 //47.116.130.254
 #define APIURL @"9090999.cn"
 
-#define JPUSHAPPKEY @"934c03ed4045d5aa1158c7c1"
+#define JPUSHAPPKEY @"87dae82662653bdc4499d254"
 
 // AppStore版本
 #define AppStore 0
