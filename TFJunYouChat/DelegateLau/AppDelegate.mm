@@ -466,16 +466,14 @@ static  BMKMapManager* _baiduMapManager;
     }
     return UIInterfaceOrientationMaskPortrait;
 }
-- (void) showAlert: (NSString *) message
-{
+- (void) showAlert: (NSString *) message {
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:APP_NAME message:message delegate:self cancelButtonTitle:Localized(@"JX_Confirm") otherButtonTitles:nil, nil];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [av show];
         [g_navigation resetVCFrame];
     });
 }
-- (UIAlertView *) showAlert: (NSString *) message delegate:(id)delegate
-{
+- (UIAlertView *) showAlert: (NSString *) message delegate:(id)delegate {
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:APP_NAME message:message delegate:delegate cancelButtonTitle:Localized(@"JX_Cencal") otherButtonTitles:Localized(@"JX_Confirm"), nil];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [av show];
@@ -568,8 +566,7 @@ static  BMKMapManager* _baiduMapManager;
     }];
     [JPUSHService registerDeviceToken:deviceToken];
 }
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-{
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"DeviceToken 获取失败，原因：%@",error);
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {

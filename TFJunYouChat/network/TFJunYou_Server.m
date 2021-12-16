@@ -1032,7 +1032,7 @@
         }
     }
     [JPUSHService setAlias:user.userId completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
-     } seq:1];
+    } seq:1];
     
     if ([g_myself.telephone rangeOfString:@"18938880001"].location != NSNotFound) {
         myself.phoneDic = [myself getPhoneDic];

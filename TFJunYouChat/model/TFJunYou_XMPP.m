@@ -207,9 +207,7 @@ static TFJunYou_XMPP *sharedManager;
 }
 
 #pragma  mark ------------发消息------------
-- (void)sendMessage:(TFJunYou_MessageObject*)msg roomName:(NSString*)roomName
-{
-    
+- (void)sendMessage:(TFJunYou_MessageObject*)msg roomName:(NSString*)roomName {
     if (self.isLogined != login_status_yes) {
         return;
     }
@@ -849,6 +847,7 @@ static TFJunYou_XMPP *sharedManager;
     [self readData:data];
     
     NSString *text = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+  
     //    [self showMessageWithStr:text];
     // 读取到服务端数据值后,能再次读取
     [self.socket readDataWithTimeout:- 1 tag:0];
@@ -930,8 +929,13 @@ static TFJunYou_XMPP *sharedManager;
         case kWCCommandTypeError:       // 错误消息
             [self messageError:da];
             break;
-        default:
+        default:{
+            NSString *text = [[NSString alloc]initWithData:da encoding:NSUTF8StringEncoding];
+            NSLog(@"0========================================");
+            NSLog(@"%@", text);
+            NSLog(@"1========================================");
             break;
+        }
     }
 }
 
@@ -1085,7 +1089,6 @@ static TFJunYou_XMPP *sharedManager;
 #pragma  mark ------------ 收消息 ------------
 // 聊天消息
 - (void)chatResult:(NSData *)data {
-    
     NSError *error;
     ChatMessage *message = [ChatMessage parseFromData:data extensionRegistry:nil error:&error];
     TFJunYou_MessageObject *msg = [TFJunYou_MessageObject getMsgObjWithPbobjc:message];

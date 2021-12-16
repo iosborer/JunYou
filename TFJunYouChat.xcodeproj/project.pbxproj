@@ -3307,9 +3307,9 @@
 			isa = PBXGroup;
 			children = (
 				4932AA9827564B2600013887 /* AppDelegate.h */,
-				4932AA9927564B2600013887 /* TFJunYou_LaunchVc.m */,
 				4932AA9A27564B2600013887 /* AppDelegate.mm */,
 				4932AA9B27564B2600013887 /* TFJunYou_LaunchVc.h */,
+				4932AA9927564B2600013887 /* TFJunYou_LaunchVc.m */,
 			);
 			path = DelegateLau;
 			sourceTree = "<group>";
