@@ -8033,7 +8033,6 @@
 					"$(PROJECT_DIR)/TFJunYouChat/3rd/amr_wav/VoiceConvert/lib",
 					"$(PROJECT_DIR)/TFJunYouChat/3rd/OpenSDK_NoPay",
 					"$(PROJECT_DIR)/TFJunYouChat/TFJunYouALLP/Util",
-					"$(PROJECT_DIR)/TFJunYouChat/3rd/alipay/Util",
 					"\"$(PROJECT_DIR)/TFJunYouChat/TFJunYouALLP/Util\"",
 					"\"$(SRCROOT)/TFJunYouChat/TFJunYouALLP/Util\"",
 				);
@@ -8130,7 +8129,6 @@
 					"$(PROJECT_DIR)/TFJunYouChat/3rd/amr_wav/VoiceConvert/lib",
 					"$(PROJECT_DIR)/TFJunYouChat/3rd/OpenSDK_NoPay",
 					"$(PROJECT_DIR)/TFJunYouChat/TFJunYouALLP/Util",
-					"$(PROJECT_DIR)/TFJunYouChat/3rd/alipay/Util",
 					"\"$(PROJECT_DIR)/TFJunYouChat/TFJunYouALLP/Util\"",
 					"\"$(SRCROOT)/TFJunYouChat/TFJunYouALLP/Util\"",
 				);

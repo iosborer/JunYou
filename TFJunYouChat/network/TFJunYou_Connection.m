@@ -207,28 +207,21 @@ static AFHTTPSessionManager *afManager;
         }
     }
     
-    self.httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
-                                                         @"text/html",
-                                                         @"image/jpeg",
-                                                         @"image/png",
-                                                         @"image/gif",
-                                                         @"application/octet-stream",
-                                                         @"text/json",
-                                                         @"video/mp4",
-                                                         @"video/quicktime",
-                                                         nil];
+    self.httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", @"image/jpeg", @"image/png", @"image/gif", @"application/octet-stream", @"text/json", @"video/mp4", @"video/quicktime", nil];
     
     //上传图片/文字，只能同POST
+//    self.params[@"file1"] = @"aaa";
+    self.params[@"access_token"] = g_server.access_token;
     [self.httpManager POST:self.url parameters:self.params constructingBodyWithBlock:^(id  _Nonnull formData) {
         // 上传文件
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"yyyyMMddHHmmss";
+//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//        formatter.dateFormat = @"yyyyMMddHHmmss";
+        
         for (NSString *key in self.uploadDataDic.allKeys) {
             NSData *data = self.uploadDataDic[key];
             NSString *mimeType = [self getUploadDataMimeType:key];
             [formData appendPartWithFileData:data name:key fileName:key mimeType:mimeType];
         }
-        
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"---------- uploadProgress = %@",uploadProgress);
         if (self.messageId.length > 0) {
@@ -240,7 +233,7 @@ static AFHTTPSessionManager *afManager;
         
         // 转码
         NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
+        NSLog(@"%@", self.url);
         self.responseData = string;
         
         NSLog(@"requestSuccess");
