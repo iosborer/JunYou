@@ -31,7 +31,8 @@
 #define APIKEY @"a891a7a6-03af-475c-8ae1-7fb4b230e958"
  
 //47.116.130.254
-#define APIURL @"9090999.cn"
+//#define APIURL @"9090999.cn"
+#define APIURL @"im-test.9090999.cn"
 
 #define JPUSHAPPKEY @"87dae82662653bdc4499d254"
 

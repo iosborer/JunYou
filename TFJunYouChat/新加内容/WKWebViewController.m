@@ -47,7 +47,10 @@
     _webView.scrollView.backgroundColor = [UIColor whiteColor];
     [_webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
     
-    NSURL *ebURL = [NSURL URLWithString: @"https://mallplaza.vip"];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *URLStr = [userDefaults valueForKey:@"kEBayH5URL"];
+    URLStr = [URLStr stringByAppendingString:@"?type=ios"];
+    NSURL *ebURL = [NSURL URLWithString: URLStr];
     NSURLRequest *req = [NSURLRequest requestWithURL:ebURL];
     [_webView loadRequest:req];
 }
