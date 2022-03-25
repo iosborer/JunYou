@@ -1110,13 +1110,8 @@
 		4932B70A27564B3000013887 /* TFJunYou_VerifyPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4932B2BA27564B2C00013887 /* TFJunYou_VerifyPayVC.m */; };
 		49DCE21227575F8C005B6462 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DCE21027575F8C005B6462 /* libcrypto.a */; };
 		49DCE21327575F8C005B6462 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49DCE21127575F8C005B6462 /* libssl.a */; };
-		49DCE21727577C0A005B6462 /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DCE21527577C0A005B6462 /* WKWebViewController.m */; };
-		49DCE21827577C0A005B6462 /* WKWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49DCE21627577C0A005B6462 /* WKWebViewController.xib */; };
-		49DCE36D2757AB0D005B6462 /* LXFloaintButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 49DCE36C2757AB0D005B6462 /* LXFloaintButton.m */; };
-		49F44B752757428600745155 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B742757427B00745155 /* libstdc++.tbd */; };
 		49F44B772757436A00745155 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B762757436A00745155 /* Accelerate.framework */; };
 		49F44B7A2757437D00745155 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B782757437C00745155 /* AddressBookUI.framework */; };
-		49F44B7B2757437D00745155 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B792757437D00745155 /* AddressBook.framework */; };
 		49F44B7D2757438A00745155 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B7C2757438A00745155 /* AssetsLibrary.framework */; };
 		49F44B7F2757439800745155 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B7E2757439800745155 /* CFNetwork.framework */; };
 		49F44B81275743C100745155 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B80275743C100745155 /* CoreData.framework */; };
@@ -1153,6 +1148,9 @@
 		49F44BC127574A4D00745155 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F44BBC27574A4D00745155 /* UIImage+WebP.m */; };
 		49F44BC227574A4D00745155 /* ImageWebPCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F44BBD27574A4D00745155 /* ImageWebPCoder.m */; };
 		49F44BC327574A4D00745155 /* libwebp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44BC027574A4D00745155 /* libwebp.framework */; };
+		8487BD1C27EC8E2200D47A7A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B792757437D00745155 /* AddressBook.framework */; };
+		8487BD2427ED510200D47A7A /* aaa.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8487BD2327ED510200D47A7A /* aaa.mm */; };
+		8487BD2627ED580100D47A7A /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8487BD2527ED580000D47A7A /* libstdc++.tbd */; };
 		BA93316DB48B8A00E526F9A1 /* Pods_TFJunYouChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A87E45A68BF28816F19552E9 /* Pods_TFJunYouChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -3132,12 +3130,6 @@
 		4932B8A227572A8600013887 /* asn1err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1err.h; sourceTree = "<group>"; };
 		49DCE21027575F8C005B6462 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		49DCE21127575F8C005B6462 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
-		49DCE21427577C0A005B6462 /* WKWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKWebViewController.h; sourceTree = "<group>"; };
-		49DCE21527577C0A005B6462 /* WKWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKWebViewController.m; sourceTree = "<group>"; };
-		49DCE21627577C0A005B6462 /* WKWebViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WKWebViewController.xib; sourceTree = "<group>"; };
-		49DCE21A275786EB005B6462 /* TFJunYouChat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TFJunYouChat-Bridging-Header.h"; sourceTree = "<group>"; };
-		49DCE36B2757AB0D005B6462 /* LXFloaintButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFloaintButton.h; sourceTree = "<group>"; };
-		49DCE36C2757AB0D005B6462 /* LXFloaintButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFloaintButton.m; sourceTree = "<group>"; };
 		49F44B742757427B00745155 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libstdc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		49F44B762757436A00745155 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		49F44B782757437C00745155 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -3176,6 +3168,9 @@
 		49F44BBE27574A4D00745155 /* UIImage+WebP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WebP.h"; sourceTree = "<group>"; };
 		49F44BBF27574A4D00745155 /* ImageWebPCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageWebPCoder.h; sourceTree = "<group>"; };
 		49F44BC027574A4D00745155 /* libwebp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libwebp.framework; sourceTree = "<group>"; };
+		8487BD1E27ED487D00D47A7A /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		8487BD2327ED510200D47A7A /* aaa.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = aaa.mm; sourceTree = "<group>"; };
+		8487BD2527ED580000D47A7A /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		A87E45A68BF28816F19552E9 /* Pods_TFJunYouChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFJunYouChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA170678FD3CB9B87179E69 /* Pods-TFJunYouChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFJunYouChat.debug.xcconfig"; path = "Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3185,6 +3180,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8487BD2627ED580100D47A7A /* libstdc++.tbd in Frameworks */,
+				8487BD1C27EC8E2200D47A7A /* AddressBook.framework in Frameworks */,
 				49F44BC327574A4D00745155 /* libwebp.framework in Frameworks */,
 				49F44B83275743CA00745155 /* CoreFoundation.framework in Frameworks */,
 				49F44BA02757475B00745155 /* libz.tbd in Frameworks */,
@@ -3198,7 +3195,6 @@
 				49F44BB2275747D300745155 /* VideoToolbox.framework in Frameworks */,
 				49F44B85275743DA00745155 /* CoreGraphics.framework in Frameworks */,
 				49F44B772757436A00745155 /* Accelerate.framework in Frameworks */,
-				49F44B7B2757437D00745155 /* AddressBook.framework in Frameworks */,
 				49F44B962757469800745155 /* JitsiMeet.framework in Frameworks */,
 				49F44B8B2757464200745155 /* CoreMotion.framework in Frameworks */,
 				4932B3B027564B2D00013887 /* MAMapKit.framework in Frameworks */,
@@ -3228,7 +3224,6 @@
 				4932B56427564B2E00013887 /* libmp3lame.a in Frameworks */,
 				49F44BAA275747A400745155 /* QuartzCore.framework in Frameworks */,
 				49F44BA62757478A00745155 /* MobileCoreServices.framework in Frameworks */,
-				49F44B752757428600745155 /* libstdc++.tbd in Frameworks */,
 				BA93316DB48B8A00E526F9A1 /* Pods_TFJunYouChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3257,10 +3252,10 @@
 		4932AA7C2756489800013887 /* TFJunYouChat */ = {
 			isa = PBXGroup;
 			children = (
-				49DCE21927578699005B6462 /* 新加内容 */,
 				4932AA9627564A7200013887 /* TFJunYouChat.entitlements */,
 				4932B28627564B2B00013887 /* ViewController.h */,
 				4932AF0F27564B2A00013887 /* ViewController.m */,
+				8487BD2327ED510200D47A7A /* aaa.mm */,
 				4932AD2427564B2800013887 /* TFJunYouChat-Prefix.pch */,
 				4932AAF327564B2700013887 /* tuijianSort.plist */,
 				4932AECB27564B2900013887 /* tuijianUser.plist */,
@@ -6501,27 +6496,6 @@
 			path = openssl;
 			sourceTree = "<group>";
 		};
-		49DCE21927578699005B6462 /* 新加内容 */ = {
-			isa = PBXGroup;
-			children = (
-				49DCE36A2757AB0D005B6462 /* FloatingButton */,
-				49DCE21A275786EB005B6462 /* TFJunYouChat-Bridging-Header.h */,
-				49DCE21427577C0A005B6462 /* WKWebViewController.h */,
-				49DCE21527577C0A005B6462 /* WKWebViewController.m */,
-				49DCE21627577C0A005B6462 /* WKWebViewController.xib */,
-			);
-			path = "新加内容";
-			sourceTree = "<group>";
-		};
-		49DCE36A2757AB0D005B6462 /* FloatingButton */ = {
-			isa = PBXGroup;
-			children = (
-				49DCE36B2757AB0D005B6462 /* LXFloaintButton.h */,
-				49DCE36C2757AB0D005B6462 /* LXFloaintButton.m */,
-			);
-			path = FloatingButton;
-			sourceTree = "<group>";
-		};
 		49F44BBB27574A4D00745155 /* webp(未使用) */ = {
 			isa = PBXGroup;
 			children = (
@@ -6537,6 +6511,8 @@
 		A2BAFDB2DD04F8176FA06EFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8487BD2527ED580000D47A7A /* libstdc++.tbd */,
+				8487BD1E27ED487D00D47A7A /* libstdc++.6.0.9.dylib */,
 				49F44BB92757497A00745155 /* libresolv.tbd */,
 				49F44BB72757495800745155 /* libsqlite3.0.tbd */,
 				49F44BB52757488500745155 /* libiconv.tbd */,
@@ -6595,9 +6571,9 @@
 				4932AA762756489800013887 /* Sources */,
 				4932AA772756489800013887 /* Frameworks */,
 				4932AA782756489800013887 /* Resources */,
-				0DD571842AD69DED68CF0F96 /* [CP] Embed Pods Frameworks */,
-				A5171C23834B3CB60D297DFD /* [CP] Copy Pods Resources */,
 				49F44B982757469800745155 /* Embed Frameworks */,
+				62D4FB0334B476BD4E4FB520 /* [CP] Embed Pods Frameworks */,
+				C5314CCD4B77A46A12AD9A0E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -7011,7 +6987,6 @@
 				4932B52127564B2E00013887 /* ele_sunnyNightMeteor1.png in Resources */,
 				4932B40827564B2D00013887 /* f001.png in Resources */,
 				4932B38B27564B2D00013887 /* FileListCell.xib in Resources */,
-				49DCE21827577C0A005B6462 /* WKWebViewController.xib in Resources */,
 				4932B40D27564B2D00013887 /* f021@2x.png in Resources */,
 				4932B43D27564B2D00013887 /* f099.png in Resources */,
 				4932B46D27564B2D00013887 /* f042.png in Resources */,
@@ -7034,23 +7009,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0DD571842AD69DED68CF0F96 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4D08D693092587C67E7F0392 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -7073,7 +7031,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A5171C23834B3CB60D297DFD /* [CP] Copy Pods Resources */ = {
+		62D4FB0334B476BD4E4FB520 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C5314CCD4B77A46A12AD9A0E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -7147,7 +7122,6 @@
 				4932B59B27564B2E00013887 /* BMChineseSort.m in Sources */,
 				4932B36327564B2C00013887 /* TFJunYou_ReadListCell.m in Sources */,
 				4932B6D627564B3000013887 /* XMG_AddrBookCell.m in Sources */,
-				49DCE21727577C0A005B6462 /* WKWebViewController.m in Sources */,
 				4932B34327564B2C00013887 /* TFJunYou_BlogRemind.m in Sources */,
 				4932B5DD27564B2E00013887 /* ATMHudView.m in Sources */,
 				4932B2C527564B2C00013887 /* PwdDialogView.m in Sources */,
@@ -7674,6 +7648,7 @@
 				4932B69927564B2F00013887 /* TFJunYou_ChatLogQRCodeVC.m in Sources */,
 				4932B6CA27564B3000013887 /* TFJunYou_SetChatBackgroundVC.m in Sources */,
 				4932B6BC27564B2F00013887 /* TFJunYou_SetLabelVC.m in Sources */,
+				8487BD2427ED510200D47A7A /* aaa.mm in Sources */,
 				4932B3F527564B2D00013887 /* MatchParser.m in Sources */,
 				4932B69327564B2F00013887 /* TFJunYou_ChatLogMoveVC.m in Sources */,
 				4932B6DB27564B3000013887 /* OrganizeSelectVC.m in Sources */,
@@ -7756,7 +7731,6 @@
 				4932B30627564B2C00013887 /* TFJunYou_TalkModel.m in Sources */,
 				4932B6F727564B3000013887 /* selectCountryVC.m in Sources */,
 				4932B62D27564B2F00013887 /* LLSegmentBarConfig.m in Sources */,
-				49DCE36D2757AB0D005B6462 /* LXFloaintButton.m in Sources */,
 				4932B5D527564B2E00013887 /* JSONModel.m in Sources */,
 				4932B2F127564B2C00013887 /* TFJunYou_CaptureMedia.m in Sources */,
 				4932B32C27564B2C00013887 /* base64.m in Sources */,
@@ -7957,6 +7931,7 @@
 			baseConfigurationReference = CAA170678FD3CB9B87179E69 /* Pods-TFJunYouChat.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -8053,6 +8028,7 @@
 			baseConfigurationReference = 195348BEE99059CC085F0DFF /* Pods-TFJunYouChat.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -8133,6 +8109,7 @@
 					"\"$(SRCROOT)/TFJunYouChat/TFJunYouALLP/Util\"",
 				);
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onlinechat.equ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

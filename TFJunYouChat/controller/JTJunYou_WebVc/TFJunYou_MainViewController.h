@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "TFJunYou_PublishVc.h"
-#import "WKWebViewController.h"
 @class TFJunYou_TabMenuView;
 @class TFJunYou_MsgViewController;
 @class TFJunYou_UserViewController;
