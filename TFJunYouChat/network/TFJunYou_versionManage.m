@@ -392,7 +392,7 @@
     if (array.firstObject) {
         self.apiUrl = array.firstObject;
     }else {
-        self.apiUrl = [NSString stringWithFormat:@"http://%@:/config", APIURL];  // 新socket
+        self.apiUrl = [NSString stringWithFormat:@"http://%@/config", APIURL];  // 新socket
         
         array = [[NSMutableArray alloc] initWithObjects:self.apiUrl, nil];
         [array writeToFile:SERVER_LIST_DATA atomically:YES];

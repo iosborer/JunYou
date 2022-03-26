@@ -113,7 +113,7 @@
     
     TFJunYou_Connection *task = [[TFJunYou_Connection alloc] init];
     
-    if([action rangeOfString:@"http://"].location == NSNotFound){
+    if([action rangeOfString:@"http://"].location == NSNotFound && [action rangeOfString:@"https://"].location == NSNotFound){
         if([action isEqualToString:act_UploadFile] ||[action isEqualToString:act_UploadVoiceServlet] || [action isEqualToString:act_UploadHeadImage] || [action isEqualToString:act_SetGroupAvatarServlet]){
             s = g_config.uploadUrl;
             
@@ -129,7 +129,9 @@
         }
     }
     url = [NSString stringWithFormat:@"%@%@%@",s,action,param];
-    
+    if([url containsString:@"config"]) {
+        NSLog(@"");
+    }
     task.url = url;
     //    task.timeOutSeconds = TFJunYou__connect_timeout;
     task.param = param;
