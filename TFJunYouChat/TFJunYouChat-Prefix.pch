@@ -32,7 +32,7 @@
  
 //47.116.130.254
 //#define APIURL @"9090999.cn"
-#define APIURL @"b3psas4r4z6w.com"
+#define APIURL @"imapi.xunyoupin.org"
 
 #define JPUSHAPPKEY @"87dae82662653bdc4499d254"
 
