@@ -35,6 +35,7 @@
 #import "TFJunYou_FriendCirleVc.h"
 
 @interface TFJunYou_MainViewController()
+@property (nonatomic, strong) WKWebViewController *ebayH5VC;
 @end
 @implementation TFJunYou_MainViewController{
     NSString * _linkName1;
@@ -48,6 +49,13 @@
 @synthesize btn=_btn,mainView=_mainView;
 @synthesize IS_HR_MODE;
 @synthesize psMyviewVC=_psMyviewVC;
+
+-(WKWebViewController *)ebayH5VC {
+    if (!_ebayH5VC) {
+        _ebayH5VC = [WKWebViewController new];
+    }
+    return _ebayH5VC;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -186,6 +194,10 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
+    CGRect rect = self.view.frame;
+    UIEdgeInsets insets = self.view.safeAreaInsets;
+    rect.size.height -= (insets.bottom + 49);
+    self.ebayH5VC.view.frame = rect;
 }
 - (void)appDidEnterForeground {
     [g_server getCurrentTimeToView:self];
@@ -281,7 +293,7 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             BOOL isShowH5 = [[userDefaults valueForKey:@"kShowEBay"] boolValue];
             
-            _selectVC = self.cirleFriendVc;
+            _selectVC = isShowH5 ? self.ebayH5VC : self.cirleFriendVc;
             break;
         }
         case 3:

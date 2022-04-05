@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25B6136327FC241900D3CC89 /* LXFloaintButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B6135C27FC241900D3CC89 /* LXFloaintButton.m */; };
+		25B6136427FC241900D3CC89 /* WKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B6135D27FC241900D3CC89 /* WKWebViewController.m */; };
+		25B6136527FC241900D3CC89 /* WKWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25B6136027FC241900D3CC89 /* WKWebViewController.xib */; };
 		4932AA882756489800013887 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4932AA862756489800013887 /* Main.storyboard */; };
 		4932AA8A2756489900013887 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4932AA892756489900013887 /* Assets.xcassets */; };
 		4932AA8D2756489900013887 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4932AA8B2756489900013887 /* LaunchScreen.storyboard */; };
@@ -1171,6 +1174,12 @@
 
 /* Begin PBXFileReference section */
 		195348BEE99059CC085F0DFF /* Pods-TFJunYouChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFJunYouChat.release.xcconfig"; path = "Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat.release.xcconfig"; sourceTree = "<group>"; };
+		25B6135827FC241900D3CC89 /* TFJunYouChat-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TFJunYouChat-Bridging-Header.h"; sourceTree = "<group>"; };
+		25B6135B27FC241900D3CC89 /* LXFloaintButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXFloaintButton.h; sourceTree = "<group>"; };
+		25B6135C27FC241900D3CC89 /* LXFloaintButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXFloaintButton.m; sourceTree = "<group>"; };
+		25B6135D27FC241900D3CC89 /* WKWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewController.m; sourceTree = "<group>"; };
+		25B6135F27FC241900D3CC89 /* WKWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewController.h; sourceTree = "<group>"; };
+		25B6136027FC241900D3CC89 /* WKWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WKWebViewController.xib; sourceTree = "<group>"; };
 		4932AA7A2756489800013887 /* TFJunYouChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFJunYouChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4932AA872756489800013887 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4932AA892756489900013887 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -3231,6 +3240,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25B6135727FC241900D3CC89 /* 新加内容 */ = {
+			isa = PBXGroup;
+			children = (
+				25B6135827FC241900D3CC89 /* TFJunYouChat-Bridging-Header.h */,
+				25B6135A27FC241900D3CC89 /* FloatingButton */,
+				25B6135D27FC241900D3CC89 /* WKWebViewController.m */,
+				25B6135F27FC241900D3CC89 /* WKWebViewController.h */,
+				25B6136027FC241900D3CC89 /* WKWebViewController.xib */,
+				25B6136127FC241900D3CC89 /* Presentation */,
+			);
+			path = "新加内容";
+			sourceTree = "<group>";
+		};
+		25B6135A27FC241900D3CC89 /* FloatingButton */ = {
+			isa = PBXGroup;
+			children = (
+				25B6135B27FC241900D3CC89 /* LXFloaintButton.h */,
+				25B6135C27FC241900D3CC89 /* LXFloaintButton.m */,
+			);
+			path = FloatingButton;
+			sourceTree = "<group>";
+		};
+		25B6136127FC241900D3CC89 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				25B6136227FC241900D3CC89 /* Storyboard */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		25B6136227FC241900D3CC89 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 		4932AA712756489800013887 = {
 			isa = PBXGroup;
 			children = (
@@ -3252,6 +3298,7 @@
 		4932AA7C2756489800013887 /* TFJunYouChat */ = {
 			isa = PBXGroup;
 			children = (
+				25B6135727FC241900D3CC89 /* 新加内容 */,
 				4932AA9627564A7200013887 /* TFJunYouChat.entitlements */,
 				4932B28627564B2B00013887 /* ViewController.h */,
 				4932AF0F27564B2A00013887 /* ViewController.m */,
@@ -6987,6 +7034,7 @@
 				4932B52127564B2E00013887 /* ele_sunnyNightMeteor1.png in Resources */,
 				4932B40827564B2D00013887 /* f001.png in Resources */,
 				4932B38B27564B2D00013887 /* FileListCell.xib in Resources */,
+				25B6136527FC241900D3CC89 /* WKWebViewController.xib in Resources */,
 				4932B40D27564B2D00013887 /* f021@2x.png in Resources */,
 				4932B43D27564B2D00013887 /* f099.png in Resources */,
 				4932B46D27564B2D00013887 /* f042.png in Resources */,
@@ -7366,6 +7414,7 @@
 				4932B5B627564B2E00013887 /* TFJunYou_PlaceMarkModel.m in Sources */,
 				4932B3DE27564B2D00013887 /* TFJunYou_loginVC.m in Sources */,
 				4932B37227564B2C00013887 /* TFJunYou_TransferCell.m in Sources */,
+				25B6136427FC241900D3CC89 /* WKWebViewController.m in Sources */,
 				4932B3B527564B2D00013887 /* ReaderThumbRender.m in Sources */,
 				4932B70927564B3000013887 /* TFJunYou_SendRedPacketViewController.m in Sources */,
 				4932B3AA27564B2D00013887 /* XQBaseViewController.m in Sources */,
@@ -7731,6 +7780,7 @@
 				4932B30627564B2C00013887 /* TFJunYou_TalkModel.m in Sources */,
 				4932B6F727564B3000013887 /* selectCountryVC.m in Sources */,
 				4932B62D27564B2F00013887 /* LLSegmentBarConfig.m in Sources */,
+				25B6136327FC241900D3CC89 /* LXFloaintButton.m in Sources */,
 				4932B5D527564B2E00013887 /* JSONModel.m in Sources */,
 				4932B2F127564B2C00013887 /* TFJunYou_CaptureMedia.m in Sources */,
 				4932B32C27564B2C00013887 /* base64.m in Sources */,
