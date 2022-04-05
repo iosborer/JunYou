@@ -3243,12 +3243,11 @@
 		25B6135727FC241900D3CC89 /* 新加内容 */ = {
 			isa = PBXGroup;
 			children = (
-				25B6135827FC241900D3CC89 /* TFJunYouChat-Bridging-Header.h */,
 				25B6135A27FC241900D3CC89 /* FloatingButton */,
+				25B6135827FC241900D3CC89 /* TFJunYouChat-Bridging-Header.h */,
 				25B6135D27FC241900D3CC89 /* WKWebViewController.m */,
 				25B6135F27FC241900D3CC89 /* WKWebViewController.h */,
 				25B6136027FC241900D3CC89 /* WKWebViewController.xib */,
-				25B6136127FC241900D3CC89 /* Presentation */,
 			);
 			path = "新加内容";
 			sourceTree = "<group>";
@@ -3260,21 +3259,6 @@
 				25B6135C27FC241900D3CC89 /* LXFloaintButton.m */,
 			);
 			path = FloatingButton;
-			sourceTree = "<group>";
-		};
-		25B6136127FC241900D3CC89 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				25B6136227FC241900D3CC89 /* Storyboard */,
-			);
-			path = Presentation;
-			sourceTree = "<group>";
-		};
-		25B6136227FC241900D3CC89 /* Storyboard */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		4932AA712756489800013887 = {
