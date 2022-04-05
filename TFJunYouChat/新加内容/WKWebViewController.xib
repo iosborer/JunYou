@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WKWebViewController">
+            <connections>
+                <outlet property="imageView" destination="sZh-Lu-gCa" id="Km6-eO-rsz"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webView" destination="2Ct-3y-fqe" id="pF9-HK-3DY"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ct-3y-fqe">
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <wkWebViewConfiguration key="configuration">
+                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                        <wkPreferences key="preferences"/>
+                    </wkWebViewConfiguration>
+                </wkWebView>
+                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="sZh-Lu-gCa">
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </imageView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="sZh-Lu-gCa" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="4sk-VB-oD6"/>
+                <constraint firstItem="2Ct-3y-fqe" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="8b4-bL-hv5"/>
+                <constraint firstItem="sZh-Lu-gCa" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="Qsd-fM-Mpn"/>
+                <constraint firstAttribute="bottom" secondItem="sZh-Lu-gCa" secondAttribute="bottom" id="dje-A2-aha"/>
+                <constraint firstAttribute="bottom" secondItem="2Ct-3y-fqe" secondAttribute="bottom" id="iij-A6-U7A"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="2Ct-3y-fqe" secondAttribute="trailing" id="rum-2f-iBd"/>
+                <constraint firstItem="2Ct-3y-fqe" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="vUl-CH-GbM"/>
+                <constraint firstAttribute="trailing" secondItem="sZh-Lu-gCa" secondAttribute="trailing" id="z9m-2v-Cwe"/>
+            </constraints>
+            <point key="canvasLocation" x="131.8840579710145" y="102.45535714285714"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="launch" width="320" height="480"/>
+    </resources>
+</document>
