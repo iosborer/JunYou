@@ -41,7 +41,10 @@
 @property (nonatomic,strong) NSString*   chatRecordTimeOut; 
 @property(nonatomic,assign) double longitude;
 @property(nonatomic,assign) double latitude;
-@property(nonatomic,strong) NSMutableArray* members;    
+@property(nonatomic,strong) NSMutableArray* members;
+
+-(memberData *)owner;
+-(NSArray<memberData *> *)admins;
 -(void)getDataFromDict:(NSDictionary*)dict;
 -(BOOL)isMember:(NSString*)theUserId;
 -(NSString*)getNickNameInRoom;
@@ -51,6 +54,7 @@
 -(void)roomHeadImageToView:(UIImageView *)toView;
 +(void)roomHeadImageRoomId:(NSString *)roomId toView:(UIImageView *)toView;
 @end
+
 @interface memberData : NSObject{
 }
 @property(nonatomic,assign) NSTimeInterval createTime;

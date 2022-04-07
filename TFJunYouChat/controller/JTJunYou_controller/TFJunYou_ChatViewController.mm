@@ -411,7 +411,12 @@
     NSString *str = self.onlinestate ? Localized(@"JX_OnLine") : Localized(@"JX_OffLine");
     
     if ([g_config.isOpenOnlineStatus boolValue]) {
-        self.title = [NSString stringWithFormat:@"%@(%@)",userName, str];
+        memberData *me = [self.room getMember:g_myself.userId];
+        if ([me.role intValue] == 1 || [me.role intValue] == 2) {
+            self.title = [NSString stringWithFormat:@"%@(%@)", self.chatPerson.userNickname, str];
+        } else {
+            self.title = self.chatPerson.userNickname;
+        }
     }else {
         self.title = userName;
     }
@@ -887,9 +892,16 @@
         [btn1 addSubview:btn];
         
         [g_server getRoomMember:roomId userId:[g_myself.userId intValue] toView:self];
+        
         //获取群成员：
         NSArray * memberArray = [memberData fetchAllMembers:_room.roomId];
-        self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, memberArray.count];
+        
+        memberData *me = [self.room getMember:g_myself.userId];
+        if ([me.role intValue] == 1 || [me.role intValue] == 2) {
+            self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, memberArray.count];
+        } else {
+            self.title = self.chatPerson.userNickname;
+        }
         
         [self setAudioIconFrame];
         if (memberArray.count > 0) {//本地有
@@ -1983,8 +1995,13 @@
 - (void)roomMembersRefreshNotifi:(NSNotification *)notif {
     
 //    NSArray * memberArray = [memberData fetchAllMembers:_room.roomId];
-    int userSize = [notif.object intValue];
-    self.title = [NSString stringWithFormat:@"%@(%d)", self.chatPerson.userNickname, userSize];
+    NSInteger userSize = [notif.object integerValue];
+    memberData *me = [self.room getMember:g_myself.userId];
+    if ([me.role intValue] == 1 || [me.role intValue] == 2) {
+        self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, userSize];
+    } else {
+        self.title = self.chatPerson.userNickname;
+    }
     
     [self setAudioIconFrame];
 }
@@ -6176,7 +6193,12 @@
         }else {
             _isAdmin = NO;
         }
-        self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, array1.count];
+        
+        if ([data.role intValue] == 1 || [data.role intValue] == 2) {
+            self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, array1.count];
+        } else {
+            self.title = self.chatPerson.userNickname;
+        }
         [self setAudioIconFrame];
     }
     //获取红包信息
@@ -6450,8 +6472,13 @@
     }
     
     if ([aDownload.action isEqualToString:act_roomGetRoom]) {
+        memberData *me = [self.room getMember:g_myself.userId];
+        if ([me.role intValue] == 1 || [me.role intValue] == 2) {
+            self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, [dict[@"userSize"] integerValue]];
+        } else {
+            self.title = self.chatPerson.userNickname;
+        }
         
-        self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, [dict[@"userSize"] integerValue]];
         [self setAudioIconFrame];
         if ([dict objectForKey:@"jid"]) {
             
@@ -7393,7 +7420,13 @@
 
     if([p.objectId isEqualToString:self.roomJid]){
         if([p.type intValue] == kRoomRemind_RoomName){
-            self.title = [NSString stringWithFormat:@"%@(%ld)",p.content,_room.curCount];
+            memberData *me = [self.room getMember:g_myself.userId];
+            if ([me.role intValue] == 1 || [me.role intValue] == 2) {
+                self.title = [NSString stringWithFormat:@"%@(%ld)", p.content, _room.curCount];
+            } else {
+                self.title = self.chatPerson.userNickname;
+            }
+            
             [self setAudioIconFrame];
         }
         if([p.type intValue] == kRoomRemind_DisableSay){
@@ -7406,7 +7439,13 @@
 //                [self actionQuit];
             
             NSArray * memberArray = [memberData fetchAllMembers:_room.roomId];
-            self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, memberArray.count];
+            
+            memberData *me = [self.room getMember:g_myself.userId];
+            if ([me.role intValue] == 1 || [me.role intValue] == 2) {
+                self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, memberArray.count];
+            } else {
+                self.title = self.chatPerson.userNickname;
+            }
             [self setAudioIconFrame];
             
         }
@@ -7425,7 +7464,13 @@
                 chatRoom.isConnected = YES;
             }
             NSArray * memberArray = [memberData fetchAllMembers:_room.roomId];
-            self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, memberArray.count];
+            
+            memberData *me = [self.room getMember:g_myself.userId];
+            if ([me.role intValue] == 1 || [me.role intValue] == 2) {
+                self.title = [NSString stringWithFormat:@"%@(%ld)", self.chatPerson.userNickname, memberArray.count];
+            } else {
+                self.title = self.chatPerson.userNickname;
+            }
             [self setAudioIconFrame];
             //                [self actionQuit];
         }
