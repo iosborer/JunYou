@@ -82,8 +82,7 @@
 @synthesize room,chatRoom;
 
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         _modifyType = 0;
@@ -1232,7 +1231,7 @@
     }
     
     //收起状态显示两行10个+两个系统图标
-    _maxShow = ([room.members count]>8 && _unfoldMode) ? 8 : [room.members count];
+    _maxShow = ([room.members count] >8 && _unfoldMode) ? 8 : [room.members count];
     if (!_isShow) {
         _maxShow = 2;
     }
@@ -2319,16 +2318,29 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _maxShow + 2;
+    memberData *data = [self.room getMember:g_myself.userId];
+    if (data.role.integerValue > 0 && data.role.integerValue < 3) {
+        return _maxShow + 2;
+    }
+    
+    return room.admins.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     TFJunYou_GroupMemberCell *cell = (TFJunYou_GroupMemberCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    NSArray *dataArray = nil;
+    memberData *me = [self.room getMember:g_myself.userId];
+    if (me.role.integerValue > 0 && me.role.integerValue < 2) {
+        dataArray = room.members;
+    } else {
+        dataArray = room.admins;
+    }
+    
     memberData* user = nil;
-    if(indexPath.row < _maxShow){
+    if(indexPath.row < _maxShow && (me.role.integerValue > 0 && me.role.integerValue < 2)){
         if (!_isShow && indexPath.row == 1) {
-            for (memberData *member in room.members) {
+            for (memberData *member in dataArray) {
                 NSString *userId = [NSString stringWithFormat:@"%ld",member.userId];
                 if ([userId isEqualToString:MY_USER_ID]) {
                     user = member;
@@ -2336,8 +2348,10 @@
                 }
             }
         }else{
-            user = [room.members objectAtIndex:indexPath.row];
+            user = [dataArray objectAtIndex:indexPath.row];
         }
+    } else {
+        user = [dataArray objectAtIndex:indexPath.row];
     }
     [cell buildNewImageview];
     if(indexPath.row == _maxShow){
@@ -2406,35 +2420,43 @@
 #pragma mark -- UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == _maxShow) {
-        [self onShowAdd];
-    }else if(indexPath.row == _maxShow + 1){
+    if (indexPath.row > _maxShow) {
         [self onShowDel];
-    }else{
-        memberData *data = [self.room getMember:g_myself.userId];
-
-        if ([data.role intValue] != 1 && [data.role intValue] != 2 && !self.room.allowSendCard) {
-            [g_App showAlert:Localized(@"JX_OnlyManagerSeeInfo")];
-            return;
-        }
-        memberData *user = nil;
-        if (!_isShow && indexPath.row == 1) {
-            for (memberData *member in room.members) {
-                NSString *userId = [NSString stringWithFormat:@"%ld",member.userId];
-                if ([userId isEqualToString:MY_USER_ID]) {
-                    user = member;
-                    break;
-                }
-            }
-        }else{
-            user = room.members[indexPath.row];
-        }
-        TFJunYou_UserInfoVC* vc = [TFJunYou_UserInfoVC alloc];
-        vc.userId = [NSString stringWithFormat:@"%ld", user.userId];
-        vc.fromAddType = 3;
-        vc = [vc init];
-        [g_navigation pushViewController:vc animated:YES];
+        return;
     }
+    
+    if (indexPath.row > _maxShow - 1) {
+        [self onShowAdd];
+        return;
+    }
+    
+    memberData *data = [self.room getMember:g_myself.userId];
+    
+    //管理员才能查看群员信息
+    if ([data.role intValue] != 1 && [data.role intValue] != 2 && !self.room.allowSendCard) {
+        [g_App showAlert:Localized(@"JX_OnlyManagerSeeInfo")];
+        return;
+    }
+    
+    
+    memberData *user = nil;
+    if (!_isShow && indexPath.row == 1) {
+        for (memberData *member in room.members) {
+            NSString *userId = [NSString stringWithFormat:@"%ld",member.userId];
+            if ([userId isEqualToString:MY_USER_ID]) {
+                user = member;
+                break;
+            }
+        }
+    }else{
+        user = room.members[indexPath.row];
+    }
+    
+    TFJunYou_UserInfoVC* vc = [TFJunYou_UserInfoVC alloc];
+    vc.userId = [NSString stringWithFormat:@"%ld", user.userId];
+    vc.fromAddType = 3;
+    vc = [vc init];
+    [g_navigation pushViewController:vc animated:YES];
 }
 
 - (UICollectionView *)memberListView{

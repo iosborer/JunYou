@@ -14,6 +14,32 @@
     roomData * room = [[roomData alloc]init];
     room.roomId = roomId;
 }
+
+-(memberData *)owner {
+    for (memberData *mem in _members) {
+        if (mem.role.integerValue == 1) {
+            return mem;
+        }
+    }
+    return nil;
+}
+-(NSArray<memberData *> *)admins {
+    NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:_members.count];
+    for (memberData *mem in _members) {
+        switch (mem.role.integerValue) {
+            case 1:
+                [tmpArray insertObject:mem atIndex:0];
+                break;
+            case 2:
+                [tmpArray addObject:mem];
+                break;
+            default:
+                break;
+        }
+    }
+    return tmpArray.copy;
+}
+
 -(void)roomHeadImageToView:(UIImageView *)toView{
     NSArray * allMem = [memberData fetchAllMembers:self.roomId];
     if (toView){
@@ -308,6 +334,8 @@
     }
 }
 @end
+
+
 @implementation memberData
 @synthesize active;
 @synthesize talkTime;
