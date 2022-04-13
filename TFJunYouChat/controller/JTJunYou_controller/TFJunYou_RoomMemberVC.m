@@ -879,16 +879,19 @@
     qrView.image = [UIImage imageNamed:@"qrcodeImage"];
     [self.iv addSubview:qrView];
 
+    membHeight += self.iv.frame.size.height;
     
-    membHeight+=self.iv.frame.size.height;
-    
-    NSString *btnTitle = _isAdmin ? Localized(@"JX_ModifyFullNickname") : Localized(@"JXRoomMemberVC_NickName");
-    self.iv = [self createButton:btnTitle drawTop:NO drawBottom:NO must:NO click:@selector(onNickName) ParentView:_memberView];
-    self.iv.frame = CGRectMake(0, membHeight, TFJunYou__SCREEN_WIDTH, HEIGHT);
-    if (!_isAdmin) {
-        _userName = [self createLabel:self.iv default:[room getNickNameInRoom] isClick:YES];
+    if (_isAdmin) {
+        NSString *btnTitle = Localized(@"JX_ModifyFullNickname");
+        self.iv = [self createButton:btnTitle drawTop:NO drawBottom:NO must:NO click:@selector(onNickName) ParentView:_memberView];
+        self.iv.frame = CGRectMake(0, membHeight, TFJunYou__SCREEN_WIDTH, HEIGHT);
+        
+        if (!_isAdmin) {
+            _userName = [self createLabel:self.iv default:[room getNickNameInRoom] isClick:YES];
+        }
+        membHeight += self.iv.frame.size.height;
     }
-    membHeight+=self.iv.frame.size.height;
+    
     membHeight+=INSETS;
     
 //    self.iv = [self createButton:Localized(@"JXRoomMemberVC_PerCount") drawTop:NO drawBottom:YES must:NO click:nil ParentView:_memberView];
@@ -2283,20 +2286,6 @@
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(52, 70);
 }
-
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-//    if (_isShow) {
-//        return CGSizeMake(TFJunYou__SCREEN_WIDTH, HEIGHT);
-//    }
-//    return CGSizeZero;
-//}
-//
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-//    if (room.members.count > 8 && _isShow) {
-//        return CGSizeMake(TFJunYou__SCREEN_WIDTH, 25);
-//    }
-//    return CGSizeZero;
-//}
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
 

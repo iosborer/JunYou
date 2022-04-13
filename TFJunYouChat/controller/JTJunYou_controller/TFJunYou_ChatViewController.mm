@@ -584,8 +584,7 @@
     [g_server faceClollectListType:@"0" View:self];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     [self getEmojsData];
     [g_notify addObserver:self selector:@selector(getEmojsData) name:kEmojiRefresh object:nil];
@@ -3558,12 +3557,13 @@
 
 
 -(void)showOneMsg:(TFJunYou_MessageObject*)msg{
-    for(int i=0;i<[_array count];i++){
-        TFJunYou_MessageObject* p = (TFJunYou_MessageObject*)[_array objectAtIndex:i];
-        if([p.messageId isEqualToString:msg.messageId])
-            return;
-        p = nil;
+    for(int i=0; i<[_array count]; i++){
+        TFJunYou_MessageObject* p = _array[i];
+        
+        if([p.messageId isEqualToString:msg.messageId]) return;
     }
+    
+    
     //判断是否展示时间
     [self setNewShowTime:msg];
     CGFloat height = 0;
@@ -3748,11 +3748,11 @@
 
 #pragma mark  接受新消息广播
 -(void)newMsgCome:(NSNotification *)notifacation{
-    
+    //10000127
+    NSString *userid = g_myself.userId;
     
     TFJunYou_MessageObject *msg = (TFJunYou_MessageObject *)notifacation.object;
-    if(msg==nil)
-        return;
+    if(!msg) return;
     
     // 更新title 在线状态
     if (!self.roomJid && !self.onlinestate && ![msg.fromUserId isEqualToString:MY_USER_ID]) {

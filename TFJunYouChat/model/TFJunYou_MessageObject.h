@@ -220,6 +220,7 @@ typedef enum {
 @property (nonatomic,strong) NSString*  toId;//目标ID <message>里
 //以下字段用于通讯，Body里：
 @property (nonatomic,strong) NSNumber*  type;//消息类型 <body>里
+@property (nonatomic,assign) NSInteger otype;
 @property (nonatomic,strong) NSString*  fromUserId;//源
 @property (nonatomic,strong) NSString*  fromUserName;//源
 @property (nonatomic,strong) NSString*  toUserId;//目标
