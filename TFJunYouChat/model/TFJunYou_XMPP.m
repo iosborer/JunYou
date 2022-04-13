@@ -1091,6 +1091,13 @@ static TFJunYou_XMPP *sharedManager;
 - (void)chatResult:(NSData *)data {
     NSError *error;
     ChatMessage *message = [ChatMessage parseFromData:data extensionRegistry:nil error:&error];
+    if ((message.type > 900 && message.type < 908) || message.type == 913) {
+        return;
+    }
+    
+//    if ((message.type > 900 && message.type < 908) || message.type == 913) {
+//        return;
+//    }
     TFJunYou_MessageObject *msg = [TFJunYou_MessageObject getMsgObjWithPbobjc:message];
     [_receiptArray addObject:msg];
     
@@ -1427,6 +1434,7 @@ static TFJunYou_XMPP *sharedManager;
                     msg.isGroup  = YES;
                     BOOL isRoomControlMsg = msg.isRoomControlMsg;
 
+                    //检查是否存在后，msg.type发生变化
                     if(![msg insert:msg.toUserId]){ //在保存时检测MessageId是否已存在记录
                         if (isRoomControlMsg) {
                             return;
@@ -1436,7 +1444,6 @@ static TFJunYou_XMPP *sharedManager;
                         [msg updateLastSend:UpdateLastSendType_Add];
                     }
                     [msg notifyNewMsg];
-                    
                 }
             }
         }

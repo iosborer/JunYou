@@ -47,7 +47,7 @@
 #import "TFJunYou_UserPublicKeyObj.h"
 
 @implementation TFJunYou_MessageObject
-@synthesize content,timeSend,fromUserId,toUserId,type,messageNo, messageId,timeReceive,fileName,fileData,fileSize,location_x,location_y,timeLen,isSend,isRead,progress,dictionary,index,fromUserName,objectId,toUserName,isReceive,fromId,toId,isEncrypt;
+@synthesize content, timeSend,fromUserId,toUserId,type, messageNo, messageId,timeReceive,fileName,fileData,fileSize,location_x,location_y,timeLen,isSend,isRead,progress,dictionary,index,fromUserName,objectId,toUserName,isReceive,fromId,toId,isEncrypt;
 @synthesize isUpload;
 
 NSString* current_chat_userId = nil;
@@ -131,8 +131,7 @@ static TFJunYou_MessageObject *shared;
 
 -(void)fromDictionary:(NSMutableDictionary*)p
 {
-    if(p==nil)
-        p = dictionary;
+    if(p==nil) p = dictionary;
     NSDateFormatter* f=[[NSDateFormatter alloc]init];
     [f setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
@@ -1799,19 +1798,9 @@ static TFJunYou_MessageObject *shared;
 }
 
 -(void)notifyNewMsg{
-    if([self.type intValue] == kWCMessageTypeNone)//如果是被踢出群或解散群时,type为0
-        return;
-//    NSString* s;
-//    s = [self getTableName];
-    
-//    BOOL isMeeting = [self.type intValue] == kWCMessageTypeAudioMeetingInvite || [self.type intValue] == kWCMessageTypeVideoMeetingInvite;
-//    if(g_xmpp.newMsgAfterLogin==0 && ![current_chat_userId isEqualToString:s] && self.isVisible && !isMeeting){ //假如不在和目标对象的聊天记录界面里，则延迟统一一次性刷新:
-//        g_xmpp.lastNewMsgTime = [[NSDate date] timeIntervalSince1970];
-//        [g_xmpp performSelector:@selector(notifyNewMsg) withObject:nil afterDelay:0.7];
-////    }else{
-//        g_xmpp.newMsgAfterLogin++;
-//        [g_notify postNotificationName:kXMPPNewMsgNotifaction object:nil userInfo:nil];//刷新首页
-//    }
+    NSInteger msgType = self.type.integerValue;
+    if(msgType == kWCMessageTypeNone) return;//如果是被踢出群或解散群时,type为0
+        
     
     if (g_xmpp.msgTimer) {
         dispatch_cancel(g_xmpp.msgTimer);
