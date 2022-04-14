@@ -180,6 +180,13 @@
         [g_App showAlert:Localized(@"JX_InputGiftCount")];
         return;
     }
+    
+    double money = _moneyText.doubleValue;
+    double minRed = [[NSUserDefaults standardUserDefaults] doubleForKey:@"kMinRedPacket"];
+    if (money - minRed < 0.000001) {
+        [g_App showAlert:[NSString stringWithFormat:@"红包金额不能小于%.2f元", minRed]];
+        return;
+    }
     if (!_isRoom) {
         _countText = @"1";
     }

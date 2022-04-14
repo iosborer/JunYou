@@ -181,8 +181,11 @@
     _countTextField.text = allMoney;
 }
 -(void)withdrawalsBtnAction:(UIButton *)button{
-    if ([_countTextField.text doubleValue] < 0.5) {
-        [g_App showAlert:Localized(@"JX_Least0.5")];
+    double money = [_countTextField.text doubleValue];
+    double minCash = [[NSUserDefaults standardUserDefaults] doubleForKey:@"kMinCash"];
+    if (money - minCash < 0.000001) {
+        NSString *msg = [NSString stringWithFormat:@"每次最少提现@%.2f元", minCash];
+        [g_App showAlert:msg];
         return;
     }
     if ([g_server.myself.isPayPassword boolValue]) {

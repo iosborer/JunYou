@@ -179,6 +179,9 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setValue:dict[@"c2CUrl"] forKey:@"kEBayH5URL"];
     [userDefaults setValue:dict[@"isOpenUI"] forKey:@"kShowEBay"];
+    [userDefaults setDouble:[dict[@"minWithdraw"] doubleValue] forKey:@"kMinCash"];
+    [userDefaults setDouble:[dict[@"minRedPacket"] doubleValue] forKey:@"kMinRedPacket"];
+    [userDefaults setValue:dict[@"configUrl"] forKey:@"kConfigUrl"];
     
     NSDictionary* p = [dict objectForKey:@"ios"];
     

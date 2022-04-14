@@ -34,7 +34,7 @@
     [self.tableBody addSubview:self.myMoneyLabel];
     [self.tableBody addSubview:self.balanceLabel];
     [self.tableBody addSubview:self.rechargeBtn];
-   // [self.tableBody addSubview:self.withdrawalsBtn];
+    [self.tableBody addSubview:self.withdrawalsBtn];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
