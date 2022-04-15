@@ -1060,9 +1060,9 @@
 /// @param code 0：导航链接 1：欢迎语 2：启动页广告 3：开奖结果
 /// @param toView 回调页面
 -(void)getAppResource:(NSString *)code ToView:(id)toView{
-    TFJunYou_Connection* p = [self addTask:act_getAppResource param:nil toView:toView];
-    [p setPostValue:code forKey:@"code"];
-    [p go];
+//    TFJunYou_Connection* p = [self addTask:act_getAppResource param:nil toView:toView];
+//    [p setPostValue:code forKey:@"code"];
+//    [p go];
     
 }
 
