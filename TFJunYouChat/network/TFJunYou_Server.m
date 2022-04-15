@@ -103,10 +103,8 @@
 }
 
 -(TFJunYou_Connection*)addTask:(NSString*)action param:(id)param toView:(id)delegate{
-    if([action length]<=0)
-        return nil;
-    if(param==nil)
-        param = @"";
+    if(action.length <= 0) return nil;
+    if(param == nil) param = @"";
     
     NSString* url=nil;
     NSString* s=@"";
@@ -116,22 +114,17 @@
     if([action rangeOfString:@"http://"].location == NSNotFound && [action rangeOfString:@"https://"].location == NSNotFound){
         if([action isEqualToString:act_UploadFile] ||[action isEqualToString:act_UploadVoiceServlet] || [action isEqualToString:act_UploadHeadImage] || [action isEqualToString:act_SetGroupAvatarServlet]){
             s = g_config.uploadUrl;
-            
-        }
-        else{
+        } else{
             NSRange range = [g_config.apiUrl rangeOfString:@"config"];
             if (range.location != NSNotFound) {
                 s = [g_config.apiUrl substringToIndex:range.location];
             }else {
                 s = g_config.apiUrl;
             }
-            
         }
     }
     url = [NSString stringWithFormat:@"%@%@%@",s,action,param];
-    if([url containsString:@"config"]) {
-        NSLog(@"");
-    }
+    
     task.url = url;
     //    task.timeOutSeconds = TFJunYou__connect_timeout;
     task.param = param;
@@ -162,12 +155,12 @@
     }
 }
 #pragma  mark   ------------------服务器数据成功----------------
--(void)requestSuccess:(TFJunYou_Connection*)task
-{
+-(void)requestSuccess:(TFJunYou_Connection*)task {
     if( [task isImage] ){
         [self doSaveImage:task];
         return;
     }
+    
     if ([task isAudio] || [task isVideo]) {
         [self doSaveVideoAudio:task];
         return;
@@ -184,26 +177,25 @@
         //    [resultParser release];
         
         if( [resultObject isKindOfClass:[NSDictionary class]] ){
-            int resultCode = [[(NSDictionary *)resultObject objectForKey:@"resultCode"] intValue];
-            if(resultCode != 1)
-
-            {
-                error = [(NSDictionary *)resultObject objectForKey:@"resultMsg"];
-                if([error length]<=0)
+            NSInteger resultCode = [resultObject[@"resultCode"] integerValue];
+            if(resultCode != 1) {
+                error = resultObject[@"resultMsg"];
+                if(error.length < 1) {
                     error = Localized(@"JXServer_Error");
+                }
             }
         }else{
             error = Localized(@"JXServer_ErrorReturn");
-            if([string length]>=6){
-                if([[string substringToIndex:6] isEqualToString:@"<html>"])
-                    error = Localized(@"JXServer_ErrorSever");
+            if([string hasPrefix:@"<html>"]) {
+                error = Localized(@"JXServer_ErrorSever");
             }
         }
         
         if(error){
             [self doError:task dict:resultObject resultMsg:string errorMsg:error];
+            NSLog(@"BBBBBBBE:%@失败:%@",task.action,string);
         }else{
-            NSLog(@"%@成功:%@",task.action,string);
+            NSLog(@"BBBBBBB:%@成功:%@",task.action,string);
 
             if ([task.action isEqualToString:act_getCurrentTime] || [task.action isEqualToString:act_Config]) {
                 // 获取服务器时间，然后对比当前客户端时间
@@ -259,8 +251,7 @@
     
     int resultCode = [[dict objectForKey:@"resultCode"] intValue];
     if(![task.action isEqualToString:act_UserLogout] && ![task.action isEqualToString:act_OutTime] && ![task.action isEqualToString:act_UserDeviceIsAuth]){
-        if(resultCode != 1)
-        {
+        if(resultCode != 1) {
             if(resultCode == 1030101 || resultCode == 1030102 || resultCode == 1030112){//未登陆时
                 
                 if (isLogin || [task.action isEqualToString:act_userLoginAuto] || [task.action isEqualToString:act_userLoginAutoV1]) {
@@ -292,6 +283,7 @@
     isLogin = NO;
     g_server.access_token = nil;
     [g_default removeObjectForKey:kMY_USER_TOKEN];
+    NSLog(@"TTT(移除):别人改密码");
     [share_defaults removeObjectForKey:kMY_ShareExtensionToken];
     [g_App showAlert:Localized(@"JX_OtherLoginNeedAgain") delegate:self tag:11000 onlyConfirm:YES];
 
@@ -851,7 +843,9 @@
     [p go];
 }
 
+//改方法没有被调用
 -(BOOL)autoLogin:(id)toView{
+    NSLog(@"AAAAAAA(自动登录V0)");
     NSString * userId = MY_USER_ID;
     NSString * token = [[NSUserDefaults standardUserDefaults] stringForKey:kMY_USER_TOKEN];
     NSString * userName = MY_USER_NAME;
@@ -866,6 +860,8 @@
     TFJunYou_Connection* p = [self addTask:act_userLoginAuto param:nil toView:toView];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用02): %@", p.params[@"access_token"]);
+    
     [p setPostValue:[TFJunYou_KeyChainStore getUUIDByKeyChain] forKey:@"serial"];
     [p setPostValue:[NSNumber numberWithDouble:latitude] forKey:@"latitude"];
     [p setPostValue:[NSNumber numberWithDouble:longitude] forKey:@"longitude"];
@@ -881,12 +877,15 @@
 }
 
 -(void)autoLoginV1:(NSString *)loginToken salt:(NSString *)salt data:(NSString *)data toView:(id)toView {
+    NSLog(@"AAAAAAA(自动登录V1)");
     
     TFJunYou_Connection* p = [self addTask:act_userLoginAutoV1 param:nil toView:toView];
     [p setPostValue:loginToken forKey:@"loginToken"];
 //    [p setPostValue:access_token forKey:@"access_token"];
     [p setPostValue:salt forKey:@"salt"];
     [p setPostValue:data forKey:@"data"];
+    
+    NSLog(@"AAAAAAA(使用03): %@", p.params);
     [p go];
 }
 
@@ -915,6 +914,7 @@
     TFJunYou_Connection* p = [self addTask:act_UserAffirmAuth param:nil toView:toView];
     [p setPostValue:myself.userId forKey:@"userId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用04): %@", p.params[@"access_token"]);
     [p setPostValue:[TFJunYou_KeyChainStore getUUIDByKeyChain] forKey:@"serial"];
     [p setPostValue:myself.latitude forKey:@"latitude"];
     [p setPostValue:myself.longitude forKey:@"longitude"];
@@ -929,6 +929,7 @@
     TFJunYou_Connection* p = [self addTask:act_UserLogout param:nil toView:toView];
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用05): %@", p.params[@"access_token"]);
     
     [p setPostValue:[self getMD5String:myself.telephone] forKey:@"telephone"];
     [p setPostValue:areaCode forKey:@"areaCode"];
@@ -952,6 +953,7 @@
 -(void)outTime:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_OutTime param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用06): %@", p.params[@"access_token"]);
     [p setPostValue:myself.userId forKey:@"userId"];
     
     [p go];
@@ -1060,28 +1062,29 @@
 /// @param code 0：导航链接 1：欢迎语 2：启动页广告 3：开奖结果
 /// @param toView 回调页面
 -(void)getAppResource:(NSString *)code ToView:(id)toView{
-    TFJunYou_Connection* p = [self addTask:act_getAppResource param:nil toView:toView];
-    [p setPostValue:code forKey:@"code"];
-    [p go];
-    
+//    TFJunYou_Connection* p = [self addTask:act_getAppResource param:nil toView:toView];
+//    [p setPostValue:code forKey:@"code"];
+//    [p go];
 }
 
 - (void)getAdvertisingToView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_getAdvertising param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用08): %@", p.params[@"access_token"]);
     [p go];
 }
 
 //客服
 -(void)customerLinkList:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_customerLinkList param:nil toView:toView];
-//    [p setPostValue:access_token forKey:@"access_token"];
+    [p setPostValue:access_token forKey:@"access_token"];
     [p go];
 }
 
 - (void)getFaceList:(NSString *)type View:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_FaceList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用10): %@", p.params[@"access_token"]);
     [p setPostValue:type forKey:@"type"];
     [p go];
 }
@@ -1096,6 +1099,7 @@
 - (void)addFaceClollect:(NSString *)faceId faceName:(NSString *)faceName url:(NSString *)url View:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_FaceClollectAddFaceClollect param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用12): %@", p.params[@"access_token"]);
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:faceId forKey:@"faceId"];
     [p setPostValue:faceName forKey:@"faceName"];
@@ -1107,6 +1111,7 @@
 - (void)faceClollectDeleteByFaceName:(NSString *)faceName  View:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_FaceClollectDeleteByFaceName param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用13): %@", p.params[@"access_token"]);
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:faceName forKey:@"name"];
     [p go];
@@ -1125,6 +1130,7 @@
 - (void)faceClollectDeleteFaceClollect:(NSString *)ids  View:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_FaceClollectDeleteFaceClollect param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用15): %@", p.params[@"access_token"]);
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:ids forKey:@"ids"];
     [p go];
@@ -1262,6 +1268,7 @@
     //初始化一个供App Groups使用的NSUserDefaults对象
     //写入数据
     [g_default setObject:self.access_token forKey:kMY_USER_TOKEN];
+    NSLog(@"TTT(保存): %@", self.access_token);
     if (self.loginToken) {
         [g_default setObject:self.loginToken forKey:kMY_USER_LOGINTOKEN];
         [share_defaults setValue:self.loginToken forKey:kMY_ShareExtensionLoginToken];
@@ -1301,6 +1308,7 @@
     myself.userId = MY_USER_ID;
     myself.companyId =[g_default objectForKey:kMY_USER_COMPANY_ID];
     self.access_token = [g_default objectForKey:kMY_USER_TOKEN];
+    NSLog(@"TTT(读取默认设置): %@", self.access_token);
     self.httpKey = [g_default objectForKey:kMY_USER_HTTPKEY];
     self.loginToken = [g_default objectForKey:kMY_USER_LOGINTOKEN];
     self.loginKey = [g_default objectForKey:kMY_USER_LOGINKEY];
@@ -1479,6 +1487,7 @@
     TFJunYou_Connection* p = [self addTask:act_CheckPhone param:nil toView:toView];
     [p setPostValue:phone forKey:@"telephone"];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用16): %@", p.params[@"access_token"]);
     [p go];
 }
 
@@ -1527,6 +1536,7 @@
     [p setPostValue:[MD5Util getMD5StringWithData:aesData] forKey:@"payPassword"];
     [p setPostValue:user.msgBackGroundUrl forKey:@"msgBackGroundUrl"];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用17): %@", p.params[@"access_token"]);
 //    [p setPostValue:user.isMultipleLogin forKey:@"multipleDevices"];
     [p go];
 }
@@ -1534,6 +1544,7 @@
 -(void)updateShikuNum:(TFJunYou_UserObject*)user toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_UserUpdate param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用18): %@", p.params[@"access_token"]);
     [p setPostValue:user.account forKey:@"account"];
     [p go];
 }
@@ -1551,6 +1562,7 @@
 -(void)get_act_apiAutoAnswergetIssue:(NSString*)theUserId toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_apiAutoAnswergetIssue param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    NSLog(@"AAAAAAA(使用20): %@", p.params[@"access_token"]);
     [p go];
 }
 
@@ -1559,6 +1571,7 @@
 -(void)get_act_ApiEditGetListByType:(NSString*)type toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_ApiEditGetListByType param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:type forKey:@"type"];
     [p go];
 }
@@ -1568,6 +1581,7 @@
 -(void)get_act_ApiComplaintSubmit:(NSString*)type phone:(NSString*)phone imgs:(NSString*)imgs content:(NSString*)content toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_ApiComplaintSubmit param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:type forKey:@"type"];
     [p setPostValue:phone forKey:@"phone"];
     [p setPostValue:imgs forKey:@"imgs"];
@@ -1580,6 +1594,7 @@
 -(void)get_act_ApiEditGet:(NSString*)type toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_ApiEditGet param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:type forKey:@"type"];
     [p go];
 }
@@ -1587,6 +1602,7 @@
 -(void)get_act_ApiFreezeApply:(NSString*)type phone:(NSString*)phone idCard:(NSString*)idCard name:(NSString*)name toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_ApiFreezeApply param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:type forKey:@"type"];
     [p setPostValue:phone forKey:@"phone"];
     [p setPostValue:idCard forKey:@"idCard"];
@@ -1598,6 +1614,7 @@
 -(void)get_act_UserCancelToView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_UserCancel param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -1622,6 +1639,7 @@
     [p setPostValue:user.longitude forKey:@"longitude"];
     [p setPostValue:user.location forKey:@"location"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -1633,6 +1651,7 @@
         [p setPostValue:[NSNumber numberWithInt:limit] forKey:@"limit"];
         [p setPostValue:[NSNumber numberWithInt:page] forKey:@"page"];
         [p setPostValue:access_token forKey:@"access_token"];
+    
         [p go];
     }
 }
@@ -1645,6 +1664,7 @@
     [p setPostValue:reasonId forKey:@"reason"];
     [p setPostValue:webUrl forKey:@"webUrl"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -1768,6 +1788,7 @@
     TFJunYou_Connection* p = [self addTask:act_getUserMoeny param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
     
+    
     [p go];
 }
 
@@ -1775,6 +1796,7 @@
 - (void)getSign:(NSString *)price payType:(NSInteger)payType toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_getSign param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:price forKey:@"price"];
     [p setPostValue:[NSNumber numberWithInteger:payType] forKey:@"payType"];
     [p go];
@@ -1783,12 +1805,14 @@
 - (void)getAliPayAuthInfoToView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_getAliPayAuthInfo param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 //保存支付宝用户Id
 - (void)aliPayUserId:(NSString *)aliUserId toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_aliPayUserId param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:aliUserId forKey:@"aliUserId"];
     [p go];
 }
@@ -1796,6 +1820,7 @@
 - (void)alipayTransfer:(NSString *)amount secret:(NSString *)secret time:(NSNumber *)time toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_alipayTransfer param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:amount forKey:@"amount"];
     [p setPostValue:secret forKey:@"secret"];
     [p setPostValue:time forKey:@"time"];
@@ -1806,6 +1831,7 @@
 - (void)codePayment:(NSString *)paymentCode money:(NSString *)money time:(long)time desc:(NSString *)desc secret:(NSString *)secret toView:(id)toView {
     TFJunYou_Connection *p = [self addTask:act_codePayment param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:paymentCode forKey:@"paymentCode"];
     [p setPostValue:money forKey:@"money"];
     [p setPostValue:[NSNumber numberWithLong:time] forKey:@"time"];
@@ -1819,6 +1845,7 @@
 - (void)codePaymentV1:(NSString *)paymentCode money:(NSString *)money desc:(NSString *)desc toView:(id)toView {
     TFJunYou_Connection *p = [self addTask:act_codePaymentV1 param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setNotNullObject:paymentCode forKey:@"paymentCode"];
@@ -1842,6 +1869,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_payVerifyQrKey param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:salt forKey:@"salt"];
     [p setPostValue:mac forKey:@"mac"];
     [p go];
@@ -1851,6 +1879,7 @@
 - (void)codeReceipt:(NSString *)toUserId money:(NSString *)money time:(long)time desc:(NSString *)desc secret:(NSString *)secret toView:(id)toView {
     TFJunYou_Connection *p = [self addTask:act_codeReceipt param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:money forKey:@"money"];
     [p setPostValue:[NSNumber numberWithLong:time] forKey:@"time"];
@@ -1865,6 +1894,7 @@
 - (void)getTransfer:(NSString *)transferId toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_receiveTransfer param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:transferId forKey:@"id"];
     [p go];
 }
@@ -1873,6 +1903,7 @@
 - (void)transferDetail:(NSString *)transferId toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_getTransferInfo param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:transferId forKey:@"id"];
     [p go];
 }
@@ -1881,6 +1912,7 @@
 - (void)getConsumeRecordList:(NSString *)toUserId pageIndex:(int)pageIndex pageSize:(int)pageSize toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_getConsumeRecordList param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:[NSNumber numberWithInt:pageIndex] forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
@@ -1893,6 +1925,7 @@
 - (void)transferUserId:(NSString *)toUserId money:(NSString *)money remark:(NSString *)remark time:(long)time secret:(NSString *)secret toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_sendTransfer param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:money forKey:@"money"];
     [p setPostValue:remark forKey:@"remark"];
@@ -1906,6 +1939,7 @@
 - (void)userRecharge:(NSString *)price toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_userRechagrge param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:[NSNumber numberWithDouble:[price doubleValue]] forKey:@"money"];
     [p setPostValue:[NSNumber numberWithInteger:1] forKey:@"type"];
     [p go];
@@ -1915,6 +1949,7 @@
 - (void)sendRedPacket:(double)money type:(int)type count:(int)count greetings:(NSString *)greet roomJid:(NSString*)roomJid toUserId:(NSString *)toUserId time:(long)time secret:(NSString *)secret toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_sendRedPacket param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:roomJid forKey:@"roomJid"];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:[NSNumber numberWithDouble:money] forKey:@"money"];
@@ -1931,6 +1966,7 @@
 - (void)sendRedPacketV1:(double)money type:(int)type count:(int)count greetings:(NSString *)greet roomJid:(NSString*)roomJid toUserId:(NSString *)toUserId time:(long)time secret:(NSString *)secret toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_sendRedPacketV1 param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:roomJid forKey:@"roomJid"];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:[NSNumber numberWithDouble:money] forKey:@"moneyStr"];
@@ -1946,6 +1982,7 @@
 - (void)getConsumeRecord:(int)pageIndex toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_consumeRecord param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:[NSNumber numberWithInteger:pageIndex] forKey:@"pageIndex"];
         [p setPostValue:[NSNumber numberWithInteger:20] forKey:@"pageSize"];
     [p go];
@@ -1955,6 +1992,7 @@
 - (void)redPacketGetSendRedPacketListIndex:(NSInteger)index toView:(id)toView {
     TFJunYou_Connection *p = [self addTask:act_redPacketGetSendRedPacketList param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:[NSNumber numberWithInteger:index] forKey:@"pageIndex"];
     //    [p setPostValue:[NSNumber numberWithInteger:10] forKey:@"pageSize"];
     [p go];
@@ -1963,6 +2001,7 @@
 - (void)redPacketGetRedReceiveListIndex:(NSInteger)index toView:(id)toView {
     TFJunYou_Connection *p = [self addTask:act_redPacketGetRedReceiveList param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:[NSNumber numberWithInteger:index] forKey:@"pageIndex"];
 
     [p go];
@@ -1971,6 +2010,7 @@
 - (void)redPacketReply:(NSString *)redPacketId content:(NSString *)content toView:(id)toView {
     TFJunYou_Connection *p = [self addTask:act_redPacketReply param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:redPacketId forKey:@"id"];
     [p setPostValue:content forKey:@"reply"];
 
@@ -1989,6 +2029,7 @@
                         userName:(NSString *)userName toView:(id)toView {
     TFJunYou_Connection *p = [self addTask:act_addWithdrawl param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:platformName forKey:@"platformName"];
     [p setPostValue:account forKey:@"account"];
     [p setPostValue:amount forKey:@"amount"];
@@ -2004,6 +2045,7 @@
 - (void)withdrawlListUserId:(NSString *)userId toView:(id)toView {
     TFJunYou_Connection *p = [self addTask:act_withdrawlList param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:userId forKey:@"userId"];
     [p go];
 }
@@ -2013,6 +2055,7 @@
     TFJunYou_Connection *p = [self addTask:act_readDelMsg param:nil toView:toView];
     [p setPostValue:msg.messageId forKey:@"messageId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2020,6 +2063,7 @@
 - (void)getRedPacket:(NSString *)redPacketId toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_getRedPacket param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:redPacketId forKey:@"id"];
     [p go];
 }
@@ -2027,6 +2071,7 @@
 - (void)openRedPacket:(NSString *)redPacketId toView:(id)toView{
     TFJunYou_Connection *p = [self addTask:act_openRedPacket param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:redPacketId forKey:@"id"];
     [p go];
 }
@@ -2034,6 +2079,7 @@
 -(void)addPhoto:(NSString*)photos toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_PhotoAdd param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:photos forKey:@"photos"];
     [p go];
 }
@@ -2041,6 +2087,7 @@
 -(void)delPhoto:(NSString*)photoId toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_PhotoDel param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:photoId forKey:@"photoId"];
     [p go];
 }
@@ -2048,6 +2095,7 @@
 -(void)updatePhoto:(NSString*)photoId oUrl:(NSString*)oUrl tUrl:(NSString*)tUrl toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_PhotoMod param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:photoId forKey:@"photoId"];
     [p setPostValue:oUrl forKey:@"oUrl"];
     [p setPostValue:tUrl forKey:@"tUrl"];
@@ -2057,6 +2105,7 @@
 -(void)listPhoto:(NSString*)theUserId toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_PhotoList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:theUserId forKey:@"userId"];
     [p go];
 }
@@ -2064,6 +2113,7 @@
 -(void)setHeadImage:(NSString*)photoId toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_SetHeadImage param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:photoId forKey:@"photoId"];
     [p go];
 }
@@ -2071,6 +2121,7 @@
 -(void)setGroupAvatarServlet:(NSString*)roomId image:(UIImage *)image toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_SetGroupAvatarServlet param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:roomId forKey:@"jid"];
     [p setData:UIImageJPEGRepresentation(image, 0.5) forKey:@"file.jpg" messageId:nil];
     [p go];
@@ -2162,6 +2213,7 @@
     [p setPostValue:[MD5Util getMD5StringWithData:oldData] forKey:@"oldPassword"];
     [p setPostValue:[MD5Util getMD5StringWithData:newData] forKey:@"newPassword"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2203,6 +2255,7 @@
     [p setPostValue:companyName forKey:@"companyName"];
     [p setPostValue:g_myself.userId forKey:@"createUserId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---退出公司/解散公司
@@ -2211,6 +2264,7 @@
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---自动查找公司
@@ -2218,6 +2272,7 @@
     TFJunYou_Connection *p = [self addTask:act_getCompany param:nil toView:toView];
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---指定管理员
@@ -2225,6 +2280,7 @@
     TFJunYou_Connection *p = [self addTask:act_setManager param:nil toView:toView];
     [p setPostValue:userId forKey:@"managerId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---管理员列表
@@ -2232,6 +2288,7 @@
     TFJunYou_Connection *p = [self addTask:act_managerList param:nil toView:toView];
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---修改公司名
@@ -2245,6 +2302,7 @@
     }
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2254,6 +2312,7 @@
     [p setPostValue:noticeContent forKey:@"noticeContent"];
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---查找公司
@@ -2261,6 +2320,7 @@
     TFJunYou_Connection *p = [self addTask:act_seachCompany param:nil toView:toView];
     [p setPostValue:keyworld forKey:@"keyworld"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2270,6 +2330,7 @@
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2281,6 +2342,7 @@
     [p setPostValue:g_myself.userId forKey:@"createUserId"];
     [p setPostValue:departName forKey:@"departName"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2290,6 +2352,7 @@
     [p setPostValue:departmentName forKey:@"dpartmentName"];
     [p setPostValue:departmentId forKey:@"departmentId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2298,6 +2361,7 @@
     TFJunYou_Connection *p = [self addTask:act_deleteDepartment param:nil toView:toView];
     [p setPostValue:departmentId forKey:@"departmentId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2311,6 +2375,7 @@
         [p setPostValue:roleArray forKey:@"roleArray"];
     }
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2320,6 +2385,7 @@
     [p setPostValue:userId forKey:@"userIds"];
     [p setPostValue:departmentId forKey:@"departmentId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2330,6 +2396,7 @@
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:newDepartmentId forKey:@"newDepartmentId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2338,6 +2405,7 @@
     TFJunYou_Connection *p = [self addTask:act_empList param:nil toView:toView];
     [p setPostValue:departmentId forKey:@"departmentId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---更改员工角色
@@ -2347,6 +2415,7 @@
     [p setPostValue:role forKey:@"role"];
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---更改员工职位(头衔)
@@ -2356,6 +2425,7 @@
     [p setPostValue:position forKey:@"position"];
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---公司列表
@@ -2364,6 +2434,7 @@
     [p setPostValue:pageIndex forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInt:12] forKey:@"pageSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2373,6 +2444,7 @@
     [p setPostValue:pageIndex forKey:@"pageIndex"];
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---员工列表
@@ -2381,6 +2453,7 @@
     [p setPostValue:pageIndex forKey:@"pageIndex"];
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---获取公司详情
@@ -2388,6 +2461,7 @@
     TFJunYou_Connection *p = [self addTask:act_companyInfo param:nil toView:toView];
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2396,6 +2470,7 @@
     TFJunYou_Connection *p = [self addTask:act_employeeInfo param:nil toView:toView];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2404,6 +2479,7 @@
     TFJunYou_Connection *p = [self addTask:act_dpartmentInfo param:nil toView:toView];
     [p setPostValue:departmentId forKey:@"departmentId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -2412,6 +2488,7 @@
     TFJunYou_Connection *p = [self addTask:act_companyNum param:nil toView:toView];
     [p setPostValue:companyId forKey:@"companyId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark---部门员工数
@@ -2419,6 +2496,7 @@
     TFJunYou_Connection *p = [self addTask:act_dpartmentNum param:nil toView:toView];
     [p setPostValue:departmentId forKey:@"departmentId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 -(void)getMessage:(NSString*)messageId toView:(id)toView{
@@ -2427,6 +2505,7 @@
     TFJunYou_Connection* p = [self addTask:act_MsgGet param:nil toView:toView];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2438,6 +2517,7 @@
         
     [p setPostValue:myself.userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2498,6 +2578,7 @@
     [p setPostValue:[NSNumber numberWithInt:visible] forKey:@"visible"];
     [p setPostValue:[NSNumber numberWithInt:1] forKey:@"cityId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:text forKey:@"text"];
     if (type == 5) {
         [p setPostValue:jsonFiles forKey:@"files"];
@@ -2558,6 +2639,7 @@
     [p setPostValue:text forKey:@"text"];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:myself.model forKey:@"model"];
     [p setPostValue:myself.osVersion forKey:@"osVersion"];
     [p setPostValue:myself.serialNumber forKey:@"serialNumber"];
@@ -2573,6 +2655,7 @@
     TFJunYou_Connection* p = [self addTask:act_MsgDel param:nil toView:toView];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2585,6 +2668,7 @@
     [p setPostValue:[NSNumber numberWithInteger:pageIndex] forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInteger:pageSize] forKey:@"pageSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2597,6 +2681,7 @@
     [p setPostValue:[NSNumber numberWithInteger:pageIndex] forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInteger:pageSize] forKey:@"pageSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2606,6 +2691,7 @@
     [p setPostValue:giftId forKey:@"giftId"];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2615,6 +2701,7 @@
     TFJunYou_Connection* p = [self addTask:act_PraiseAdd param:nil toView:toView];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2624,6 +2711,7 @@
     TFJunYou_Connection* p = [self addTask:act_PraiseDel param:nil toView:toView];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2634,6 +2722,7 @@
     TFJunYou_Connection *p = [self addTask:act_ForwardAdd param:nil toView:toView];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2644,6 +2733,7 @@
     TFJunYou_Connection *p = [self addTask:act_PlayAmountAdd param:nil toView:toView];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2654,6 +2744,7 @@
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:gifts forKey:@"gifts"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2667,6 +2758,7 @@
     [p setPostValue:reply.toNickName forKey:@"toNickname"];
     [p setPostValue:reply.toBody forKey:@"toBody"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 /**
@@ -2682,6 +2774,7 @@
     [p setPostValue:idcard forKey:idcard];
     [p setPostValue:realName forKey:@"realName"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2690,6 +2783,7 @@
     TFJunYou_Connection* p = [self addTask:act_cergetVerifyResult param:nil toView:toView];
     [p setPostValue:bizId forKey:@"bizId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 //实名认证
@@ -2698,6 +2792,7 @@
     TFJunYou_Connection* p = [self addTask:act_cerGetToken param:nil toView:toView];
     [p setPostValue:bizId forKey:@"bizId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 -(void)delComment:(NSString*)messageId commentId:(NSString*)commentId toView:(id)toView{
@@ -2707,6 +2802,7 @@
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:commentId forKey:@"commentId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2716,6 +2812,7 @@
     TFJunYou_Connection* p = [self addTask:act_FriendAdd param:nil toView:toView];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2725,6 +2822,7 @@
     TFJunYou_Connection* p = [self addTask:act_FriendDel param:nil toView:toView];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2734,6 +2832,7 @@
     [p setPostValue:[NSNumber numberWithInt:page] forKey:@"pageIndex"];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2743,6 +2842,7 @@
     [p setPostValue:[NSNumber numberWithInt:page] forKey:@"pageIndex"];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2752,6 +2852,7 @@
     [p setPostValue:[NSNumber numberWithInt:page] forKey:@"pageIndex"];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2765,6 +2866,7 @@
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:@(fromAddType) forKey:@"fromAddType"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2774,6 +2876,7 @@
     TFJunYou_Connection* p = [self addTask:act_AttentionDel param:nil toView:toView];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2783,6 +2886,7 @@
     TFJunYou_Connection* p = [self addTask:act_BlacklistAdd param:nil toView:toView];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2792,6 +2896,7 @@
     TFJunYou_Connection* p = [self addTask:act_BlacklistDel param:nil toView:toView];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2800,6 +2905,7 @@
     [p setPostValue:[NSNumber numberWithInt:page] forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInt:TFJunYou__page_size] forKey:@"pageSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2811,6 +2917,7 @@
     [p setPostValue:noteName forKey:@"remarkName"];
     [p setPostValue:describe forKey:@"describe"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2822,6 +2929,7 @@
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:chatRecordTimeOut forKey:@"chatRecordTimeOut"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2830,6 +2938,7 @@
     [p setPostValue:[NSNumber numberWithInt:TFJunYou__page_size*5] forKey:@"pageSize"];
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2837,6 +2946,7 @@
 -(void)changeFriendSetting:(NSString *)friendsVerify allowAtt:(NSString *)allowAtt allowGreet:(NSString*)allowGreet key:(NSString *)key value:(NSString *)value toView:(id)toView{
     TFJunYou_Connection * p = [self addTask:act_SettingsUpdate param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:friendsVerify forKey:@"friendsVerify"];
     [p setPostValue:allowAtt forKey:@"allowAtt"];
     [p setPostValue:allowGreet forKey:@"allowGreet"];
@@ -2848,6 +2958,7 @@
     TFJunYou_Connection * p = [self addTask:act_Settings param:nil toView:toView];
     [p setPostValue:userID forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2856,6 +2967,7 @@
     TFJunYou_Connection * p = [self addTask:act_offlineOperation param:nil toView:toView];
     [p setPostValue:[NSNumber numberWithDouble:offlineTime] forKey:@"offlineTime"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2865,6 +2977,7 @@
     [p setPostValue:messageId forKey:@"messageId"];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2874,7 +2987,6 @@
     area = [self httpDataStr:area];
     [p setPostValue:area forKey:@"area"];
     [p go];
-    
 }
 
 //http传输过程的数据转换
@@ -2907,6 +3019,7 @@
 
     [g_default removeObjectForKey:kMY_USER_PASSWORD];
     [g_default removeObjectForKey:kMY_USER_TOKEN];
+    NSLog(@"TTT(移除): 显示手动登录");
     [share_defaults removeObjectForKey:kMY_ShareExtensionToken];
     TFJunYou_loginVC* vc = [TFJunYou_loginVC alloc];
     vc.isAutoLogin = NO;
@@ -2941,6 +3054,7 @@
 -(void)listPays:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_payList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2950,12 +3064,14 @@
     [p setPostValue:[NSString stringWithFormat:@"%d",count] forKey:@"count"];
     [p setPostValue:[NSString stringWithFormat:@"%d",rechargeType] forKey:@"rechargeType"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
 -(void)listBizs:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_bizList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -2964,6 +3080,7 @@
     [p setPostValue:[NSString stringWithFormat:@"%d",goodId] forKey:@"goodsId"];
     [p setPostValue:[NSString stringWithFormat:@"%d",count] forKey:@"count"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 #pragma mark----新用户
@@ -2981,6 +3098,7 @@
         [p setPostValue:[NSNumber numberWithDouble:latitude] forKey:@"latitude"];
     }
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -3006,6 +3124,7 @@
         [p setPostValue:[NSNumber numberWithDouble:latitude] forKey:@"latitude"];
     }
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
     
 }
@@ -3051,6 +3170,7 @@
     [p setPostValue:[NSNumber numberWithDouble:room.latitude] forKey:@"latitude"];
     [p setPostValue:[NSNumber numberWithInteger:category] forKey:@"category"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3061,6 +3181,7 @@
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:nickName forKey:@"nickname"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3068,6 +3189,7 @@
     TFJunYou_Connection* p = [self addTask:act_roomDel param:nil toView:toView];
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3076,6 +3198,7 @@
     [p setPostValue:roomId forKey:@"roomId"];
 //    [p setPostValue:[NSNumber numberWithInt:kRoomMemberListNum] forKey:@"pageSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3087,6 +3210,7 @@
     [p setPostValue:[NSNumber numberWithLong:room.talkTime] forKey:@"talkTime"];
     [p setPostValue:[NSNumber numberWithInt:room.maxCount] forKey:@"maxUserSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3095,6 +3219,7 @@
     [p setPostValue:room.roomId forKey:@"roomId"];
     [p setPostValue:[NSNumber numberWithInt:room.maxCount] forKey:@"maxUserSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3102,6 +3227,7 @@
     TFJunYou_Connection* p = [self addTask:act_roomSet param:nil toView:toView];
     [p setPostValue:room.roomId forKey:@"roomId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     if (value) {
         [p setPostValue:value forKey:key];
     }
@@ -3130,6 +3256,7 @@
 //    [p setPostValue:[NSNumber numberWithInt:room.showMember ? 1 : 0] forKey:@"showMember"];
 //    [p setPostValue:[NSNumber numberWithInt:room.allowSendCard ? 1 : 0] forKey:@"allowSendCard"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3138,6 +3265,7 @@
     [p setPostValue:room.roomId forKey:@"roomId"];
     [p setPostValue:room.desc forKey:@"desc"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3146,6 +3274,7 @@
     [p setPostValue:room.roomId forKey:@"roomId"];
     [p setPostValue:room.note forKey:@"notice"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3155,6 +3284,7 @@
     [p setPostValue:noticeId forKey:@"noticeId"];
     [p setPostValue:noticeContent forKey:@"noticeContent"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3163,6 +3293,7 @@
     [p setPostValue:[NSNumber numberWithInt:page] forKey:@"pageIndex"];
     [p setPostValue:roomName forKey:@"roomName"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3174,6 +3305,7 @@
     [p setPostValue:[NSNumber numberWithInt:page] forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInt:0] forKey:@"type"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3183,6 +3315,7 @@
     [p setPostValue:[NSNumber numberWithInt:page] forKey:@"pageIndex"];
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3191,6 +3324,7 @@
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:[NSNumber numberWithLong:userId] forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3199,6 +3333,7 @@
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:[NSNumber numberWithLong:userId] forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3216,6 +3351,7 @@
         [p setPostValue:member.userNickName forKey:@"nickname"];
     }
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3225,6 +3361,7 @@
     [p setPostValue:[NSNumber numberWithLongLong:member.talkTime] forKey:@"talkTime"];
     [p setPostValue:[NSNumber numberWithLong:member.userId] forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3234,6 +3371,7 @@
     [p setPostValue:userId forKey:@"touserId"];
     [p setPostValue:[NSNumber numberWithInt:type] forKey:@"type"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 // 指定监控人、隐身人
@@ -3243,6 +3381,7 @@
     [p setPostValue:userId forKey:@"touserId"];
     [p setPostValue:[NSNumber numberWithInt:type] forKey:@"type"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3252,6 +3391,7 @@
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3261,6 +3401,7 @@
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:nickName forKey:@"nickname"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3300,6 +3441,7 @@
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:text forKey:@"text"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3340,6 +3482,7 @@
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:text forKey:@"text"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3353,6 +3496,7 @@
     [p setPostValue:size forKey:@"size"];
     [p setPostValue:[NSNumber numberWithInteger:type] forKey:@"type"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 /**获取文件列表*/
@@ -3365,6 +3509,7 @@
         [p setPostValue:g_myself.userId forKey:@"userId"];
     }
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 /**获取单个文件信息*/
@@ -3373,6 +3518,7 @@
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:shareId forKey:@"shareId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 /**删除文件*/
@@ -3382,6 +3528,7 @@
     [p setPostValue:shareId forKey:@"shareId"];
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3394,6 +3541,7 @@
     [p setPostValue:[NSNumber numberWithLong:joinTime] forKey:@"joinTime"];
     [p setPostValue:[NSNumber numberWithInt:kRoomMemberListNum] forKey:@"pageSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3406,6 +3554,7 @@
     [p setPostValue:@"2" forKey:@"deviceId"];
     [p setPostValue:channelId forKey:@"channelId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:identifier forKey:@"appId"];
     [p go];
 }
@@ -3417,6 +3566,7 @@
     [p setPostValue:nodeName forKey:@"nodeName"];
     [p setPostValue:text forKey:@"text"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3476,6 +3626,7 @@
     TFJunYou_Connection* p = [self addTask:act_tigaseGetLastChatList param:nil toView:toView];
     [p setPostValue:startTime forKey:@"startTime"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3488,6 +3639,7 @@
     [p setPostValue:[NSNumber numberWithLong:endTime] forKey:@"endTime"];
     [p setPostValue:receiver forKey:@"receiver"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3500,6 +3652,7 @@
     [p setPostValue:[NSNumber numberWithLong:endTime] forKey:@"endTime"];
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3509,6 +3662,7 @@
         TFJunYou_Connection* p = [self addTask:act_publicMenuList param:nil toView:toView];
         [p setPostValue:userId forKey:@"userId"];
         [p setPostValue:access_token forKey:@"access_token"];
+    
         [p go];
     }
 }
@@ -3519,6 +3673,7 @@
     [p setPostValue:[NSNumber numberWithInt:pageIndex] forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInt:pageSize] forKey:@"pageSize"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3527,6 +3682,7 @@
     TFJunYou_Connection* p = [self addTask:act_queryGroupHelper param:nil toView:toView];
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3537,6 +3693,7 @@
     [p setPostValue:roomJid forKey:@"roomJid"];
     [p setPostValue:helperId forKey:@"helperId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3545,6 +3702,7 @@
     TFJunYou_Connection* p = [self addTask:act_deleteGroupHelper param:nil toView:toView];
     [p setPostValue:groupHelperId forKey:@"groupHelperId"];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3557,6 +3715,7 @@
     [p setPostValue:helperId forKey:@"helperId"];
     
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3567,12 +3726,14 @@
     [p setPostValue:keyWordId forKey:@"keyWordId"];
     
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 // 删除&撤回聊天记录
 - (void)tigaseDeleteMsgWithMessageId:(NSString *)msgId type:(int)type deleteType:(int)deleteType roomJid:(NSString *)roomJid toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_tigaseDeleteMsg param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:msgId forKey:@"messageId"];
     [p setPostValue:[NSNumber numberWithInt:type] forKey:@"type"];
     [p setPostValue:[NSNumber numberWithInt:deleteType] forKey:@"delete"];
@@ -3592,6 +3753,7 @@
 - (void)friendsUpdateOfflineNoPushMsgUserId:(NSString *)userId toUserId:(NSString *)toUserId offlineNoPushMsg:(int)offlineNoPushMsg type:(int)type toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_friendsUpdateOfflineNoPushMsg param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:[NSNumber numberWithInt:offlineNoPushMsg] forKey:@"offlineNoPushMsg"];
@@ -3605,6 +3767,7 @@
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     TFJunYou_Connection* p = [self addTask:act_PKPushSetToken param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:token forKey:@"token"];
     [p setPostValue:@"2" forKey:@"deviceId"];
     [p setPostValue:[NSNumber numberWithInt:isVoip] forKey:@"isVoip"];
@@ -3617,6 +3780,7 @@
     NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     TFJunYou_Connection* p = [self addTask:act_jPushSetToken param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:token forKey:@"regId"];
     [p setPostValue:@"4" forKey:@"deviceId"];
     [p setPostValue:identifier forKey:@"appId"];
@@ -3644,6 +3808,7 @@
     SBJsonWriter * OderJsonwriter = [SBJsonWriter new];
     NSString * emojiJson = [OderJsonwriter stringWithObject:emoji];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:emojiJson forKey:@"emoji"];
 
     [p go];
@@ -3653,6 +3818,7 @@
 //-(void)addFavoriteWithContent:(NSString *)contentStr type:(int)type toView:(id)toView{
 //    TFJunYou_Connection* p = [self addTask:act_userEmojiAdd param:nil toView:toView];
 //    [p setPostValue:access_token forKey:@"access_token"];
+ //
 //    [p setPostValue:contentStr forKey:@"url"];
 //    [p setPostValue:[NSNumber numberWithInt:type] forKey:@"type"];
 //    [p go];
@@ -3662,6 +3828,7 @@
 //- (void)userEmojiAddWithUrl:(NSString *)url toView:(id)toView {
 //    TFJunYou_Connection* p = [self addTask:act_userEmojiAdd param:nil toView:toView];
 //    [p setPostValue:access_token forKey:@"access_token"];
+//
 //    [p setPostValue:url forKey:@"url"];
 //    [p go];
 //}
@@ -3670,6 +3837,7 @@
 - (void)userEmojiDeleteWithId:(NSString *)emojiId toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_userEmojiDelete param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:emojiId forKey:@"emojiId"];
     [p go];
 }
@@ -3678,6 +3846,7 @@
 - (void)userWeiboEmojiDeleteWithId:(NSString *)messageId toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_WeiboDeleteCollect param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:messageId forKey:@"messageId"];
     [p go];
 }
@@ -3687,6 +3856,7 @@
 - (void)filterUserCircle:(NSString *)toUserId shieldType:(NSNumber *)shieldType type:(NSNumber *)type toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_filterUserCircle param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:type forKey:@"type"];
     [p setPostValue:shieldType forKey:@"shieldType"];
@@ -3697,6 +3867,7 @@
 -(void)userCollectionListWithType:(int)type pageIndex:(int)pageIndex toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_userCollectionList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:g_myself.userId forKey:@"userId"];
     if (type > 0)
         [p setPostValue:[NSNumber numberWithInt:type] forKey:@"type"];
@@ -3708,6 +3879,7 @@
 - (void)userEmojiListWithPageIndex:(int)pageIndex toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_userEmojiList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:[NSNumber numberWithInteger:pageIndex] forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInteger:1000] forKey:@"pageSize"];
@@ -3721,6 +3893,7 @@
         [p setPostValue:roomJid forKey:@"roomJid"];
     }
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:messageIds forKey:@"messageIds"];
     [p setPostValue:courseName forKey:@"courseName"];
@@ -3732,6 +3905,7 @@
 - (void)userCourseList:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_userCourseList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p go];
 }
@@ -3739,6 +3913,7 @@
 - (void)userCourseUpdateWithCourseId:(NSString *)courseId MessageIds:(NSString *)messageIds CourseName:(NSString *)courseName CourseMessageId:(NSString *)courseMessageId toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_userCourseUpdate param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     if (courseId.length > 0) {
         [p setPostValue:courseId forKey:@"courseId"];
     }
@@ -3760,6 +3935,7 @@
 - (void)userCourseDeleteWithCourseId:(NSString *)courseId toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_userCourseDelete param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:courseId forKey:@"courseId"];
     [p go];
 }
@@ -3767,6 +3943,7 @@
 - (void)userCourseGetWithCourseId:(NSString *)courseId toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_userCourseGet param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:courseId forKey:@"courseId"];
     [p go];
 }
@@ -3775,6 +3952,7 @@
 - (void)userChangeMsgNum:(NSInteger)num toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_userChangeMsgNum param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:[NSNumber numberWithInteger:num] forKey:@"num"];
     [p go];
 }
@@ -3784,6 +3962,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_roomMemberSetOfflineNoPushMsg param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:[NSNumber numberWithInt:type] forKey:@"type"];
@@ -3795,6 +3974,7 @@
 - (void)friendGroupAdd:(NSString *)groupName toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_FriendGroupAdd param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:groupName forKey:@"groupName"];
     [p go];
 }
@@ -3804,6 +3984,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_FriendGroupUpdateGroupUserList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:groupId forKey:@"groupId"];
     [p setPostValue:userIdListStr forKey:@"userIdListStr"];
     [p go];
@@ -3814,6 +3995,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_FriendGroupUpdate param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:groupId forKey:@"groupId"];
     [p setPostValue:groupName forKey:@"groupName"];
     [p go];
@@ -3824,6 +4006,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_FriendGroupDelete param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:groupId forKey:@"groupId"];
     [p go];
 }
@@ -3832,6 +4015,7 @@
 - (void)friendGroupListToView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_FriendGroupList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -3840,6 +4024,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_FriendGroupUpdateFriend param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:groupIdStr forKey:@"groupIdStr"];
     [p go];
@@ -3849,6 +4034,7 @@
 - (void)roomDeleteNotice:(NSString *)roomId noticeId:(NSString *)noticeId ToView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_roomDeleteNotice param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:noticeId forKey:@"noticeId"];
     [p go];
@@ -3859,6 +4045,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_UploadCopyFileServlet param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:validTime forKey:@"validTime"];
     [p setPostValue:paths forKey:@"paths"];
     [p go];
@@ -3868,6 +4055,7 @@
 - (void)copyRoom:(NSString *)roomId toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_copyRoom param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:roomId forKey:@"roomId"];
     [p go];
 }
@@ -3877,6 +4065,7 @@
 - (void)emptyMsgWithTouserId:(NSString *)toUserId type:(NSNumber *)type toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_EmptyMsg param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:toUserId forKey:@"toUserId"];
     [p setPostValue:type forKey:@"type"];
     [p go];
@@ -3886,12 +4075,14 @@
 - (void)getAddressBookAll:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_AddressBookGetAll param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 // 上传通讯录
 - (void)uploadAddressBookUploadStr:(NSString *)uploadStr toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_AddressBookUpload param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:uploadStr forKey:@"uploadJsonStr"];
     [p go];
 }
@@ -3899,6 +4090,7 @@
 - (void)friendsAttentionBatchAddToUserIds:(NSString *)toUserIds toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_FriendsAttentionBatchAdd param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:toUserIds forKey:@"toUserIds"];
     [p go];
 }
@@ -3908,6 +4100,7 @@
 - (void)userBindWXCodeWithCode:(NSString *)code toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_UserBindWXCode param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:code forKey:@"code"];
     [p go];
 }
@@ -3917,6 +4110,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_UserBindWXAccount param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     
     if (self.openId.length > 0 ) {
         NSString *tel = [NSString stringWithFormat:@"%@%@",user.areaCode,user.telephone];
@@ -3940,6 +4134,7 @@
 - (void)transferWXPayWithAmount:(NSString *)amount secret:(NSString *)secret time:(NSNumber *)time toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_TransferWXPay param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:amount forKey:@"amount"];
     [p setPostValue:secret forKey:@"secret"];
     [p setPostValue:time forKey:@"time"];
@@ -3950,6 +4145,7 @@
 - (void)checkPayPasswordWithUser:(TFJunYou_UserObject *)user toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_CheckPayPassword param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     NSData *aesData = [AESUtil encryptAESData:[g_myself.userId dataUsingEncoding:NSUTF8StringEncoding] key:[MD5Util getMD5DataWithString:user.payPassword]];
     [p setPostValue:[MD5Util getMD5StringWithData:aesData] forKey:@"payPassword"];
     [p go];
@@ -3960,6 +4156,7 @@
 - (void)updatePayPasswordWithUser:(TFJunYou_UserObject *)user toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_UpdatePayPassword param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     NSData *aesData = [AESUtil encryptAESData:[g_myself.userId dataUsingEncoding:NSUTF8StringEncoding] key:[MD5Util getMD5DataWithString:user.payPassword]];
     NSData *aesDataOld = [AESUtil encryptAESData:[g_myself.userId dataUsingEncoding:NSUTF8StringEncoding] key:[MD5Util getMD5DataWithString:user.oldPayPassword]];
     [p setPostValue:[MD5Util getMD5StringWithData:aesData] forKey:@"payPassword"];
@@ -3971,6 +4168,7 @@
 - (void)userOpenMeetWithToUserId:(NSString *)toUserId toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_UserOpenMeet param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     NSString *area = [g_default objectForKey:kLocationArea];
     [p setPostValue:area forKey:@"area"];
     [p setPostValue:toUserId forKey:@"toUserId"];
@@ -3981,6 +4179,7 @@
 - (void)roomGetRoom:(NSString *)roomId toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_roomGetRoom param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:roomId forKey:@"roomId"];
     [p go];
 }
@@ -3990,6 +4189,7 @@
     TFJunYou_Connection* p = [self addTask:act_CircleMsgPureVideo param:nil toView:toView];
 
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:[NSNumber numberWithInteger:pageIndex] forKey:@"pageIndex"];
     [p setPostValue:lable forKey:@"lable"];
     [p setPostValue:[NSNumber numberWithInteger:20] forKey:@"pageSize"];
@@ -4001,6 +4201,7 @@
     TFJunYou_Connection* p = [self addTask:act_MusicList param:nil toView:toView];
     
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:[NSNumber numberWithInteger:pageIndex] forKey:@"pageIndex"];
     [p setPostValue:[NSNumber numberWithInteger:20] forKey:@"pageSize"];
     [p setPostValue:keyword forKey:@"keyword"];
@@ -4011,6 +4212,7 @@
 - (void)openOpenAuthInterfaceWithUserId:(NSString *)userId appId:(NSString *)appId appSecret:(NSString *)appSecret type:(NSInteger)type toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_OpenAuthInterface param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:appId forKey:@"appId"];
     [p setPostValue:appSecret forKey:@"appSecret"];
@@ -4150,6 +4352,7 @@
     TFJunYou_Connection* p = [self addTask:act_userCheckReportUrl param:nil toView:toView];
     [p setPostValue:webUrl forKey:@"webUrl"];
 //    [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -4159,6 +4362,7 @@
     TFJunYou_Connection* p = [self addTask:act_unbind param:nil toView:toView];
     [p setPostValue:[NSNumber numberWithInt:type] forKey:@"type"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -4166,6 +4370,7 @@
 - (void)getBindInfo:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_getBindInfo param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -4179,6 +4384,7 @@
     [p setPostValue:[NSNumber numberWithInt:isQuery] forKey:@"isQuery"];
     [p setPostValue:password forKey:@"password"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 //面对面建群加入
@@ -4187,6 +4393,7 @@
     TFJunYou_Connection* p = [self addTask:act_RoomLocationJoin param:nil toView:toView];
     [p setPostValue:jid forKey:@"jid"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 //面对面建群退出
@@ -4195,6 +4402,7 @@
     TFJunYou_Connection* p = [self addTask:act_RoomLocationExit param:nil toView:toView];
     [p setPostValue:jid forKey:@"jid"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -4206,6 +4414,7 @@
     [p setPostValue:appId forKey:@"appId"];
     [p setPostValue:prepayId forKey:@"prepayId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -4219,6 +4428,7 @@
     [p setPostValue:secret forKey:@"secret"];
     [p setPostValue:time forKey:@"time"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 // 重置支付密码
@@ -4226,6 +4436,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_AuthkeysResetPayPassword param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:salt forKey:@"salt"];
     [p setPostValue:mac forKey:@"mac"];
     [p go];
@@ -4238,6 +4449,7 @@
     [p setPostValue:qrCodeKey forKey:@"qrCodeKey"];
     [p setPostValue:type forKey:@"type"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -4245,6 +4457,7 @@
 - (void)userGetByAccountWithAccount:(NSString *)account toView:(id)toView {
     TFJunYou_Connection* p = [self addTask:act_UserGetByAccount param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:account forKey:@"account"];
     [p go];
 }
@@ -4254,6 +4467,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_AuthkeysGetPayPrivateKey param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 // 上传RSA公私钥
@@ -4261,6 +4475,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_AuthkeysUploadPayKey param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:privateKey forKey:@"privateKey"];
     [p setPostValue:publicKey forKey:@"publicKey"];
     [p setPostValue:mac forKey:@"mac"];
@@ -4271,6 +4486,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_TransactionGetCode param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:salt forKey:@"salt"];
     [p setPostValue:mac forKey:@"mac"];
     [p go];
@@ -4281,6 +4497,7 @@
     
     TFJunYou_Connection* p = [self addTask:action param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:codeId forKey:@"codeId"];
     [p setPostValue:data forKey:@"data"];
     [p go];
@@ -4327,6 +4544,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_AuthkeysGetDHMsgKeyList param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p setPostValue:userId forKey:@"userId"];
     [p go];
 }
@@ -4336,6 +4554,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_UserGetRandomStr param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
+    
     [p go];
 }
 

@@ -14,6 +14,7 @@
 -(void)listLiveRoom:(int)page status:(NSInteger)status toView:(id)toView{
     TFJunYou_Connection* p = [self addTask:act_liveRoomList param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p setPostValue:[NSNumber numberWithInt:TFJunYou__page_size] forKey:@"pageSize"];
     [p setPostValue:[NSNumber numberWithInt:page] forKey:@"pageIndex"];
     if (status)
@@ -29,6 +30,7 @@
     [p setPostValue:notice forKey:@"notice"];
     [p setPostValue:jid forKey:@"jid"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -36,6 +38,7 @@
     TFJunYou_Connection* p = [self addTask:act_liveRoomGet param:nil toView:toView];
     [p setPostValue:liveRoomId forKey:@"roomId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -47,6 +50,7 @@
     //    [p setPostValue:url forKey:@"url"];
     [p setPostValue:notice forKey:@"notice"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -54,6 +58,7 @@
     TFJunYou_Connection* p = [self addTask:act_liveRoomDelete param:nil toView:toView];
     [p setPostValue:liveRoomId forKey:@"roomId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -61,6 +66,7 @@
     TFJunYou_Connection* p = [self addTask:act_liveRoomMemberList param:nil toView:toView];
     [p setPostValue:liveRoomId forKey:@"roomId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -68,6 +74,7 @@
     TFJunYou_Connection* p = [self addTask:act_liveRoomEnter param:nil toView:toView];
     [p setPostValue:liveRoomId forKey:@"roomId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -76,6 +83,7 @@
     [p setPostValue:liveRoomId forKey:@"roomId"];
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -85,6 +93,7 @@
     [p setPostValue:liveRoomId forKey:@"roomId"];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -94,6 +103,7 @@
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:[NSNumber numberWithInt:type] forKey:@"type"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -103,6 +113,7 @@
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:[NSNumber numberWithInteger:state] forKey:@"state"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -111,6 +122,7 @@
     [p setPostValue:liveRoomId forKey:@"roomId"];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -118,6 +130,7 @@
     TFJunYou_Connection* p = [self addTask:act_liveRoomPraise param:nil toView:toView];
     [p setPostValue:liveRoomId forKey:@"roomId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -133,6 +146,7 @@
     [p setPostValue:g_myself.userId forKey:@"userId"];
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 /**
@@ -144,6 +158,7 @@
     [p setPostValue:[NSNumber numberWithInt:50] forKey:@"pageSize"];
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 /**
@@ -158,6 +173,7 @@
     [p setPostValue:price forKey:@"price"];
     [p setPostValue:[NSNumber numberWithInteger:count] forKey:@"count"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 /**
@@ -167,6 +183,7 @@
     TFJunYou_Connection *p = [self addTask:act_liveRoomAnchorGiftList param:nil toView:toView];
     [p setPostValue:userId forKey:@"userId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -178,6 +195,7 @@
     [p setPostValue:roomId forKey:@"roomId"];
     [p setPostValue:[NSNumber numberWithInteger:status] forKey:@"status"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 
@@ -186,6 +204,7 @@
     TFJunYou_Connection* p = [self addTask:act_liveRoomGetLiveRoom param:nil toView:toView];
     [p setPostValue:[NSNumber numberWithInteger:userId] forKey:@"userId"];
     [p setPostValue:self.access_token forKey:@"access_token"];
+    
     [p go];
 }
 

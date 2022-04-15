@@ -634,6 +634,7 @@
 -(void)doSwitch{
     [g_default removeObjectForKey:kMY_USER_PASSWORD];
     [g_default removeObjectForKey:kMY_USER_TOKEN];
+    NSLog(@"TTT(移除):");
     [g_notify postNotificationName:kSystemLogoutNotifaction object:nil];
     g_xmpp.isReconnect = NO;
     [[TFJunYou_XMPP sharedInstance] logout];

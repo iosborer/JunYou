@@ -48,6 +48,7 @@
             self.title = Localized(@"JX_SMSLogin");
             self.isGotoBack = YES;
         }
+        
         [g_server getAppResource:@"0" ToView:self];
         [g_server customerLinkList:self];
         g_server.isManualLogin = NO;
@@ -188,6 +189,7 @@
             [rightBtn addTarget:self action:@selector(passWordRightViewClicked:) forControlEvents:UIControlEventTouchUpInside];
             [eyeView addSubview:rightBtn];
         }
+        
         n = n+HEIGHT+INSETS;
         UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 37, HEIGHT)];
         _pwd.leftView = rightView;
@@ -200,6 +202,7 @@
         verticalLine.backgroundColor = THE_LINE_COLOR;
         [_pwd addSubview:verticalLine];
         n += 6;
+        
         UIButton *lbUser = [[UIButton alloc]initWithFrame:CGRectMake(40, n, 100, 20)];
         [lbUser setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [lbUser setTitle:Localized(@"JX_ForgetPassWord") forState:UIControlStateNormal];
@@ -433,7 +436,7 @@
     }
 }
 -(void)onClick{
-    if([_phone.text length]<=0){
+    if(_phone.text.length <=0){
         if ([g_config.regeditPhoneOrName intValue] == 1) {
             [g_App showAlert:Localized(@"JX_InputUserAccount")];
         }else {
@@ -441,7 +444,7 @@
         }
         return;
     }
-    if([_pwd.text length]<=0){
+    if(_pwd.text.length <=0){
         [g_App showAlert:self.isSMSLogin ? Localized(@"JX_InputMessageCode") : Localized(@"JX_InputPassWord")];
         return;
     }
@@ -451,10 +454,15 @@
     }else {
         _user.password  = [g_server getMD5String:_pwd.text];
     }
+    
     _user.telephone = _phone.text;
     _user.areaCode = [_areaCodeBtn.titleLabel.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
+    
     self.isAutoLogin = NO;
+    
+    //等待指示器开始转
     [_wait start:Localized(@"JX_Logining")];
+    
     [g_server getSetting:self];
 }
 - (void)actionConfig {
@@ -676,8 +684,7 @@
 -(void)actionQuit{
     [super actionQuit];
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == _phone) {
         [_pwd becomeFirstResponder];
     }else{
@@ -724,8 +731,7 @@
     }
     return [NSString stringWithFormat:@"%@%@.html",protocolStr,lange];
 }
-- (NSString *)getLaunchImageName
-{
+- (NSString *)getLaunchImageName {
     NSString *viewOrientation = @"Portrait";
     if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         viewOrientation = @"Landscape";
@@ -738,8 +744,7 @@
  
     
     CGSize viewSize = tyCurrentWindow.bounds.size;
-    for (NSDictionary* dict in imagesDict)
-    {
+    for (NSDictionary* dict in imagesDict) {
         CGSize imageSize = CGSizeFromString(dict[@"UILaunchImageSize"]);
         if (CGSizeEqualToSize(imageSize, viewSize) && [viewOrientation isEqualToString:dict[@"UILaunchImageOrientation"]])
         {

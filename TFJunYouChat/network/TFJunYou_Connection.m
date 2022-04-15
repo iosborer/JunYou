@@ -338,8 +338,7 @@ static AFHTTPSessionManager *afManager;
 
 - (void)setPostValue:(id <NSObject>)value forKey:(NSString *)key
 {
-    if(value==nil)
-        return;
+    if(value==nil) return;
     [self.params setObject:value forKey:key];
 }
 // 接口加密
@@ -348,9 +347,9 @@ static AFHTTPSessionManager *afManager;
     long time = (long)[[NSDate date] timeIntervalSince1970];
     time = (time *1000 + g_server.timeDifference);
     NSString *salt = [NSString stringWithFormat:@"%ld",time];
-    
-    if (self.params[@"salt"])
-        salt = self.params[@"salt"];
+
+    self.params[@"salt"] = salt;
+//    if (self.params[@"salt"]) salt = self.params[@"salt"];
     
     if (self.params[@"access_token"]) {
         
