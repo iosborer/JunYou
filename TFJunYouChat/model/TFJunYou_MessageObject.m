@@ -47,7 +47,7 @@
 #import "TFJunYou_UserPublicKeyObj.h"
 
 @implementation TFJunYou_MessageObject
-@synthesize content, timeSend,fromUserId,toUserId,type, messageNo, messageId,timeReceive,fileName,fileData,fileSize,location_x,location_y,timeLen,isSend,isRead,progress,dictionary,index,fromUserName,objectId,toUserName,isReceive,fromId,toId,isEncrypt;
+@synthesize content, timeSend, fromUserId, toUserId, type, msgType, messageNo, messageId, timeReceive, fileName, fileData, fileSize, location_x, location_y, timeLen, isSend, isRead, progress, dictionary, index, fromUserName, objectId, toUserName, isReceive, fromId, toId, isEncrypt;
 @synthesize isUpload;
 
 NSString* current_chat_userId = nil;
@@ -109,6 +109,7 @@ static TFJunYou_MessageObject *shared;
     self.timeSend = nil;
     self.timeReceive = nil;
     self.type = nil;
+    self.msgType = nil;
     self.messageNo = nil;
     self.messageId = nil;
     self.fileName = nil;
@@ -129,8 +130,7 @@ static TFJunYou_MessageObject *shared;
     //    [super dealloc];
 }
 
--(void)fromDictionary:(NSMutableDictionary*)p
-{
+-(void)fromDictionary:(NSMutableDictionary*)p {
     if(p==nil) p = dictionary;
     NSDateFormatter* f=[[NSDateFormatter alloc]init];
     [f setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -3310,7 +3310,6 @@ static TFJunYou_MessageObject *shared;
     msg.timeLen = [NSNumber numberWithLongLong:message.fileTime];
     
     if ([msg.isEncrypt boolValue]) {
-        //        self.content = [DESUtil decryptDESStr:messCont key:[NSString stringWithFormat:@"%@",[p objectForKey:kMESSAGE_TIMESEND]]];
         NSMutableString *str = [NSMutableString string];
         [str appendString:APIKEY];
         [str appendString:[NSString stringWithFormat:@"%lld",message.timeSend]];
@@ -3320,7 +3319,6 @@ static TFJunYou_MessageObject *shared;
         if (IsStringNull(msg.content)) {
             msg.content = message.content;
         }
-        
     }else{
         msg.content = message.content;
     }

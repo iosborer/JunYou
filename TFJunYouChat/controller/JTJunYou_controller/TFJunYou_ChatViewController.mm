@@ -2893,12 +2893,10 @@
 }
 
 #pragma mark   ---------tableView协议----------------
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+//-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+//    return 1;
+//}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _array.count;
 }
 
@@ -2916,8 +2914,7 @@
 ////    }
 //}
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row >= _array.count) {
         return [[TFJunYou_BaseChatCell alloc] init];
     }
@@ -3070,8 +3067,7 @@
     
     return cell;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row >= _array.count) {
         return 0;
     }
@@ -3117,6 +3113,7 @@
             return [TFJunYou_FileCell getChatCellHeight:msg];
             break;
         case kWCMessageTypeRemind:
+            return 0.5;
             return [TFJunYou_RemindCell getChatCellHeight:msg];
             break;
         case kWCMessageTypeRedPacket:
@@ -3244,6 +3241,7 @@
             cell = [self creatFileCell:msg indexPath:indexPath];
             break;
         case kWCMessageTypeRemind:
+            NSLog(@"%@", msg.msgType);
             cell = [self creatRemindCell:msg indexPath:indexPath];
             break;
         case kWCMessageTypeRedPacket:
@@ -10161,13 +10159,12 @@
     TFJunYou_MessageObject *msg = notif.object;
     
     for(NSInteger i=[_array count]-1;i>=0;i--){
-        TFJunYou_MessageObject *p=[_array objectAtIndex:i];
+        TFJunYou_MessageObject *p = _array[i];
         if([p.messageId isEqualToString:msg.messageId]){//如果找到被撤回的那条消息
             p.content = msg.content;
             p.type = msg.type;
             [_table reloadRow:(int)i section:0];
         }
-        p =nil;
     }
 }
 

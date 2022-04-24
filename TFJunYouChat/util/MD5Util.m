@@ -42,8 +42,8 @@
     return content;
 }
 +(NSData*)getMD5DataWithString:(NSString*)str{ //aaa
-    if(str==nil)
-        return nil;
+    if(str==nil) return nil;
+    
     const char *buf = [str cStringUsingEncoding:NSUTF8StringEncoding];
     unsigned char md[CC_MD5_DIGEST_LENGTH];
     unsigned long n = strlen(buf);

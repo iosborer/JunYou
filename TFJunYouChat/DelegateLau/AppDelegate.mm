@@ -52,7 +52,7 @@
 #import "TFJunYou_MainViewController.h"
 
 static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS %ld_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/%ld.0 Mobile/14A300 Safari/602.1";
-@interface AppDelegate () <BuglyDelegate,WXApiDelegate>
+@interface AppDelegate () <BuglyDelegate, WXApiDelegate>
 @property (nonatomic, assign) NSInteger pasteboardChangeCount;
 //@property (nonatomic,strong) SystemPlugin *sysPlugin;
 @end
@@ -128,7 +128,9 @@ static  BMKMapManager* _baiduMapManager;
 //       }else {
 //           [self showPageUI];
 //       }
+//    [self showMainUI];
     [self showLoginUI];
+//    [g_loginServer autoLoginWithToView:self];
     
     [self startPush:application didFinishLaunchingWithOptions:launchOptions];
     /*
@@ -264,8 +266,7 @@ static  BMKMapManager* _baiduMapManager;
     }
     return _subWindow;
 }
-- (void)resignWindow
-{
+- (void)resignWindow {
     [_subWindow removeFromSuperview];
     _subWindow  =  nil ;
 }
@@ -283,10 +284,9 @@ static  BMKMapManager* _baiduMapManager;
         [self applicationDidEnterBackground:[UIApplication sharedApplication]];
     }
 }
--(void)showMainUI{
+-(void)showMainUI {
     _mainVc=[[TFJunYou_MainViewController alloc]init];
-   // _watherViewC=[[ViewController alloc]init];
- g_navigation.rootViewController = _mainVc;
+    g_navigation.rootViewController = _mainVc;
         int height = 218;
         if (THE_DEVICE_HAVE_HEAD) {
             height = 253;
@@ -784,5 +784,29 @@ static  BMKMapManager* _baiduMapManager;
             return [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom ? YES : NO;
         }
     return NO;
+}
+
+-(void) didServerResultSucces:(TFJunYou_Connection*)aDownload dict:(NSDictionary*)dict array:(NSArray*)array1{
+    if([aDownload.action isEqualToString:act_userLoginAuto] || [aDownload.action isEqualToString:act_userLoginAutoV1]){
+        [g_server getAppResource:@"2" ToView:self];
+        
+        TFJunYou_UserObject *user = [[TFJunYou_UserObject alloc] init];
+        
+        if ([g_default objectForKey:kMY_USER_NICKNAME])
+            user.userNickname = MY_USER_NAME;
+        if ([g_default objectForKey:kMY_USER_ID])
+            user.userId = [g_default objectForKey:kMY_USER_ID];
+        if ([g_default objectForKey:kMY_USER_COMPANY_ID])
+            user.companyId = [g_default objectForKey:kMY_USER_COMPANY_ID];
+        if ([g_default objectForKey:kMY_USER_LoginName]) {
+            user.telephone = [g_default objectForKey:kMY_USER_LoginName];
+        }
+//        if ([g_default objectForKey:kMY_USER_PASSWORD]) {
+//            user.password = _pwd.text;
+//        }
+        
+        [g_server doLoginOK:dict user:user];
+        [self showMainUI];
+    }
 }
 @end

@@ -41,6 +41,7 @@
 #import "TFJunYou_AboutVC.h"
 #import "TFJunYou_ThirdServiceVC.h"
 #import "TFJunYou_ChatViewController.h"
+#import "TFJunYou_RecordCodeVC.h"
 
 #define HEIGHT 45
 #define MY_INSET  10
@@ -89,12 +90,17 @@ static const BOOL OPEN_THIRD_SERVICE = NO;
 //        [self setPartRoundWithView:_setBaseView corners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadius:20];
         h = 13;
         if ([g_config.enablePayModule boolValue]) {
-
                 iv = [self createButton:Localized(@"JX_MyBalance") drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"balance_recharge_simple" : @"balance_recharge" click:@selector(onRecharge)];
                 iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
 
                 h+=iv.frame.size.height+MY_INSET;
         }
+        
+        //添加账单
+        iv = [self createButton:Localized(@"JX_Bill") drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"my_bill" : @"my_bill" click:@selector(onBill)];
+        iv.frame = CGRectMake(MY_INSET,h, w-MY_INSET*2, HEIGHT);
+        h+=iv.frame.size.height+MY_INSET;
+        
         
         if (OPEN_DYNAMIC) {
             iv = [self createButton:@"我的相册" drawTop:NO drawBottom:YES icon:THESIMPLESTYLE ? @"my_space_simple" : @"my_space" click:@selector(onMyBlog)];
@@ -392,6 +398,10 @@ static const BOOL OPEN_THIRD_SERVICE = NO;
 -(void)onGroupVideoMeeting:(TFJunYou_MessageObject*)msg{
     self.isAudioMeeting = NO;
     [self onInvite];
+}
+- (void)onBill {
+    TFJunYou_RecordCodeVC * recordVC = [[TFJunYou_RecordCodeVC alloc]init];
+    [g_navigation pushViewController:recordVC animated:YES];
 }
 
 - (void)accountSecurity {

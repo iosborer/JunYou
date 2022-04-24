@@ -334,7 +334,7 @@
 #define SYSBARBUTTON(ITEM, SELECTOR) [[UIBarButtonItem alloc] initWithBarButtonSystemItem:ITEM target:self action:SELECTOR]
 #define CUSTOMBARBUTTON(VIEW) [[UIBarButtonItem alloc] initWithCustomView:VIEW]
 
-#define MY_USER_ID [[NSUserDefaults standardUserDefaults]objectForKey:kMY_USER_ID]  //我的userId
+#define MY_USER_ID [[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_ID]  //我的userId
 #define MY_USER_NAME [[NSUserDefaults standardUserDefaults]objectForKey:kMY_USER_NICKNAME]  //我的name
 //我的role , 这是个数组
 #define MY_USER_ROLE [[NSUserDefaults standardUserDefaults]objectForKey:kMY_USER_ROLE]

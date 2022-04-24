@@ -46,6 +46,7 @@
 #import "CYWebCustomerServiceVC.h"
 #import "CYWebAddPointVC.h"
 #import "TFJunYouChat_MainNoteVc.h"
+#import "TFJunYou_MsgAndUserObject.h"
 
 @interface TFJunYou_MsgViewController ()<UIAlertViewDelegate, UITextFieldDelegate,TFJunYou_SelectMenuViewDelegate,UITextViewDelegate,TFJunYou_RoomObjectDelegate>
 
@@ -793,8 +794,7 @@
 
 
 #pragma mark   ---------tableView协议----------------
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* cellName = [NSString stringWithFormat:@"msg"];
     
     TFJunYou_Cell *cell = [tableView dequeueReusableCellWithIdentifier:cellName];
@@ -1051,11 +1051,10 @@
             oldobj.message.content = [msg getLastContent];
             oldobj.message.type = msg.type;
             oldobj.message.timeSend = msg.timeSend;
-            if([current_chat_userId isEqualToString:s] || msg.isMySend || !showNumber){//假如是我发送的，或正在这个界面，或不显示数量时
+            if([current_chat_userId isEqualToString:s] || msg.isMySend || !showNumber) {//假如是我发送的，或正在这个界面，或不显示数量时
                 if([current_chat_userId isEqualToString:s])//正在聊天时，置0;是我发送的消息时，不变化数量
                     oldobj.user.msgsNew = [NSNumber numberWithInt:0];
-            }
-            else{
+            }else{
                 if ([msg.content rangeOfString:Localized(@"JX_OtherWithdraw")].location == NSNotFound) {
                     oldobj.user.msgsNew = [NSNumber numberWithInt:[oldobj.user.msgsNew intValue]+1];
                 }
@@ -1137,8 +1136,7 @@
         [self getTotalNewMsgCount];
 }
 
--(void)getServerData
-{
+-(void)getServerData {
     [self stopLoading];
     
     if(_array==nil || _page == 0){
@@ -1150,7 +1148,20 @@
     }
     //访问DB获取好友消息列表
     NSMutableArray* p = [[TFJunYou_MessageObject sharedInstance] fetchRecentChat];
-    
+    NSMutableArray *p1 = p.mutableCopy;
+    for (int i=0; i<p1.count; i++) {
+        TFJunYou_MessageObject *msg = p1[i];
+        if ([msg isKindOfClass:TFJunYou_MsgAndUserObject.class]) {
+            msg = ((TFJunYou_MsgAndUserObject *)msg).message;
+        }
+        if (msg.type.intValue == kWCMessageTypeRemind) {
+            //1.邀请成员, 2.取消了禁言, 3.设置了禁言, 4.撤回了一条消息, 5.管理员撤回了一条成员消息， 6,被
+            if ([msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"]) {
+                [p removeObjectAtIndex:i];
+            }
+            
+        }
+    }
 //    // 查出置顶个数
 //    for (NSInteger i = 0; i < p.count; i ++) {
 //        TFJunYou_MsgAndUserObject * obj = (TFJunYou_MsgAndUserObject*) [p objectAtIndex:i];
@@ -2065,6 +2076,7 @@
 
 
 -(int) didServerResultFailed:(TFJunYou_Connection*)aDownload dict:(NSDictionary*)dict{
+    NSLog(@"HHHHHHHH(chatVC):%@", aDownload.action);
     [_wait hide];
     
     if ([aDownload.action isEqualToString:act_tigaseGetLastChatList]) {
@@ -2079,6 +2091,7 @@
 }
 
 -(int) didServerConnectError:(TFJunYou_Connection*)aDownload error:(NSError *)error{//error为空时，代表超时
+    NSLog(@"HHHHHHHH(chatVC):%@", aDownload.action);
     [_wait hide];
 
 //    if (![aDownload.action isEqualToString:act_userChangeMsgNum] && ![aDownload.action isEqualToString:act_tigaseGetLastChatList]) {
@@ -2094,12 +2107,10 @@
 }
 
 -(void)onDrag:(UIView*)sender{
-    
     sender.hidden = YES;
 }
 
--(void)onReceiveRoomRemind:(NSNotification *)notifacation//
-{
+-(void)onReceiveRoomRemind:(NSNotification *)notifacation {
     TFJunYou_RoomRemind* p     = (TFJunYou_RoomRemind *)notifacation.object;
     TFJunYou_UserObject* user = [[TFJunYou_UserObject sharedInstance] getUserById:p.objectId];//如果能查到，说明是群组，否则是直播间
     

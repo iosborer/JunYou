@@ -2,6 +2,7 @@
 @implementation AESUtil
 static Byte iv[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 +(NSData *)encryptAESData:(NSData *)data key:(NSData *)keyData {
+    
     size_t  dataInLength = [data length];
     const void * dataIn = (const void *)[data bytes];
     CCCryptorStatus ccStatus;

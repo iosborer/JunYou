@@ -20,6 +20,7 @@
         iv = [self createButton:Localized(@"JX_Bill") drawTop:NO drawBottom:YES click:@selector(onBill)];
         iv.frame = CGRectMake(0,h, w, HEIGHT);
         h+=iv.frame.size.height;
+        
         iv = [self createButton:Localized(@"JX_SetPayPsw") drawTop:NO drawBottom:YES  click:@selector(onPayThePassword)];
         iv.frame = CGRectMake(0,h, w, HEIGHT);
         h+=iv.frame.size.height;

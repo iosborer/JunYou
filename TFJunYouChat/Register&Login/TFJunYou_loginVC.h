@@ -10,10 +10,10 @@ typedef NS_ENUM(NSInteger, TFJunYou_LoginType) {
 }
 @property(assign)BOOL isAutoLogin;
 @property(assign)BOOL isSwitchUser;
-@property (nonatomic, strong) UIImageView *launchImageView;
 @property (nonatomic, strong) UIButton *btn;
 @property (nonatomic, strong) TFJunYou_Location *location;
 @property (nonatomic, assign) BOOL isThirdLogin;
 @property (nonatomic, assign) BOOL isSMSLogin;
 @property (nonatomic, assign) TFJunYou_LoginType type;
+@property (nonatomic,strong) UIView *launchView;
 @end

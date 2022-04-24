@@ -214,6 +214,7 @@ typedef enum {
 } UpdateLastSendType;
 
 @interface TFJunYou_MessageObject : NSObject<NSCopying>
+@property (nonatomic, strong) NSNumber *msgType;
 //以下字段用于通讯,message里：
 @property (nonatomic,strong) NSString*  messageId;//消息标识号，字符串,UUID <message>里
 @property (nonatomic,strong) NSString*  fromId;//发送ID <message>里

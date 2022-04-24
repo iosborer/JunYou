@@ -79,7 +79,7 @@
             if ([g_config.regeditPhoneOrName intValue] == 1) {
                 _phone.keyboardType = UIKeyboardTypeDefault;  // 仅支持大小写字母数字
             }else {
-                _phone.keyboardType = UIKeyboardTypeNumberPad;  // 限制只能数字输入，使用数字键盘
+                _phone.keyboardType = UIKeyboardTypeASCIICapable;  // 限制只能数字输入，使用数字键盘
             }
             _phone.clearButtonMode = UITextFieldViewModeWhileEditing;
             [_phone addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];

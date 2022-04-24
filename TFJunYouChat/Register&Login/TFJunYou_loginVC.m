@@ -11,8 +11,7 @@
 #import "WKWebViewViewController.h"
 #define HEIGHT 56
 #define tyCurrentWindow [[UIApplication sharedApplication].windows firstObject]
-@interface TFJunYou_loginVC ()<UITextFieldDelegate,QCheckBoxDelegate,TFJunYou_LocationDelegate,TFJunYou_LocationDelegate>
-{
+@interface TFJunYou_loginVC ()<UITextFieldDelegate, QCheckBoxDelegate, TFJunYou_LocationDelegate, TFJunYou_LocationDelegate> {
     UIButton *_areaCodeBtn;
     QCheckBox * _checkProtocolBtn;
     UIButton *_forgetBtn;
@@ -32,8 +31,18 @@
 @property(nonatomic,assign)NSInteger count;
 @property(nonatomic,strong)UIView *waitAuthView;
 @property (nonatomic,weak) UIView *backView;
+
 @end
 @implementation TFJunYou_loginVC
+-(UIView *)launchView {
+    if (!_launchView) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
+        UIViewController *vc = sb.instantiateInitialViewController;
+        _launchView = vc.view;
+        [self.view addSubview:_launchView];
+    }
+    return _launchView;
+}
 - (id)init{
     self = [super init];
     if (self) {
@@ -86,7 +95,7 @@
             }else {
                 _phone = [UIFactory createTextFieldWith:CGRectMake(40, n, TFJunYou__SCREEN_WIDTH-40*2, HEIGHT) delegate:self returnKeyType:UIReturnKeyNext secureTextEntry:NO placeholder:Localized(@"JX_InputUserAccount") font:g_factory.font16];
                 _phone.attributedPlaceholder = [[NSAttributedString alloc] initWithString:Localized(@"JX_InputUserAccount") attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
-                 _phone.keyboardType = UIKeyboardTypeNumberPad;
+                 _phone.keyboardType = UIKeyboardTypeDefault;
             }
             _phone.borderStyle = UITextBorderStyleNone;
             _phone.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -281,19 +290,14 @@
         [g_notify addObserver:self selector:@selector(authRespNotification:) name:kWxSendAuthRespNotification object:nil];
         if(!self.isAutoLogin || IsStringNull(_myToken)) {
             _btn.userInteractionEnabled = YES;
-        }else {
-//            _launchImageView = [[UIImageView alloc] init];
-//            _launchImageView.frame = [UIScreen mainScreen].bounds;
-//            _launchImageView.image = [UIImage imageNamed:@"launch2688"];// [UIImage imageNamed:[self getLaunchImageName]];
-//            [[UIApplication sharedApplication].keyWindow addSubview:_launchImageView];
-//            _launchImageView.hidden=NO;
+            self.launchView.hidden = YES;
         }
+        
         if(self.isAutoLogin && !IsStringNull(_myToken))
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self->_wait startWithClearColor];
             });
         if (!_isThirdLogin) {
-             
            [g_server getSetting:self];
         }
     }
@@ -417,19 +421,22 @@
 -(void)dealloc{
     [g_notify  removeObserver:self name:kRegisterNotifaction object:nil];
 }
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     [self.view addGestureRecognizer:tap];
 }
+
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    self.launchView.frame = self.view.bounds;
+    [self.view bringSubviewToFront:self.launchView];
+}
 - (void)tapAction:(UITapGestureRecognizer *)tap {
     [self.view endEditing:YES];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
+
 - (void) textFieldDidChange:(UITextField *) TextField{
     if ([TextField.text isEqualToString:@""]) {
         _pwd.text = @"";
@@ -459,6 +466,7 @@
     _user.areaCode = [_areaCodeBtn.titleLabel.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
     
     self.isAutoLogin = NO;
+    self.launchView.hidden = YES;
     
     //等待指示器开始转
     [_wait start:Localized(@"JX_Logining")];
@@ -483,13 +491,13 @@
         g_server.location = _location;
         [g_server locate];
     }
-    if((self.isAutoLogin && !IsStringNull(_myToken)) || _isThirdLogin)
+    if((self.isAutoLogin && !IsStringNull(_myToken)) || _isThirdLogin) {
         if (_isThirdLogin) {
             [g_loginServer thirdLoginV1:_user password:_pwd.text type:self.type openId:g_server.openId isLogin:NO toView:self];
         }else {
             [self performSelector:@selector(autoLogin) withObject:nil afterDelay:.5];
         }
-    else if (IsStringNull(_myToken) && !IsStringNull(_phone.text) && !IsStringNull(_pwd.text)) {
+    } else if (IsStringNull(_myToken) && !IsStringNull(_phone.text) && !IsStringNull(_pwd.text)) {
         g_server.isManualLogin = YES;
         NSString *areaCode = [_areaCodeBtn.titleLabel.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
         if (self.isSMSLogin) {
@@ -498,13 +506,13 @@
             g_server.temporaryPWD = _pwd.text;
             [g_loginServer loginWithUser:_user password:_pwd.text areaCode:areaCode account:_phone.text toView:self];
         }
-    }
-    else
+    } else {
         [_wait stop];
+        self.launchView.hidden = YES;
+    }
 }
 -(void) didServerResultSucces:(TFJunYou_Connection*)aDownload dict:(NSDictionary*)dict array:(NSArray*)array1{
-    if ([aDownload.action isEqualToString:act_customerLinkList])
-    {
+    if ([aDownload.action isEqualToString:act_customerLinkList]) {
         g_App.customerLinkListArray = array1;
     }
     if( [aDownload.action isEqualToString:act_Config]){
@@ -546,24 +554,19 @@
             [g_App showMainUI];
         [self actionQuit];
         [_wait stop];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            _launchImageView.hidden = YES;
-        });
+       
      
     }
     if([aDownload.action isEqualToString:act_userLoginAuto] || [aDownload.action isEqualToString:act_userLoginAutoV1]){
-                [g_server getAppResource:@"2" ToView:self];
-                [g_server doLoginOK:dict user:_user];
-                [g_App showMainUI];
-                [self actionQuit];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self->_launchImageView.hidden = YES;
-        });
+        [g_server getAppResource:@"2" ToView:self];
+        [g_server doLoginOK:dict user:_user];
+        [g_App showMainUI];
+        [self actionQuit];
+     
      
         [_wait stop];
     }
     if ([aDownload.action isEqualToString:act_GetWxOpenId]) {
-        _launchImageView.hidden = NO;
         g_server.openId = [dict objectForKey:@"openid"];
         [g_loginServer wxSdkLoginV1:_user type:2 openId:g_server.openId toView:self];
     }
@@ -591,7 +594,7 @@
 }
 -(int) didServerResultFailed:(TFJunYou_Connection*)aDownload dict:(NSDictionary*)dict{
     _btn.userInteractionEnabled = YES;
-    _launchImageView.hidden = YES;
+    
     if ([aDownload.action isEqualToString:act_UserDeviceIsAuth]) {
         if ([[dict objectForKey:@"resultCode"] intValue] == 101987) {
             [self changeAccount];
@@ -623,6 +626,13 @@
     if([aDownload.action isEqualToString:act_userLoginAuto] || [aDownload.action isEqualToString:act_userLoginAutoV1]){
         [g_default removeObjectForKey:kMY_USER_TOKEN];
         [share_defaults removeObjectForKey:kMY_ShareExtensionToken];
+        
+        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationCurveEaseOut animations:^{
+            self.launchView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.launchView.hidden = YES;
+            self.launchView.alpha = 1;
+        }];
     }
     if ([aDownload.action isEqualToString:act_thirdLogin] || [aDownload.action isEqualToString:act_thirdLoginV1]) {
     }
@@ -633,7 +643,7 @@
 }
 -(int) didServerConnectError:(TFJunYou_Connection*)aDownload error:(NSError *)error{
     _btn.userInteractionEnabled = YES;
-    _launchImageView.hidden = YES;
+    
     if ([aDownload.action isEqualToString:act_Config]) {
         NSString *url = [g_default stringForKey:kLastApiUrl];
         g_config.apiUrl = url;
@@ -643,6 +653,13 @@
     if([aDownload.action isEqualToString:act_userLoginAuto] || [aDownload.action isEqualToString:act_userLoginAutoV1]){
         [g_default removeObjectForKey:kMY_USER_TOKEN];
         [share_defaults removeObjectForKey:kMY_ShareExtensionToken];
+        
+        [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationCurveEaseOut animations:^{
+            self.launchView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.launchView.hidden = YES;
+            self.launchView.alpha = 1;
+        }];
     }
     if ([aDownload.action isEqualToString:act_thirdLogin] || [aDownload.action isEqualToString:act_thirdLoginV1]) {
     }
@@ -673,7 +690,7 @@
     if (token.length > 0) {
         [g_loginServer autoLoginWithToView:self];
     }else {
-        _launchImageView.hidden = YES;
+        self.launchView.hidden = YES;
     }
 }
 -(void)onRegistered:(NSNotification *)notifacation{
@@ -850,8 +867,6 @@
     [_backView removeFromSuperview];
 }
 -(void)iniframe{
-    
- 
     UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     backView.userInteractionEnabled=YES;
     backView.backgroundColor=[UIColor colorWithWhite:0.0 alpha:0.5];
@@ -933,20 +948,7 @@
        sureBtn.frame=CGRectMake(20, cancelBtn.bottom+5, leftIM.width-40, 40);;
        [sureBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
 }
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    
-    _launchImageView = [[UIImageView alloc] init];
-    _launchImageView.frame = [UIScreen mainScreen].bounds;
-    _launchImageView.image = [UIImage imageNamed:@"launch"];// [UIImage imageNamed:[self getLaunchImageName]];
-    [[UIApplication sharedApplication].keyWindow addSubview:_launchImageView];
 
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        _launchImageView.hidden=YES;
-    });
-}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -961,7 +963,10 @@
         });
     }
     
+    _phone.keyboardType = UIKeyboardTypeASCIICapable;
+    self.launchView.hidden = !self.isAutoLogin;
 }
+
 //用户协议
  - (void)rightBtnL{
 

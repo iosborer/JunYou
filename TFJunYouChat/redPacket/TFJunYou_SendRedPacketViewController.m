@@ -420,17 +420,12 @@
     return YES;
 }
 - (NSString *)getSecretWithText:(NSString *)text time:(long)time {
-    NSMutableString *str1 = [NSMutableString string];
-    [str1 appendString:APIKEY];
-    [str1 appendString:[NSString stringWithFormat:@"%ld",time]];
-    [str1 appendString:[NSString stringWithFormat:@"%@",[NSNumber numberWithDouble:[_moneyText doubleValue]]]];
-    str1 = [[g_server getMD5String:str1] mutableCopy];
-    [str1 appendString:g_myself.userId];
-    [str1 appendString:g_server.access_token];
-    NSMutableString *str2 = [NSMutableString string];
-    str2 = [[g_server getMD5String:text] mutableCopy];
-    [str1 appendString:str2];
-    str1 = [[g_server getMD5String:str1] mutableCopy];
-    return [str1 copy];
+    NSString *md5 = [g_server getMD5String:text];
+    
+    NSString *ret = [NSString stringWithFormat:@"%@%ld%@", APIKEY, time, _moneyText];
+    ret = [g_server getMD5String:ret];
+    
+    ret = [ret stringByAppendingFormat:@"%@%@%@", g_myself.userId, g_server.access_token, md5];
+    return [g_server getMD5String:ret];
 }
 @end

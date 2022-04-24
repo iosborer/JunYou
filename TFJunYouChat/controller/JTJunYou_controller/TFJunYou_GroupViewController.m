@@ -51,8 +51,7 @@
 
 #pragma mark - life circle
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
 //        self.title = @"";
@@ -173,11 +172,7 @@
     }else{
         [_scrollView setContentOffset:CGPointMake(TFJunYou__SCREEN_WIDTH, 0) animated:NO];
     }
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
+    [self doRefresh:nil];
 }
 
 -(void)onNewRoom{

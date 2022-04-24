@@ -286,18 +286,12 @@
     return p;
 }
 - (NSString *)getSecretWithText:(NSString *)text time:(long)time {
-   NSMutableString *str1 = [NSMutableString string];
-   [str1 appendString:APIKEY];
-   [str1 appendString:[NSString stringWithFormat:@"%ld",time]];
-   [str1 appendString:[NSString stringWithFormat:@"%@",[NSNumber numberWithDouble:[_countTextField.text doubleValue]]]];
-   str1 = [[g_server getMD5String:str1] mutableCopy];
-   [str1 appendString:g_myself.userId];
-   [str1 appendString:g_server.access_token];
-   NSMutableString *str2 = [NSMutableString string];
-   str2 = [[g_server getMD5String:text] mutableCopy];
-   [str1 appendString:str2];
-   str1 = [[g_server getMD5String:str1] mutableCopy];
-   return [str1 copy];
+    NSString *str1 = [NSString stringWithFormat:@"%@%ld%@", APIKEY, time, _countTextField.text];
+    str1 = [g_server getMD5String:str1];
+    str1 = [str1 stringByAppendingFormat:@"%@%@", g_myself.userId, g_server.access_token];
+    str1 = [str1 stringByAppendingString:[g_server getMD5String:text]];
+
+   return [g_server getMD5String:str1];
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
    if (scrollView == self.tableBody) {

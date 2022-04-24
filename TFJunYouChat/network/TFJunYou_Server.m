@@ -1334,7 +1334,7 @@
             TFJunYou_loginVC *vc = (TFJunYou_loginVC *)g_navigation.rootViewController;
             
             vc.btn.userInteractionEnabled = YES;
-            vc.launchImageView.hidden = YES;
+            vc.launchView.hidden = YES;
         }
     }else {
         NSString * URLString = @"http://itunes.apple.com/cn/app/id333206289?mt=8";
@@ -4146,8 +4146,11 @@
     TFJunYou_Connection* p = [self addTask:act_CheckPayPassword param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
     
-    NSData *aesData = [AESUtil encryptAESData:[g_myself.userId dataUsingEncoding:NSUTF8StringEncoding] key:[MD5Util getMD5DataWithString:user.payPassword]];
-    [p setPostValue:[MD5Util getMD5StringWithData:aesData] forKey:@"payPassword"];
+    NSData *uid = [g_myself.userId dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *psw = [MD5Util getMD5DataWithString:user.payPassword];
+    NSData *aes = [AESUtil encryptAESData:uid key:psw];
+    NSString *md5 = [MD5Util getMD5StringWithData:aes];
+    [p setPostValue:md5 forKey:@"payPassword"];
     [p go];
 }
 
@@ -4157,10 +4160,19 @@
     TFJunYou_Connection* p = [self addTask:act_UpdatePayPassword param:nil toView:toView];
     [p setPostValue:self.access_token forKey:@"access_token"];
     
-    NSData *aesData = [AESUtil encryptAESData:[g_myself.userId dataUsingEncoding:NSUTF8StringEncoding] key:[MD5Util getMD5DataWithString:user.payPassword]];
-    NSData *aesDataOld = [AESUtil encryptAESData:[g_myself.userId dataUsingEncoding:NSUTF8StringEncoding] key:[MD5Util getMD5DataWithString:user.oldPayPassword]];
-    [p setPostValue:[MD5Util getMD5StringWithData:aesData] forKey:@"payPassword"];
-    [p setPostValue:user.oldPayPassword ? [MD5Util getMD5StringWithData:aesDataOld] : @"" forKey:@"oldPayPassword"];
+    //1.将userID转成Data
+    NSData *uid = [g_myself.userId dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSData *psw = [MD5Util getMD5DataWithString:user.payPassword];
+    NSData *aes = [AESUtil encryptAESData:uid key: psw];
+    NSString *md5 = [MD5Util getMD5StringWithData:aes];
+    [p setPostValue: md5 forKey:@"payPassword"];
+    
+    NSData *opsw = [MD5Util getMD5DataWithString:user.oldPayPassword];
+    NSData *oaes = [AESUtil encryptAESData:uid key: opsw];
+    NSString *omd5 = [MD5Util getMD5StringWithData:oaes];
+    [p setPostValue:omd5 forKey:@"oldPayPassword"];
+  
     [p go];
 }
 

@@ -1091,27 +1091,23 @@ static TFJunYou_XMPP *sharedManager;
 - (void)chatResult:(NSData *)data {
     NSError *error;
     ChatMessage *message = [ChatMessage parseFromData:data extensionRegistry:nil error:&error];
-    if ((message.type > 900 && message.type < 908) || message.type == 913) {
-        return;
-    }
-    
-//    if ((message.type > 900 && message.type < 908) || message.type == 913) {
+    NSLog(@"HHHHHHH(%d):%@", message.type, message.content);
+//    if ((message.type > 900 && message.type < 908) || message.type == 913 || message.type == 202) {
 //        return;
 //    }
+    
     TFJunYou_MessageObject *msg = [TFJunYou_MessageObject getMsgObjWithPbobjc:message];
+    msg.msgType = @(message.type);
     [_receiptArray addObject:msg];
     
     if (_receiptArray.count >= 100) {
         [self receiptTimerAction:nil];
     }
     
-//    [self sendMessageReceipt:msg];
-    
     // 如收到自己发的群聊消息 判定为群聊回执
-    if (msg.chatType == 2 && [msg.fromId isEqualToString:[NSString stringWithFormat:@"%@/%@",g_myself.userId,SameResource]]) {
+    if (msg.chatType == 2 && [msg.fromId isEqualToString:[NSString stringWithFormat:@"%@/%@", g_myself.userId, SameResource]]) {
         
         [self msgReceiptWithMsgId:msg.messageId];
-        
         return;
     }
     
@@ -1119,8 +1115,6 @@ static TFJunYou_XMPP *sharedManager;
     NSString *fromUserId = msg.fromId;
     NSString *toUserId = msg.toId;
     int type = msg.chatType;
-    
-    NSLog(@"收消息  = %@",msg);
     
     if(![blackList containsObject:fromUserId] && ![blackList containsObject:toUserId]){ //排除黑名单，未对黑名单处理
         
@@ -1232,6 +1226,7 @@ static TFJunYou_XMPP *sharedManager;
                     for (NSInteger i = 0; i < arr.count; i ++) {
                         TFJunYou_MessageObject * p = [arr objectAtIndex:i];
                         if ([p.messageId isEqualToString:msg.content]) {
+                            p.msgType = msg.msgType;
                             if ([p.isReadDel boolValue]) {
                                 if ([p.type intValue] == kWCMessageTypeImage|| [p.type intValue] == kWCMessageTypeCustomFace|| [p.type intValue] == kWCMessageTypeEmoji || [p.type intValue] == kWCMessageTypeVoice || [p.type intValue] == kWCMessageTypeVideo || [p.type intValue] == kWCMessageTypeText) {
                                     
@@ -1250,6 +1245,7 @@ static TFJunYou_XMPP *sharedManager;
                                         newMsg.fromUserId = msg.fromUserId;
                                         newMsg.toUserId = msg.toUserId;
                                         [newMsg update];
+                                        NSLog(@"KKKKKKK:%@", newMsg.msgType);
                                         [newMsg updateLastSend:UpdateLastSendType_None];
                                         msg = nil;
                                     }else {
@@ -1273,6 +1269,7 @@ static TFJunYou_XMPP *sharedManager;
                 if ([msg.type intValue] == kWCMessageTypeWithdraw) {
                     
                     TFJunYou_MessageObject *newMsg = [[TFJunYou_MessageObject alloc] init];
+                    newMsg.msgType = msg.type;
                     newMsg.isShowTime = NO;
                     newMsg.messageId = msg.content;
                     if(type != kWCChatTypeChat){
@@ -1286,6 +1283,7 @@ static TFJunYou_XMPP *sharedManager;
                     newMsg.toUserId = msg.toUserId;
                     newMsg.timeSend = msg.timeSend;
                     TFJunYou_MessageObject *msg1 = [newMsg getMsgWithMsgId:msg.content];
+                    msg1.msgType = msg.msgType;
                     if ([msg.fromUserId isEqualToString:MY_USER_ID]) {
                         newMsg.content = Localized(@"JX_AlreadyWithdraw");
                     }
@@ -1389,6 +1387,7 @@ static TFJunYou_XMPP *sharedManager;
                     if ([msg.type intValue] == kWCMessageTypeDelMsgTwoSides) {
                         TFJunYou_UserObject *user = [[TFJunYou_UserObject sharedInstance] getUserById:msg.fromUserId];
                         TFJunYou_MessageObject *msg1 = [[TFJunYou_MessageObject alloc] init];
+                        msg1.msgType = msg.type;
                         msg1.toUserId = msg.fromUserId;
                         [msg1 deleteAll];
                         msg1.type = [NSNumber numberWithInt:1];

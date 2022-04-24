@@ -141,7 +141,6 @@
     }];
 }
 - (void)pushMainVc{
-    
     [self.view removeFromSuperview];
     g_navigation.rootViewController =  [[TFJunYou_MainViewController alloc]init];
 }
