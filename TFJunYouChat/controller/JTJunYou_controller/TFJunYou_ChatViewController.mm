@@ -883,7 +883,6 @@
         btn1 = [[UIButton alloc] initWithFrame:CGRectMake(TFJunYou__SCREEN_WIDTH-18-BTN_RANG_UP*2, TFJunYou__SCREEN_TOP -18-BTN_RANG_UP*2, 18+BTN_RANG_UP*2, 18+BTN_RANG_UP*2)];
         [btn1 addTarget:self action:@selector(onMember) forControlEvents:UIControlEventTouchUpInside];
         [self.tableHeader addSubview:btn1];
-        
 
         btn = [UIFactory createButtonWithImage:@"chat_more_black" highlight:nil target:self selector:@selector(onMember)];
         btn.custom_acceptEventInterval = 1.0f;
@@ -2026,8 +2025,7 @@
     }
 }
 
--(void)refresh:(TFJunYou_MessageObject*)msg
-{
+-(void)refresh:(TFJunYou_MessageObject*)msg {
     _isRefreshing = YES;
     if (self.courseId.length > 0) {
         NSMutableArray *arr = [NSMutableArray array];
@@ -2066,54 +2064,53 @@
         NSMutableArray* p;
         if (self.isGetServerMsg) {
            // 获取漫游聊天记录
-                      [_wait start];
-                      long starTime;
-                      long endTime;
-                      long chatSyncTimeLen = 0;
-                      switch ([g_myself.chatSyncTimeLen integerValue]) {
-                           case 0: // 0.04 1小时
-                              chatSyncTimeLen = 3600000;
-                              break;
-                           case 1: //  1天
-                              chatSyncTimeLen = 86400000;
-                              break;
-                           case 7: //  7天
-                              chatSyncTimeLen = 604800017;
-                              break;
-                           case 30: // 30天
-                              chatSyncTimeLen = 2629800000;
-                              break;
-                           case 90: // 90天
-                              chatSyncTimeLen = 7889400000;
-                              break;
-                           case 365: //365天
-                              chatSyncTimeLen = 31557600000;
-                              break;
-                           case -1: // 永久(20年)
-                              chatSyncTimeLen = 631152000000;
-                              break;
-                          default:
-                              break;
-                      }
-                      endTime = [[NSDate date] timeIntervalSince1970] * 1000;
-                      starTime = endTime - chatSyncTimeLen;
-                                     
-                     // 群组删除聊天记录时间
-                      NSInteger time1 = 0;
-                     if ([g_default valueForKey:s] && ([self.roomJid length]>0)) {
-                        time1 = [[g_default valueForKey:s] integerValue];
-                     }
-                      NSNumber *lastClearRecordTime = [NSNumber numberWithInteger:time1];
-                     // 设置删除所有聊天记录时间
-                      NSInteger time2 = 0;
-                     if ([g_default valueForKey:@"CLEARALLMSGRECORDTIME"] && ([self.roomJid length]>0)) {
-                         time2 = [[g_default valueForKey:@"CLEARALLMSGRECORDTIME"] integerValue];
-                     }
-                     NSNumber *CLEARALLMSGRECORDTIME = [NSNumber numberWithInteger:time2];
-                     // 设置漫游的时间
-                     NSNumber *synTime = [NSNumber numberWithLong:starTime];
-                     
-                     // 排序四个时间 入群时间,群组删除聊天记录时间,设置删除所有聊天记录时间,设置漫游的时间
+            [_wait start];
+            long starTime;
+            long endTime;
+            long chatSyncTimeLen = 0;
+            switch ([g_myself.chatSyncTimeLen integerValue]) {
+                case 0: // 0.04 1小时
+                    chatSyncTimeLen = 3600000;
+                    break;
+                case 1: //  1天
+                    chatSyncTimeLen = 86400000;
+                    break;
+                case 7: //  7天
+                    chatSyncTimeLen = 604800017;
+                    break;
+                case 30: // 30天
+                    chatSyncTimeLen = 2629800000;
+                    break;
+                case 90: // 90天
+                    chatSyncTimeLen = 7889400000;
+                    break;
+                case 365: //365天
+                    chatSyncTimeLen = 31557600000;
+                    break;
+                case -1: // 永久(20年)
+                    chatSyncTimeLen = 631152000000;
+                    break;
+                default:
+                    break;
+            }
+            endTime = [[NSDate date] timeIntervalSince1970] * 1000;
+            starTime = endTime - chatSyncTimeLen;
+            
+            // 群组删除聊天记录时间
+            NSInteger time1 = 0;
+            if ([g_default valueForKey:s] && ([self.roomJid length]>0)) {
+                time1 = [[g_default valueForKey:s] integerValue];
+            }
+            NSNumber *lastClearRecordTime = [NSNumber numberWithInteger:time1];
+            // 设置删除所有聊天记录时间
+            NSInteger time2 = 0;
+            if ([g_default valueForKey:@"CLEARALLMSGRECORDTIME"] && ([self.roomJid length]>0)) {
+                time2 = [[g_default valueForKey:@"CLEARALLMSGRECORDTIME"] integerValue];
+            }
+            NSNumber *CLEARALLMSGRECORDTIME = [NSNumber numberWithInteger:time2];
+            // 设置漫游的时间
+            NSNumber *synTime = [NSNumber numberWithLong:starTime];
+            // 排序四个时间 入群时间,群组删除聊天记录时间,设置删除所有聊天记录时间,设置漫游的时间
                      NSArray *sortedArray = [@[lastClearRecordTime,synTime,CLEARALLMSGRECORDTIME] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
                          NSComparisonResult result = [obj1 compare: obj2];
                          return result;
@@ -3072,9 +3069,24 @@
         return 0;
     }
     TFJunYou_MessageObject *msg=[_array objectAtIndex:indexPath.row];
-    if (self.roomJid)
+    if (self.roomJid){
         msg.isGroup = YES;
-    
+        NSArray * memberArr = [memberData fetchAllMembers:_room.roomId];
+        
+        NSInteger from = msg.fromUserId.integerValue;
+        BOOL exist = NO;
+        for (int j=0; j<memberArr.count; j++) {
+            memberData *mem = memberArr[j];
+            if (mem.userId == from) {
+                exist = YES;
+                break;
+            }
+        }
+        
+        if (!exist) {
+            return 0;
+        }
+    }
     switch ([msg.type intValue]) {
         case kWCMessageTypeText:
             return [TFJunYou_MessageCell getChatCellHeight:msg];
@@ -3112,10 +3124,13 @@
         case kWCMessageTypeFile:
             return [TFJunYou_FileCell getChatCellHeight:msg];
             break;
-        case kWCMessageTypeRemind:
-            return 0.5;
+        case kWCMessageTypeRemind: {
+            if (msg.type.intValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"]) {
+                return 0;
+            }
+            
             return [TFJunYou_RemindCell getChatCellHeight:msg];
-            break;
+        }
         case kWCMessageTypeRedPacket:
             return [TFJunYou_RedPacketCell getChatCellHeight:msg];
             break;
@@ -3241,7 +3256,6 @@
             cell = [self creatFileCell:msg indexPath:indexPath];
             break;
         case kWCMessageTypeRemind:
-            NSLog(@"%@", msg.msgType);
             cell = [self creatRemindCell:msg indexPath:indexPath];
             break;
         case kWCMessageTypeRedPacket:
@@ -3428,6 +3442,10 @@
     TFJunYou_RemindCell *cell=[_table dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[TFJunYou_RemindCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    
+    if (msg.type.intValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"]) {
+        cell.hidden = YES;
     }
     return cell;
 }
@@ -5623,16 +5641,14 @@
 
 
 -(void)scrollToPageUp{
-    if(_isLoading)
-        return;
+    if(_isLoading) return;
     NSLog(@"scrollToPageUp");
     _page ++;
     [self getServerData];
 }
 
 -(void)scrollToPageDown{
-    if(_isLoading)
-        return;
+    if(_isLoading) return;
     _page=0;
     [self getServerData];
 }
@@ -8798,8 +8814,7 @@
     }
 }
 
-- (BOOL)isNumber:(NSString *)strValue
-{
+- (BOOL)isNumber:(NSString *)strValue {
     if (strValue == nil || [strValue length] <= 0)
     {
         return NO;
