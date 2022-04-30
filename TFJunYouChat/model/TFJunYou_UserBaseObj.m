@@ -137,9 +137,7 @@ static TFJunYou_UserBaseObj *sharedUser;
     return worked;
 }
 
--(BOOL)update
-{
-    
+-(BOOL)update{
     if (self.roomId.length > 0) {
         self.roomFlag= [NSNumber numberWithInt:1];
         self.companyId= [NSNumber numberWithInt:0];
