@@ -155,7 +155,7 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
     NSString *readStr = [[NSString alloc] initWithData: data encoding:NSUTF8StringEncoding];
-    NSLog(@"读到的数据：%@",readStr);
+    NSLog(@"socket收到消息_QR：%@",readStr);
     
     //    [sock writeData:[readStr dataUsingEncoding:NSUTF8StringEncoding] withTimeout:-1 tag:101];
     
@@ -174,7 +174,7 @@
     NSLog(@"断开连接");
 }
 -(void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
-    NSLog(@"sock:%@  %ld",sock,tag);
+    NSLog(@"发送成功1(%ld)", tag);
 }
 
 
