@@ -17,7 +17,6 @@
 }
 
 -(void)creatUI{
-    self.contentView.hidden = YES;
     _baseView = [[UIView alloc] initWithFrame:CGRectMake(40, 10, TFJunYou__SCREEN_WIDTH-80, 0)];
     _baseView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
     _baseView.layer.cornerRadius = 3.f;
