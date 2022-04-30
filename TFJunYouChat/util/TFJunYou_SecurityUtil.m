@@ -386,12 +386,11 @@ size_t encodeLength(unsigned char * buf, size_t length) {
     size_t dataLength = data.length;
     NSData *keys = keyData;
     size_t keyLength = keys.length;
+    
+    //创建一个数组
     unsigned char result[CC_MD5_DIGEST_LENGTH];
     CCHmac(kCCHmacAlgMD5, [keys bytes], keyLength, [data bytes], dataLength, result);
-    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i ++) {
-        printf("%d ",result[i]);
-    }
-    printf("\n-------%s-------\n",result);
+    
     NSData *data1 = [[NSData alloc] initWithBytes:result length:sizeof(result)];
     return data1;
 }
