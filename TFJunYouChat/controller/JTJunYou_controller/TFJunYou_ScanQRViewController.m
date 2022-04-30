@@ -569,7 +569,7 @@
 }
 
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
-    
+    NSLog(@"socket收到消息Scan长度: %ld", data.length);
     if (self.lastData.length > 0) {
         NSMutableData *mData = [[NSMutableData alloc] init];
         [mData appendData:self.lastData];
