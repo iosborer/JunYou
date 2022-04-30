@@ -18,7 +18,7 @@
 @class TFJunYou_RoomObject;
 @class TFJunYou_BaseChatCell;
 @class TFJunYou_VideoPlayer;
-@interface TFJunYou_ChatViewController : TFJunYou_TableViewController<UIImagePickerControllerDelegate,UITextViewDelegate,AVAudioPlayerDelegate,UIImagePickerControllerDelegate,AVAudioRecorderDelegate,UINavigationControllerDelegate,LXActionSheetDelegate>
+@interface TFJunYou_ChatViewController : TFJunYou_TableViewController <UIImagePickerControllerDelegate,UITextViewDelegate,AVAudioPlayerDelegate,UIImagePickerControllerDelegate,AVAudioRecorderDelegate,UINavigationControllerDelegate,LXActionSheetDelegate>
 {
     
     NSMutableArray *_pool;
