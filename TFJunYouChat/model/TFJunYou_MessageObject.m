@@ -47,7 +47,7 @@
 #import "TFJunYou_UserPublicKeyObj.h"
 
 @implementation TFJunYou_MessageObject
-@synthesize content, timeSend, fromUserId, toUserId, type, msgType, messageNo, messageId, timeReceive, fileName, fileData, fileSize, location_x, location_y, timeLen, isSend, isRead, progress, dictionary, index, fromUserName, objectId, toUserName, isReceive, fromId, toId, isEncrypt;
+@synthesize content, timeSend, fromUserId, toUserId, type, messageNo, messageId, timeReceive, fileName, fileData, fileSize, location_x, location_y, timeLen, isSend, isRead, progress, dictionary, index, fromUserName, objectId, toUserName, isReceive, fromId, toId, isEncrypt;
 @synthesize isUpload;
 
 NSString* current_chat_userId = nil;
@@ -109,7 +109,7 @@ static TFJunYou_MessageObject *shared;
     self.timeSend = nil;
     self.timeReceive = nil;
     self.type = nil;
-    self.msgType = nil;
+
     self.messageNo = nil;
     self.messageId = nil;
     self.fileName = nil;
@@ -1612,8 +1612,7 @@ static TFJunYou_MessageObject *shared;
     return  messageList;
 }
 
--(NSMutableArray *)fetchRecentChat
-{
+-(NSMutableArray *)fetchRecentChat {
     NSString* myUserId = MY_USER_ID;
     FMDatabase* db = [[TFJunYou_XMPP sharedInstance] openUserDb:myUserId];
     
