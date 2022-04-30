@@ -567,7 +567,8 @@
 
     [self stopLoading];
     if([aDownload.action isEqualToString:act_roomList] || [aDownload.action isEqualToString:act_roomListHis] ){
-        self.isShowFooterPull = [array1 count]>=TFJunYou__page_size;
+        
+        self.isShowFooterPull = [array1 count] >= TFJunYou__page_size;
         
         NSMutableArray * tempArray;
         if (_selMenu == 0) {
@@ -578,14 +579,24 @@
         
         
         if (_page == 0) {
-            
             [tempArray removeAllObjects];
         }
         
+        NSMutableArray* p = [[TFJunYou_MessageObject sharedInstance] fetchRecentChat];
+        
         for (int i = 0; i < [array1 count]; i++) {
             NSDictionary *dict=array1[i];
+            TFJunYou_MsgAndUserObject *uobj = [p filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(TFJunYou_MsgAndUserObject*  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+                TFJunYou_MessageObject *msg = evaluatedObject.message;
+                return [msg.fromUserId isEqual: dict[@"jid"]];
+            }]].firstObject;
             
-            TFJunYou_UserObject* user = [[TFJunYou_UserObject alloc]init];
+            BOOL isUpdate = NO;
+            TFJunYou_UserObject* user = uobj.user;
+            if (!user.userId || user.userId.length < 1) {
+                user = [[TFJunYou_UserObject alloc] init];
+                isUpdate = YES;
+            }
             user.userNickname = [dict objectForKey:@"name"];
             user.userId = [dict objectForKey:@"jid"];
             user.userDescription = [dict objectForKey:@"desc"];
@@ -614,11 +625,10 @@
 #endif
             
             if ([aDownload.action isEqualToString:act_roomListHis]) {
-
                 if (![user haveTheUser]){
                     [user insertRoom];
                 }else {
-                    [user update];
+                    !isUpdate ?: [user update];
                     [user updateUserNickname];
                 }
             }
@@ -774,16 +784,13 @@
     
 }
 -(void)scrollToPageUp{
-    if(_isLoading)
-        return;
+    if(_isLoading) return;
+    
     _page = 0;
     [self performSelector:@selector(stopLoading) withObject:nil afterDelay:1.0];
-    
     if(_selMenu==1){
-        
         [g_server listRoom:_page roomName:nil toView:self];
-    }
-    else{
+    }else{
         [g_server listHisRoom:_page pageSize:1000 toView:self];
         _searchfield.text = @"";
     }
@@ -791,21 +798,24 @@
 }
 -(void)getServerData{
     self.isShowFooterPull = _selMenu == 1;
-    if(_selMenu==1){
-        
+    if(_selMenu == 1){
         [g_server listRoom:_page roomName:nil toView:self];
         self.isShowFooterPull = YES;
     }
     else{
         self.isShowFooterPull = NO;
 
+        [g_server listHisRoom:_page pageSize:1000 toView:self];
+        _searchfield.text = @"";
+        
+        return;
         _myGroupArray = [[TFJunYou_UserObject sharedInstance] fetchAllRoomsFromLocal];
         if (_myGroupArray == nil) {
             _myGroupArray = [NSMutableArray array];
         }
         [_currentGroupArray removeAllObjects];
         _currentGroupArray = [[NSMutableArray alloc]initWithArray:_myGroupArray] ;
-        if (_myGroupArray.count <= 0) {
+        if (_myGroupArray.count < 2) {
             [self scrollToPageUp];
         }else {
             [self.tableView reloadData];
