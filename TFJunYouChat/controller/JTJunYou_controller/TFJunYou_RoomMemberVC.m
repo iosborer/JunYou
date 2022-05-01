@@ -2318,6 +2318,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     TFJunYou_GroupMemberCell *cell = (TFJunYou_GroupMemberCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    [cell buildNewImageview];
     NSArray *dataArray = nil;
     memberData *me = [self.room getMember:g_myself.userId];
     if (me.role.integerValue > 0 && me.role.integerValue < 2) {
@@ -2327,29 +2328,44 @@
     }
     
     memberData* user = nil;
-    if(indexPath.row < _maxShow && (me.role.integerValue > 0 && me.role.integerValue < 2)){
-        if (!_isShow && indexPath.row == 1) {
-            for (memberData *member in dataArray) {
-                NSString *userId = [NSString stringWithFormat:@"%ld",member.userId];
-                if ([userId isEqualToString:MY_USER_ID]) {
-                    user = member;
-                    break;
-                }
-            }
-        }else{
+    if (me.role.integerValue > 0 && me.role.integerValue < 2) {
+        if (indexPath.item < _maxShow) {
             user = [dataArray objectAtIndex:indexPath.row];
+            [g_server getHeadImageSmall:[NSString stringWithFormat:@"%ld",user.userId] userName:user.userNickName imageView:cell.imageView];
+        } if(indexPath.row == _maxShow){
+            cell.imageView.image = [UIImage imageNamed:@"add"];
+        }else if(indexPath.row > _maxShow){
+            cell.imageView.image = [UIImage imageNamed:@"lose"];
         }
     } else {
         user = [dataArray objectAtIndex:indexPath.row];
-    }
-    [cell buildNewImageview];
-    if(indexPath.row == _maxShow){
-        cell.imageView.image = [UIImage imageNamed:@"add"];
-    }else if(indexPath.row > _maxShow){
-        cell.imageView.image = [UIImage imageNamed:@"lose"];
-    }else{
         [g_server getHeadImageSmall:[NSString stringWithFormat:@"%ld",user.userId] userName:user.userNickName imageView:cell.imageView];
     }
+//    if(indexPath.row < _maxShow && me.role.integerValue > 0 && me.role.integerValue < 2){
+//        user = [dataArray objectAtIndex:indexPath.row];
+
+//        if (!_isShow && indexPath.row == 1) {
+//            for (memberData *member in dataArray) {
+//                NSString *userId = [NSString stringWithFormat:@"%ld",member.userId];
+//                if ([userId isEqualToString:MY_USER_ID]) {
+//                    user = member;
+//                    break;
+//                }
+//            }
+//        }else{
+//            user = [dataArray objectAtIndex:indexPath.row];
+//        }
+//    } else{
+//        user = [dataArray objectAtIndex:indexPath.row];
+//    }
+    
+//    if(indexPath.row == _maxShow){
+//        cell.imageView.image = [UIImage imageNamed:@"add"];
+//    }else if(indexPath.row > _maxShow){
+//        cell.imageView.image = [UIImage imageNamed:@"lose"];
+//    }else{
+//        [g_server getHeadImageSmall:[NSString stringWithFormat:@"%ld",user.userId] userName:user.userNickName imageView:cell.imageView];
+//    }
     NSString *name = [NSString string];
     TFJunYou_UserObject *allUser = [[TFJunYou_UserObject alloc] init];
     allUser = [allUser getUserById:[NSString stringWithFormat:@"%ld",user.userId]];

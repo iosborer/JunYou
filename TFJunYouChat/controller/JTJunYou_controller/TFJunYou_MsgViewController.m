@@ -162,16 +162,11 @@
     [_array removeAllObjects];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self getServerData];
-    
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
+    [self getServerData];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -614,7 +609,6 @@
 }
 
 - (void)didMenuView:(TFJunYou__SelectMenuView *)MenuView WithIndex:(NSInteger)index {
-    
     NSString *method = MenuView.sels[index];
     SEL _selector = NSSelectorFromString(method);
     [self performSelectorOnMainThread:_selector withObject:nil waitUntilDone:YES];
