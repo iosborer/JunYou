@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <AvoidCrash/AvoidCrash.h>
+//#import <AvoidCrash/AvoidCrash.h>
 #import <Bugly/Bugly.h>
 #import "TFJunYou_LaunchVc.h"
 #import "TFJunYou_MainViewController.h"
@@ -98,7 +98,7 @@ static  BMKMapManager* _baiduMapManager;
 #endif
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
  
-     [AvoidCrash makeAllEffective];
+//     [AvoidCrash makeAllEffective];
      NSArray *noneSelClassStrings = @[
                                    @"NSNull",
                                    @"NSNumber",
@@ -106,7 +106,7 @@ static  BMKMapManager* _baiduMapManager;
                                    @"NSDictionary",
                                    @"NSArray"
                                    ];
-      [AvoidCrash setupNoneSelClassStringsArr:noneSelClassStrings];
+//      [AvoidCrash setupNoneSelClassStringsArr:noneSelClassStrings];
       [Bugly startWithAppId:BUGLY_APP_ID];
       [WXApi registerApp:@"wxef6e2ba2099bf1fd" universalLink:@"https://vito.liyaning.top/yiqun/"];
      

@@ -393,14 +393,15 @@
     }
     
     if (returnValue == nil) {
-        returnValue = [NSNull null];
+        returnValue = nil;//[NSNull null];
     }
     
     return returnValue;
 }
 
 - (id)objectForColumnName:(NSString*)columnName {
-    return [self objectForColumnIndex:[self columnIndexForName:columnName]];
+    int index = [self columnIndexForName:columnName];
+    return [self objectForColumnIndex:index];
 }
 
 // returns autoreleased NSString containing the name of the column in the result set

@@ -43,6 +43,8 @@
     [str appendString:g_myself.userId];
     [str appendString:g_server.access_token];
     [str appendString:salt];
+    
+    
     NSData *aesData = [AESUtil encryptAESData:[g_myself.userId dataUsingEncoding:NSUTF8StringEncoding] key:[MD5Util getMD5DataWithString:payPassword]];
     NSData *macData = [g_securityUtil getHMACMD5:[str dataUsingEncoding:NSUTF8StringEncoding] key:[[MD5Util getMD5StringWithData:aesData] dataUsingEncoding:NSUTF8StringEncoding]];
     NSString *mac = [macData base64EncodedStringWithOptions:0];

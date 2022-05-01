@@ -241,9 +241,8 @@
     }
 }
 - (void)didVerifyPay:(NSString *)sender {
-    long time = (long)[[NSDate date] timeIntervalSince1970];
+    NSTimeInterval time = (long)[[NSDate date] timeIntervalSince1970];
     time = (time *1000 + g_server.timeDifference)/1000;
-    NSString *secret = [self getSecretWithText:sender time:time];
     NSMutableArray *arr = [NSMutableArray arrayWithObjects:@"type",[NSString stringWithFormat:@"%ld",self.indexInt],@"moneyStr",_moneyText,@"count",_countText,@"greetings",_greetText, nil];
     if (self.roomJid.length > 0) {
         [arr addObject:@"roomJid"];

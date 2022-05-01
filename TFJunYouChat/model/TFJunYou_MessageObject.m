@@ -1646,6 +1646,8 @@ static TFJunYou_MessageObject *shared;
         TFJunYou_MessageObject *p=[[TFJunYou_MessageObject alloc]init];
         //        [p fromRs:rs];
         p.content = [rs stringForColumn:kMESSAGE_CONTENT];
+        
+        id ty = [rs objectForColumnName:kMESSAGE_TYPE];
         p.type = [rs objectForColumnName:kMESSAGE_TYPE];
         p.timeSend = [rs dateForColumn:kMESSAGE_TIMESEND];
         p.fromUserId = [rs stringForColumn:kUSER_ID];

@@ -344,11 +344,15 @@ static AFHTTPSessionManager *afManager;
 // 接口加密
 - (NSString *)getSecret {
     
-    long time = (long)[[NSDate date] timeIntervalSince1970];
-    time = (time *1000 + g_server.timeDifference);
-    NSString *salt = [NSString stringWithFormat:@"%ld",time];
+    NSString *salt = self.params[@"salt"];
+    if (!salt || [salt isKindOfClass:NSNull.class] || salt.length < 1) {
+        long time = (long)[[NSDate date] timeIntervalSince1970];
+        time = (time *1000 + g_server.timeDifference);
+        salt = [NSString stringWithFormat:@"%ld",time];
 
-    self.params[@"salt"] = salt;
+        self.params[@"salt"] = salt;
+    }
+    
 //    if (self.params[@"salt"]) salt = self.params[@"salt"];
     
     if (self.params[@"access_token"]) {

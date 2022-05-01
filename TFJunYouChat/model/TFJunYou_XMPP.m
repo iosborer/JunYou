@@ -1092,9 +1092,6 @@ static TFJunYou_XMPP *sharedManager;
     NSError *error;
     ChatMessage *message = [ChatMessage parseFromData:data extensionRegistry:nil error:&error];
     NSLog(@"HHHHHHH(%d):%@", message.type, message.content);
-//    if ((message.type > 900 && message.type < 908) || message.type == 913 || message.type == 202) {
-//        return;
-//    }
     
     TFJunYou_MessageObject *msg = [TFJunYou_MessageObject getMsgObjWithPbobjc:message];
     [_receiptArray addObject:msg];

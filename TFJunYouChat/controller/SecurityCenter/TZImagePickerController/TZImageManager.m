@@ -554,7 +554,7 @@ static CGFloat TZScreenScale;
             options.shouldMoveFile = YES;
             [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 if (success && completion) {
                     completion(nil);
                 } else if (error) {

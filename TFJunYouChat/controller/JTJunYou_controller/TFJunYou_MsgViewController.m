@@ -805,6 +805,12 @@
         array = _array;
     }
     TFJunYou_MsgAndUserObject * dict = (TFJunYou_MsgAndUserObject*) [array objectAtIndex:indexPath.row];
+    TFJunYou_MessageObject *msg = dict.message;
+    if (msg.type.integerValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"]) {
+        cell.lbSubTitle.hidden = YES;
+    } else {
+        cell.lbSubTitle.hidden = NO;
+    }
     
     if(cell==nil){
         cell = [[TFJunYou_Cell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellName];;
@@ -1148,20 +1154,6 @@
     }
     //访问DB获取好友消息列表
     NSMutableArray* p = [[TFJunYou_MessageObject sharedInstance] fetchRecentChat];
-    NSMutableArray *p1 = p.mutableCopy;
-    for (int i=0; i<p1.count; i++) {
-        TFJunYou_MessageObject *msg = p1[i];
-        if ([msg isKindOfClass:TFJunYou_MsgAndUserObject.class]) {
-            msg = ((TFJunYou_MsgAndUserObject *)msg).message;
-        }
-        if (msg.type.intValue == kWCMessageTypeRemind) {
-            //1.邀请成员, 2.取消了禁言, 3.设置了禁言, 4.撤回了一条消息, 5.管理员撤回了一条成员消息， 6,被
-            if ([msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"]) {
-                [p removeObjectAtIndex:i];
-            }
-            
-        }
-    }
 //    // 查出置顶个数
 //    for (NSInteger i = 0; i < p.count; i ++) {
 //        TFJunYou_MsgAndUserObject * obj = (TFJunYou_MsgAndUserObject*) [p objectAtIndex:i];

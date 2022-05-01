@@ -3446,6 +3446,8 @@
     
     if (msg.type.intValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"]) {
         cell.hidden = YES;
+    }else {
+        cell.hidden = NO;
     }
     return cell;
 }

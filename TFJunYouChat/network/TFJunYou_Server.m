@@ -4498,7 +4498,7 @@
     
     TFJunYou_Connection* p = [self addTask:act_TransactionGetCode param:nil toView:toView];
     [p setPostValue:access_token forKey:@"access_token"];
-    
+//    [p setPostValue:@"1" forKey:@"type"];
     [p setPostValue:salt forKey:@"salt"];
     [p setPostValue:mac forKey:@"mac"];
     [p go];
