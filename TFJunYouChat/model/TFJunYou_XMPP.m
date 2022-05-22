@@ -150,7 +150,8 @@ static TFJunYou_XMPP *sharedManager;
             self.isLogined = login_status_ing;
             [self notify];
             NSError *error = nil;
-            [self.socket connectToHost:g_config.XMPPHost onPort:5222 viaInterface:nil withTimeout:-1 error:&error];
+            NSInteger port = [[NSUserDefaults standardUserDefaults] integerForKey:@"xMPPPort"];
+            [self.socket connectToHost:g_config.XMPPHost onPort:port viaInterface:nil withTimeout:-1 error:&error];
             NSLog(@"XMPPHost---%@",g_config.XMPPHost);
         }
             break;

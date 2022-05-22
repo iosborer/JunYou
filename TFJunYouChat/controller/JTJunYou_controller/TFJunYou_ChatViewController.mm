@@ -114,6 +114,7 @@
 #import "TFJunYou_FaceCustomCell.h"
 #import "TFJunYou_RealCerVc.h"
 #import "TFJunYou_FAQCenterVC.h"
+#import <XHToast/XHToast.h>
 
 #define faceHeight (THE_DEVICE_HAVE_HEAD ? 253 : 218)
 #define PAGECOUNT 50
@@ -3125,7 +3126,7 @@
             return [TFJunYou_FileCell getChatCellHeight:msg];
             break;
         case kWCMessageTypeRemind: {
-            if (msg.type.intValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"]) {
+            if ((msg.type.intValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"] || [msg.content containsString:@"移除成员"]) && !_isAdmin) {
                 return 0;
             }
             
@@ -3444,7 +3445,7 @@
         cell = [[TFJunYou_RemindCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    if (msg.type.intValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"]) {
+    if ((msg.type.intValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"] || [msg.content containsString:@"移除成员"]) && !_isAdmin) {
         cell.hidden = YES;
     }else {
         cell.hidden = NO;
@@ -4906,9 +4907,7 @@
 }
 
 -(void)doEndEdit{
-	
     _textViewBtn.hidden = YES;
-    
     
     if (_messageText.isFirstResponder) {
         
@@ -6274,6 +6273,7 @@
         [self changeMessageArrFileSize:dict[@"packet"][@"id"]];
 //        }
         [self doEndEdit];
+        
 //        TFJunYou_OpenRedPacketVC * openRedPacketVC = [[TFJunYou_OpenRedPacketVC alloc]init];
 //        openRedPacketVC.dataDict = [[NSDictionary alloc]initWithDictionary:dict];
 //        [g_window addSubview:openRedPacketVC.view];
@@ -7722,7 +7722,9 @@
 //    if([[NSDate date] timeIntervalSince1970] <= _disableSay && [data.role intValue] != 1){
     if([[NSDate date] timeIntervalSince1970] <= _disableSay && !_isAdmin){
         NSString* s = [TimeUtil formatDate:[NSDate dateWithTimeIntervalSince1970:_disableSay] format:@"yyyy-MM-dd HH:mm"];
-        [g_App showAlert:[NSString stringWithFormat:@"%@%@",s,Localized(@"JXChatVC_GagTime")]];
+        NSString *msg = [NSString stringWithFormat:@"%@%@",s,Localized(@"JXChatVC_GagTime")];
+//        [g_App showAlert:msg];
+        [self.view showXHToastCenterWithText:@"你已被禁言"];
         [self hideKeyboard:NO];
         return YES;
     }
@@ -8553,7 +8555,7 @@
     self.redBaseView = [[UIView alloc] initWithFrame:self.view.bounds];
     self.redBaseView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5f];
     [self.view addSubview:self.redBaseView];
-    
+
     UIImage *redImage = [UIImage imageNamed:@"red_packet_bg"];
     
     CGFloat h = TFJunYou__SCREEN_HEIGHT - TFJunYou__SCREEN_TOP - TFJunYou__SCREEN_BOTTOM - 30-50;

@@ -182,6 +182,7 @@
     [userDefaults setDouble:[dict[@"minWithdraw"] doubleValue] forKey:@"kMinCash"];
     [userDefaults setDouble:[dict[@"minRedPacket"] doubleValue] forKey:@"kMinRedPacket"];
     [userDefaults setValue:dict[@"configUrl"] forKey:@"kConfigUrl"];
+    [userDefaults setInteger:[dict[@"xMPPPort"] integerValue] forKey:@"xMPPPort"];
     
     NSDictionary* p = [dict objectForKey:@"ios"];
     
@@ -395,7 +396,7 @@
     if (array.firstObject) {
         self.apiUrl = array.firstObject;
     }else {
-        self.apiUrl = [NSString stringWithFormat:@"http://%@/config", APIURL];  // 新socket
+        self.apiUrl = [NSString stringWithFormat:@"https://%@/config", APIURL];  // 新socket
         
         array = [[NSMutableArray alloc] initWithObjects:self.apiUrl, nil];
         [array writeToFile:SERVER_LIST_DATA atomically:YES];

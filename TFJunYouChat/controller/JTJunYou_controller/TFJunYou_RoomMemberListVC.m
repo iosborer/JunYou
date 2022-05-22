@@ -399,7 +399,7 @@
 //                            destructiveButtonTitle:Localized(@"JX_Cencal")
 //                            otherButtonTitles:@[Localized(@"JXAlert_NotGag"),Localized(@"JXAlert_GagTenMinute"),Localized(@"JXAlert_GagOneHour"),Localized(@"JXAlert_GagOne"),Localized(@"JXAlert_GagThere"),Localized(@"JXAlert_GagOneWeek"),Localized(@"JXAlert_GagOver")]];
 //    [g_window addSubview:_menu];
-    TFJunYou_ActionSheetVC *actionVC = [[TFJunYou_ActionSheetVC alloc] initWithImages:@[] names:@[Localized(@"JXAlert_NotGag"),Localized(@"JXAlert_GagTenMinute"),Localized(@"JXAlert_GagOneHour"),Localized(@"JXAlert_GagOne"),Localized(@"JXAlert_GagThere"),Localized(@"JXAlert_GagOneWeek"),Localized(@"JXAlert_GagFifteen")]];
+    TFJunYou_ActionSheetVC *actionVC = [[TFJunYou_ActionSheetVC alloc] initWithImages:@[] names:@[Localized(@"JXAlert_NotGag"),Localized(@"JXAlert_GagTenMinute"),Localized(@"JXAlert_GagOneHour"),Localized(@"JXAlert_GagOne"),Localized(@"JXAlert_GagThere"),Localized(@"JXAlert_GagOneWeek"),Localized(@"JXAlert_GagFifteen"), @"永久禁言"]];
     actionVC.delegate = self;
     [self presentViewController:actionVC animated:NO completion:nil];
 
@@ -430,6 +430,8 @@
         case 6:
             member.talkTime = 15*24*3600+n;
             break;
+        case 7:
+            member.talkTime = NSUIntegerMax;
         default:
             break;
     }

@@ -32,9 +32,14 @@
  
 //47.116.130.254
 //#define APIURL @"9090999.cn"
-#define APIURL @"b3psas4r4z6w.com"
+//线上
+#define APIURL @"pu7yzy1sz.com"
 
-#define JPUSHAPPKEY @"87dae82662653bdc4499d254"
+//测试
+//#define APIURL @"fyohqpavqstz.com"
+
+#define JPUSHAPPKEY @"3ad3d4b7097a8a380686e0f2"
+#define UMAPPKEY @"6264dfb8d024421570cc5258"
 
 // AppStore版本
 #define AppStore 0

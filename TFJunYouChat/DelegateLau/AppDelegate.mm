@@ -151,9 +151,10 @@ static  BMKMapManager* _baiduMapManager;
     entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound|JPAuthorizationOptionProvidesAppNotificationSettings;
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
     
-    
+    NSString *uuid = [[NSUUID UUID] UUIDString];
     [JPUSHService setupWithOption:launchOptions appKey:JPUSHAPPKEY
-                          channel:@"App Store"  apsForProduction:YES    advertisingIdentifier:@""];
+                          channel:@"App Store"  apsForProduction:YES advertisingIdentifier:uuid];
+  
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
         if(resCode == 0){
             NSLog(@"registrationID获取成功：%@",registrationID);
@@ -583,20 +584,17 @@ static  BMKMapManager* _baiduMapManager;
 }
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
     NSDictionary * userInfo = notification.request.content.userInfo;
+    [JPUSHService handleRemoteNotification:userInfo];
     [g_default setObject:userInfo forKey:kDidReceiveRemoteDic];
     [g_default synchronize];
-    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
-        [JPUSHService handleRemoteNotification:userInfo];
-    }
-    completionHandler(UNNotificationPresentationOptionAlert); 
+   
+    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert);
 }
 - (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
     NSDictionary * userInfo = response.notification.request.content.userInfo;
+    [JPUSHService handleRemoteNotification:userInfo];
     [g_default setObject:userInfo forKey:kDidReceiveRemoteDic];
     [g_default synchronize];
-    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
-        [JPUSHService handleRemoteNotification:userInfo];
-    }
     completionHandler();  
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {

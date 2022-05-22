@@ -800,7 +800,8 @@
     }
     TFJunYou_MsgAndUserObject * dict = (TFJunYou_MsgAndUserObject*) [array objectAtIndex:indexPath.row];
     TFJunYou_MessageObject *msg = dict.message;
-    if (msg.type.integerValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"]) {
+
+    if (msg.type.integerValue == 202 || [msg.content containsString:@"取消了禁言"] || [msg.content containsString:@"设置了禁言"] || [msg.content containsString:@"撤回了一条消息"] || [msg.content containsString:@"管理员撤回了一条成员消息"] || [msg.content containsString:@"退出群组"] || [msg.content containsString:@"移除成员"]) {
         cell.lbSubTitle.hidden = YES;
     } else {
         cell.lbSubTitle.hidden = NO;

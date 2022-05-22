@@ -30,7 +30,7 @@
     self.isGotoBack   = YES;
     
     [self createHeadAndFoot];
-    self.title = _type == FreezeTypeBlocking ? @"冻结eBay号" :  @"解冻eBay号";
+    self.title = _type == FreezeTypeBlocking ? @"冻结book号" :  @"解冻book号";
     self.tableBody.frame = CGRectZero;
     _constraintHHH.constant = 44;
     _nextBtn.layer.cornerRadius = 5;
