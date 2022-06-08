@@ -435,12 +435,15 @@ static TFJunYou_XMPP *sharedManager;
 	//DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
 }
 
--(void)fetchUser:(NSString*)userId
-{
+-(void)fetchUser:(NSString*)userId {
     [g_server getUser:userId toView:self];
 }
 
 -(void) didServerResultSucces:(TFJunYou_Connection*)aDownload dict:(NSDictionary*)dict array:(NSArray*)array1{
+    if ([aDownload.action isEqual:act_Config]) {
+        [g_config didReceive:dict];
+        return;
+    }
     if ([aDownload.action isEqualToString:act_readDelMsg]) {
         NSLog(@"删除成功");
     }
@@ -843,11 +846,8 @@ static TFJunYou_XMPP *sharedManager;
  @param data 读取到的数据
  @param tag 本次读取的标记
  */
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
-{
+- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
     [self readData:data];
-    
-    NSString *text = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
   
     //    [self showMessageWithStr:text];
     // 读取到服务端数据值后,能再次读取
@@ -1093,6 +1093,10 @@ static TFJunYou_XMPP *sharedManager;
     NSError *error;
     ChatMessage *message = [ChatMessage parseFromData:data extensionRegistry:nil error:&error];
     NSLog(@"HHHHHHH(%d):%@", message.type, message.content);
+    if (message.type == 516) {
+        [g_server getSetting:self];
+        return;
+    }
     
     TFJunYou_MessageObject *msg = [TFJunYou_MessageObject getMsgObjWithPbobjc:message];
     [_receiptArray addObject:msg];

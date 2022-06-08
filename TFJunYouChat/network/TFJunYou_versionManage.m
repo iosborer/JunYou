@@ -82,6 +82,7 @@
 }
 
 -(void)showNewVersion{
+    return;
     NSString *currentVersion = [self getVersion:version];
     if(theNewVersion != nil){
         if( [theNewVersion floatValue]> [currentVersion floatValue]){//发现新版本
@@ -123,6 +124,7 @@
 }
 //版本已被禁用
 -(void)showDisableUse{
+    return;
 //    NSString* s=[NSString stringWithFormat:@"%@;",version];
 //    if(disableVersion)
 //        if( [disableVersion rangeOfString:s].location != NSNotFound )
@@ -141,7 +143,7 @@
 //            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:AppURL]];
 //        }];
 //        [alert addAction:action];
-        [g_App.window.rootViewController  presentViewController:alert animated:NO completion:nil];
+//        [g_App.window.rootViewController  presentViewController:alert animated:NO completion:nil];
 
     }
 }
