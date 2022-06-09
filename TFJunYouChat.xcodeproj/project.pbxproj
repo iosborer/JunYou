@@ -8015,7 +8015,7 @@
 					"\"$(SRCROOT)/TFJunYouChat/3rd\"",
 				);
 				INFOPLIST_FILE = TFJunYouChat/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MWV;
+				INFOPLIST_KEY_CFBundleDisplayName = MVW;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "允许应用程序在您使用该应用程序时访问您的日历吗？用来记录当前时间";
 				INFOPLIST_KEY_NSCameraUsageDescription = "允许应用程序在您使用该应用程序时访问您的相机吗？用来拍照发送图片/保存图片使用，您是否允许访问？";
 				INFOPLIST_KEY_NSContactsUsageDescription = "允许上传通讯录数据到服务器，以便发现共同使用此APP的好友，您是否同意使用?";
@@ -8046,7 +8046,7 @@
 					"\"$(SRCROOT)/TFJunYouChat/TFJunYouALLP/Util\"",
 				);
 				MARKETING_VERSION = 2.0.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mwv.im;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mvw.im;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TFJunYouChat/新加内容/TFJunYouChat-Bridging-Header.h";
@@ -8112,7 +8112,7 @@
 					"\"$(SRCROOT)/TFJunYouChat/3rd\"",
 				);
 				INFOPLIST_FILE = TFJunYouChat/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MWV;
+				INFOPLIST_KEY_CFBundleDisplayName = MVW;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "允许应用程序在您使用该应用程序时访问您的日历吗？用来记录当前时间";
 				INFOPLIST_KEY_NSCameraUsageDescription = "允许应用程序在您使用该应用程序时访问您的相机吗？用来拍照发送图片/保存图片使用，您是否允许访问？";
 				INFOPLIST_KEY_NSContactsUsageDescription = "允许上传通讯录数据到服务器，以便发现共同使用此APP的好友，您是否同意使用?";
@@ -8144,7 +8144,7 @@
 				);
 				MARKETING_VERSION = 2.0.6;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mwv.im;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mvw.im;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TFJunYouChat/新加内容/TFJunYouChat-Bridging-Header.h";
