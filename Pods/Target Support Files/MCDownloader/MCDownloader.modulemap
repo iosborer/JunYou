@@ -1,0 +1,6 @@
+framework module MCDownloader {
+  umbrella header "MCDownloader-umbrella.h"
+
+  export *
+  module * { export * }
+}

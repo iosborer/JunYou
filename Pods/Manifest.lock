@@ -1,0 +1,158 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - AvoidCrash (2.5.2)
+  - BaiduMapKit (3.2.1)
+  - BPush (1.5.5):
+    - BPush/normal (= 1.5.5)
+  - BPush/normal (1.5.5)
+  - Bugly (2.5.91)
+  - CocoaAsyncSocket (7.6.5)
+  - CocoaLumberjack (3.4.2):
+    - CocoaLumberjack/Default (= 3.4.2)
+    - CocoaLumberjack/Extensions (= 3.4.2)
+  - CocoaLumberjack/Default (3.4.2)
+  - CocoaLumberjack/Extensions (3.4.2):
+    - CocoaLumberjack/Default
+  - FLAnimatedImage (1.0.16)
+  - GoogleMaps (6.2.1):
+    - GoogleMaps/Maps (= 6.2.1)
+  - GoogleMaps/Base (6.2.1)
+  - GoogleMaps/Maps (6.2.1):
+    - GoogleMaps/Base
+  - GPUImage (0.1.7)
+  - HXPhotoPicker (3.1.9):
+    - HXPhotoPicker/Default (= 3.1.9)
+  - HXPhotoPicker/Default (3.1.9)
+  - IQKeyboardManager (3.2.0.3)
+  - JCore (3.2.3)
+  - JPush (4.6.6):
+    - JCore (>= 2.0.0)
+  - KissXML (5.3.1):
+    - KissXML/All (= 5.3.1)
+  - KissXML/Additions (5.3.1):
+    - KissXML/Core
+  - KissXML/All (5.3.1):
+    - KissXML/Additions
+    - KissXML/Core
+  - KissXML/Core (5.3.1)
+  - lottie-ios_Oc (0.0.1)
+  - Mantle (2.1.6):
+    - Mantle/extobjc (= 2.1.6)
+  - Mantle/extobjc (2.1.6)
+  - Masonry (1.1.0)
+  - MBProgressHUD (1.1.0)
+  - MCDownloader (1.0.0)
+  - MJExtension (3.0.17)
+  - pop (1.0.12)
+  - Protobuf (3.21.1)
+  - SDWebImage (5.10.4):
+    - SDWebImage/Core (= 5.10.4)
+  - SDWebImage/Core (5.10.4)
+  - SimpleAudioPlayer (0.1.2)
+  - SVProgressHUD (2.2.5)
+  - XHToast (1.4.0)
+
+DEPENDENCIES:
+  - AFNetworking (~> 3.1.0)
+  - AvoidCrash
+  - BaiduMapKit (~> 3.2.1)
+  - BPush
+  - Bugly
+  - CocoaAsyncSocket
+  - CocoaLumberjack (~> 3.4.1)
+  - FLAnimatedImage
+  - GoogleMaps
+  - GPUImage (~> 0.1.7)
+  - HXPhotoPicker (~> 3.1.8)
+  - IQKeyboardManager (~> 3.2.0.3)
+  - JPush
+  - KissXML
+  - lottie-ios_Oc
+  - Mantle (~> 2.1.0)
+  - Masonry
+  - MBProgressHUD (~> 1.1.0)
+  - MCDownloader
+  - MJExtension (~> 3.0.12)
+  - pop
+  - Protobuf
+  - SDWebImage (~> 5.10.4)
+  - SimpleAudioPlayer
+  - SVProgressHUD
+  - XHToast
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
+    - AvoidCrash
+    - BaiduMapKit
+    - BPush
+    - Bugly
+    - CocoaAsyncSocket
+    - CocoaLumberjack
+    - FLAnimatedImage
+    - GoogleMaps
+    - GPUImage
+    - HXPhotoPicker
+    - IQKeyboardManager
+    - JCore
+    - JPush
+    - KissXML
+    - lottie-ios_Oc
+    - Mantle
+    - Masonry
+    - MBProgressHUD
+    - MCDownloader
+    - MJExtension
+    - pop
+    - Protobuf
+    - SDWebImage
+    - SimpleAudioPlayer
+    - SVProgressHUD
+    - XHToast
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  AvoidCrash: 28c6916fe19bd2b84126b8dec7cbe61c9a12741d
+  BaiduMapKit: 9c748785aa3dddfc41dcb70c14b21ce32f680930
+  BPush: 6b61a6563e844e4b0b6cdf405cb3dab93b24f116
+  Bugly: afe841bba2ea6de6d432a3c125240a5e75949c55
+  CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
+  CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
+  FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
+  GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  HXPhotoPicker: e1816ff27f17c3926f6e83aebbb9f4b329324f0b
+  IQKeyboardManager: 7b071d1284b47b1c0c19891a042c2c65f118fa85
+  JCore: 9b3cb5b6163d4da6d9dfe95652316f09e5bf8140
+  JPush: 95c8f0b93ee40b76ea97b6c9eaaa0247947185ba
+  KissXML: 5c8e0f2e8b9f071d3e1ae123dec3eb5da615c10c
+  lottie-ios_Oc: 246311aa2a6106fe03cb34e3e30f8daf7e1e7d9a
+  Mantle: 4c0ed6ce47c96eccc4dc3bb071deb3def0e2c3be
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  MCDownloader: 38b1540d38cc54398e8051f8eebe614661e387a4
+  MJExtension: 74ec83124a68891619fb7ba9c5c811bbf1691076
+  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
+  Protobuf: 9e88c1e667d75aa2491d211f26ccddde4e8ad4cf
+  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
+  SimpleAudioPlayer: c14dd9c85c5bbf058b0529292789950cc67eb61b
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  XHToast: 3b354766d56d9df8fef8e64387bbd25c90d71a86
+
+PODFILE CHECKSUM: d8a28a7fddf18253b48c73b5d8161814fc2e2fd9
+
+COCOAPODS: 1.11.3

@@ -1,0 +1,6 @@
+framework module SimpleAudioPlayer {
+  umbrella header "SimpleAudioPlayer-umbrella.h"
+
+  export *
+  module * { export * }
+}
