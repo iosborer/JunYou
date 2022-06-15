@@ -113,25 +113,7 @@
 }
 
 -(void)didTouch:(UIButton*)button{
-    if ([self.msg.fileName isEqualToString:@"3"]) {
-//        //如果可以打开
-//        if([self.msg.fileSize intValue] != 2){
-//            [g_App showAlert:Localized(@"JX_WantOpenGift")];
-//            return;
-//        }
-        
-        [g_notify postNotificationName:kcellRedPacketDidTouchNotifaction object:self.msg];
-    }
-    
-    if ([self.msg.fileName isEqualToString:@"1"] || [self.msg.fileName isEqualToString:@"2"]) {
-        //如果可以打开
-//        if([self.msg.fileSize intValue] != 2){
-            [g_notify postNotificationName:kcellRedPacketDidTouchNotifaction object:self.msg];
-            return;
-//        }
-    }
-    
-//    [g_server getRedPacket:self.msg.objectId toView:self.chatView];
+    [g_notify postNotificationName:kcellRedPacketDidTouchNotifaction object:self.msg];
 }
 
 + (float)getChatCellHeight:(TFJunYou_MessageObject *)msg {
