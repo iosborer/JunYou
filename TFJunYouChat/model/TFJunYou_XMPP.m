@@ -1098,6 +1098,7 @@ static TFJunYou_XMPP *sharedManager;
         return;
     }
     
+    NSLog(@"KKKKKKK(%d): %@", message.type, message.fileName);
     TFJunYou_MessageObject *msg = [TFJunYou_MessageObject getMsgObjWithPbobjc:message];
     [_receiptArray addObject:msg];
     
