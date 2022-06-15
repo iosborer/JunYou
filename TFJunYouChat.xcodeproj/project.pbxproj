@@ -8046,7 +8046,7 @@
 					"\"$(SRCROOT)/TFJunYouChat/TFJunYouALLP/Util\"",
 				);
 				MARKETING_VERSION = 2.0.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bear.im;
+				PRODUCT_BUNDLE_IDENTIFIER = com.youbo.bear;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TFJunYouChat/新加内容/TFJunYouChat-Bridging-Header.h";
@@ -8144,7 +8144,7 @@
 				);
 				MARKETING_VERSION = 2.0.6;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bear.im;
+				PRODUCT_BUNDLE_IDENTIFIER = com.youbo.bear;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TFJunYouChat/新加内容/TFJunYouChat-Bridging-Header.h";
