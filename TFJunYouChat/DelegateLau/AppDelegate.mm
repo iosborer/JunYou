@@ -80,6 +80,7 @@ static  BMKMapManager* _baiduMapManager;
        }
     [self setupBugly];
     [self networkStatusChange];
+
     _commonService = [[TFJunYou_CommonService alloc] init];
     _jxServer = [[TFJunYou_Server alloc] init];
     _config  = [[TFJunYou_versionManage alloc] init];

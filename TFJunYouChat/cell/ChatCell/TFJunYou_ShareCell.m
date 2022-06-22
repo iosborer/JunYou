@@ -59,7 +59,8 @@
     _title.text = [msgDict objectForKey:@"title"];
     _subTitle.text = [msgDict objectForKey:@"subTitle"];
     if ([msgDict objectForKey:@"imageUrl"]) {
-        [_shareImage sd_setImageWithURL:[NSURL URLWithString:[msgDict objectForKey:@"imageUrl"]] placeholderImage:[UIImage imageNamed:@""]];
+        NSString *url = msgDict[@"imageUrl"];
+        [_shareImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@""]];
         
     }else {
         

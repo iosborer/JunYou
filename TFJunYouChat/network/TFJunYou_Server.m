@@ -365,30 +365,24 @@
     }
     
     //    客服头像
-    if([userId intValue] == 10005){
-        iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"im_10005"]];
+    if(userId.intValue == 10005){
+        iv.image = [UIImage imageNamed:@"im_10005"];
         return;
     }
     
     //    系统公告头像
-    if([userId intValue]<10100 && [userId intValue]>=10000){
-        iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"ALOGO_120"]];
+    if(userId.intValue < 10100 && userId.intValue >= 10000){
+        iv.image = [UIImage imageNamed:@"ALOGO_120"];
         return;
     }
   
     
     // 支付公众号
-    if ([userId intValue] == [SHIKU_TRANSFER intValue]) {
-        iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"shiku_transfer"]];
+    if (userId.intValue == [SHIKU_TRANSFER intValue]) {
+        iv.image = [UIImage imageNamed:@"shiku_transfer"];
         return;
     }
-     NSString* s;
-    if([userId isKindOfClass:[NSNumber class]])
-        s = [(NSNumber*)userId stringValue];
-    else
-        s = userId;
-//    if([s length]<=0)
-//        return;
+    NSString *s = [userId isKindOfClass:[NSNumber class]] ? [(NSNumber*)userId stringValue] : userId;
     
     // Android头像
     if ([s isEqualToString:ANDROID_USERID]) {
@@ -417,7 +411,7 @@
     }
     
     NSString* dir  = [NSString stringWithFormat:@"%d",[s intValue] % 10000];
-    NSString* url  = [NSString stringWithFormat:@"%@avatar/t/%@/%@.jpg",g_config.downloadAvatarUrl,dir,s];
+    NSString* url  = [NSString stringWithFormat:@"%@avatar/t/%@/%@.jpg",g_config.downloadAvatarUrl, dir, s];
 //    [iv sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"avatar_normal"] options:SDWebImageRetryFailed];
     [self getDefultHeadImage:[NSURL URLWithString:url] userId:userId userName:userName  placeholderImage:placeholderImage iv:iv];
 }
@@ -461,7 +455,7 @@
         return;
     }
     NSString* dir  = [NSString stringWithFormat:@"%d",[s intValue] % 10000];
-    NSString* url  = [NSString stringWithFormat:@"%@avatar/o/%@/%@.jpg",g_config.downloadAvatarUrl,dir,s];
+    NSString* url  = [NSString stringWithFormat:@"%@avatar/o/%@/%@.jpg?temp=%f",g_config.downloadAvatarUrl,dir,s, NSDate.date.timeIntervalSince1970];
     
     UIImage *placeholderImage = [UIImage imageNamed:@"avatar_normal"];
     if (iv.image) {
@@ -484,7 +478,7 @@
     int a = abs(hashCode % 10000);
     int b = abs(hashCode % 20000);
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@avatar/o/%d/%d/%@.jpg",g_config.downloadAvatarUrl,a,b,userId];
+    NSString *urlStr = [NSString stringWithFormat:@"%@avatar/o/%d/%d/%@.jpg?temp=%f",g_config.downloadAvatarUrl,a,b,userId, NSDate.date.timeIntervalSince1970];
     [iv sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[self roomHeadImage:userId roomId:roomId] options:SDWebImageRefreshCached completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (error) {
 //            [[SDWebImageManager sharedManager] removeFaileUrl:[NSURL URLWithString:urlStr]];
@@ -610,6 +604,15 @@
 }
 
 - (void)getDefultHeadImage:(NSURL *)url userId:(NSString *)userId userName:(NSString *)userName placeholderImage:(UIImage *)placeholderImage iv:(UIImageView *)iv {
+    NSString *str = url.absoluteString;
+    NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+    if ([str containsString:@"?"]) {
+        str = [str stringByAppendingFormat:@"&temp=%f", time];
+    } else {
+        str = [str stringByAppendingFormat:@"?temp=%f", time];
+    }
+    url = [NSURL URLWithString:str];
+    
     [iv sd_setImageWithURL:url placeholderImage:placeholderImage options:SDWebImageRefreshCached completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (error) {
             iv.image = [self getPlaceholderImage:userId userName:userName placeholderImage:placeholderImage iv:iv];
@@ -678,6 +681,12 @@
         [subView removeFromSuperview];
     }
     
+    NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+    if ([url containsString:@"?"]) {
+        url = [url stringByAppendingFormat:@"&temp=%f", time];
+    } else {
+        url = [url stringByAppendingFormat:@"?temp=%f", time];
+    }
     [iv sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"avatar_normal"] options:SDWebImageRefreshCached completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         
         if (iv.image.size.width != iv.image.size.height) {
