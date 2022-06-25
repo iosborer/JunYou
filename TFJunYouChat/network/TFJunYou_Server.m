@@ -484,7 +484,7 @@
     int a = abs(hashCode % 10000);
     int b = abs(hashCode % 20000);
     
-    NSString *urlStr = [NSString stringWithFormat:@"%@avatar/o/%d/%d/%@.jpg",g_config.downloadAvatarUrl,a,b,userId];
+    NSString *urlStr = [NSString stringWithFormat:@"%@avatar/o/%d/%d/%@.jpg?temp=%f",g_config.downloadAvatarUrl, a, b, userId, [[NSUserDefaults standardUserDefaults] doubleForKey:@"TEMP"]];
     [iv sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:[self roomHeadImage:userId roomId:roomId] options:SDWebImageRefreshCached completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (error) {
 //            [[SDWebImageManager sharedManager] removeFaileUrl:[NSURL URLWithString:urlStr]];
@@ -610,6 +610,14 @@
 }
 
 - (void)getDefultHeadImage:(NSURL *)url userId:(NSString *)userId userName:(NSString *)userName placeholderImage:(UIImage *)placeholderImage iv:(UIImageView *)iv {
+    NSString *str = url.absoluteString;
+    NSTimeInterval time = [[NSUserDefaults standardUserDefaults] doubleForKey:@"TEMP"];
+    if ([str containsString:@"?"]) {
+        str = [str stringByAppendingFormat:@"&temp=%f", time];
+    } else {
+        str = [str stringByAppendingFormat:@"?temp=%f", time];
+    }
+    url = [NSURL URLWithString:str];
     [iv sd_setImageWithURL:url placeholderImage:placeholderImage options:SDWebImageRefreshCached completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         if (error) {
             iv.image = [self getPlaceholderImage:userId userName:userName placeholderImage:placeholderImage iv:iv];
@@ -678,6 +686,12 @@
         [subView removeFromSuperview];
     }
     
+    NSTimeInterval time = [[NSUserDefaults standardUserDefaults] doubleForKey:@"TEMP"];
+    if ([url containsString:@"?"]) {
+        url = [url stringByAppendingFormat:@"&temp=%f", time];
+    } else {
+        url = [url stringByAppendingFormat:@"?temp=%f", time];
+    }
     [iv sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"avatar_normal"] options:SDWebImageRefreshCached completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         
         if (iv.image.size.width != iv.image.size.height) {
@@ -1521,6 +1535,7 @@
 }
 
 -(void)updateUser:(TFJunYou_UserObject*)user toView:(id)toView{
+    [[NSUserDefaults standardUserDefaults] setDouble:NSDate.date.timeIntervalSince1970 forKey:@"TEMP"];
     TFJunYou_Connection* p = [self addTask:act_UserUpdate param:nil toView:toView];
     [p setPostValue:user.userType forKey:@"userType"];
     [p setPostValue:user.userNickname forKey:@"nickname"];
