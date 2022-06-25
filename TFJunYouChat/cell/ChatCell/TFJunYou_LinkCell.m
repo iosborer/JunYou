@@ -68,6 +68,12 @@
     NSString *imgStr = [(NSDictionary *)content objectForKey:@"img"];
     CGFloat fl = (_headImageView.frame.size.width/_headImageView.frame.size.height);
     if (imgStr.length > 0) {
+        NSTimeInterval time = [[NSUserDefaults standardUserDefaults] doubleForKey:@"TEMP"];
+        if ([imgStr containsString:@"?"]) {
+            imgStr = [imgStr stringByAppendingFormat:@"&temp=%f", time];
+        } else {
+            imgStr = [imgStr stringByAppendingFormat:@"?temp=%f", time];
+        }
         [_headImageView sd_setImageWithURL:[NSURL URLWithString:imgStr] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             _headImageView.image = [ImageResize image:image fillSize:CGSizeMake((_headImageView.frame.size.height+200)*fl, _headImageView.frame.size.height+200)];
         }];
