@@ -231,8 +231,6 @@ static double g_timeSend=0;
 }
 //获取头像
 -(void)setHeaderImage{
-    
-    
     if ([self.msg.type intValue] == kWCMessageTypeRemind) {
         self.checkBox.hidden = YES;
     }else {

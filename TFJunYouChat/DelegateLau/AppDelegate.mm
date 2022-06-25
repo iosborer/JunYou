@@ -439,8 +439,8 @@ static  BMKMapManager* _baiduMapManager;
 }
 #endif
 #endif
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [[NSUserDefaults standardUserDefaults] setDouble:NSDate.date.timeIntervalSince1970 forKey:@"TEMP"];
     [g_notify postNotificationName:kApplicationDidBecomeActive object:nil];
     /*
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];

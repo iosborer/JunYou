@@ -585,7 +585,7 @@ didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
         return;
     }
     NSString* dir  = [NSString stringWithFormat:@"%lld",[userId longLongValue] % 10000];
-    NSString* urlString  = [NSString stringWithFormat:@"%@avatar/t/%@/%@.jpg?temp=%f",g_config.downloadAvatarUrl, dir, userId, NSDate.date.timeIntervalSince1970];
+    NSString* urlString  = [NSString stringWithFormat:@"%@avatar/t/%@/%@.jpg",g_config.downloadAvatarUrl, dir, userId];
     NSURL * url = [[NSURL alloc]initWithString:urlString];
     [headImage sd_setImageWithURL:url completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         headImage.image = image;

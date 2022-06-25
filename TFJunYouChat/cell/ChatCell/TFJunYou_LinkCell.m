@@ -68,7 +68,7 @@
     NSString *imgStr = [(NSDictionary *)content objectForKey:@"img"];
     CGFloat fl = (_headImageView.frame.size.width/_headImageView.frame.size.height);
     if (imgStr.length > 0) {
-        NSTimeInterval time = [[NSDate date] timeIntervalSince1970];
+        NSTimeInterval time = [[NSUserDefaults standardUserDefaults] doubleForKey:@"TEMP"];
         if ([imgStr containsString:@"?"]) {
             imgStr = [imgStr stringByAppendingFormat:@"&temp=%f", time];
         } else {

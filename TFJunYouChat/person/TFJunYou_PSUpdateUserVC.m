@@ -496,13 +496,11 @@
     _image = [ImageResize image:image fillSize:CGSizeMake(640, 640)];
     _head.image = _image;
 }
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)onUpdate{
-    if(![self getInputValue])
-        return;
+    if(![self getInputValue]) return;
     if (_image || self.isUpdate) {
         [g_server updateUser:user toView:self];
     }else {
@@ -510,8 +508,7 @@
     }
 }
 -(void)onInsert{
-    if(![self getInputValue])
-        return;
+    if(![self getInputValue]) return;
     [g_loginServer registerUserV1:user type:0 inviteCode:nil workexp:0 diploma:0 isSmsRegister:NO smsCode:nil password:@"" toView:self];
 }
 -(BOOL)getInputValue{
