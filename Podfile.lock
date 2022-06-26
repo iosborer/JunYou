@@ -58,7 +58,7 @@ PODS:
   - MCDownloader (1.0.0)
   - MJExtension (3.0.17)
   - pop (1.0.12)
-  - Protobuf (3.21.1)
+  - Protobuf (3.21.2)
   - SDWebImage (5.10.4):
     - SDWebImage/Core (= 5.10.4)
   - SDWebImage/Core (5.10.4)
@@ -147,7 +147,7 @@ SPEC CHECKSUMS:
   MCDownloader: 38b1540d38cc54398e8051f8eebe614661e387a4
   MJExtension: 74ec83124a68891619fb7ba9c5c811bbf1691076
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
-  Protobuf: 9e88c1e667d75aa2491d211f26ccddde4e8ad4cf
+  Protobuf: 818c6a87e44193a77f56b87c6a1c106efda7e062
   SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
   SimpleAudioPlayer: c14dd9c85c5bbf058b0529292789950cc67eb61b
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
