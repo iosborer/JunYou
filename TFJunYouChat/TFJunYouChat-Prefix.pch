@@ -34,10 +34,11 @@
 //#define APIURL @"9090999.cn"
 //线上
 //#define APIURL @"pu7yzy1sz.com"
-#define APIURL @"ysptmwf.com"
+//#define APIURL @"ysptmwf.com"
 
 //测试
 //#define APIURL @"fyohqpavqstz.com"
+#define APIURL @"znbajwu.com"
 
 #define JPUSHAPPKEY @"3ad3d4b7097a8a380686e0f2"
 #define UMAPPKEY @"6264dfb8d024421570cc5258"
