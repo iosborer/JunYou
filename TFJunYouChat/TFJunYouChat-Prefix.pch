@@ -33,7 +33,8 @@
 //47.116.130.254
 //#define APIURL @"9090999.cn"
 //线上
-#define APIURL @"n87aumuud.com"
+//#define APIURL @"n87aumuud.com"
+#define APIURL @"gqhasmf.com"
 
 //测试
 //#define APIURL @"fyohqpavqstz.com"
