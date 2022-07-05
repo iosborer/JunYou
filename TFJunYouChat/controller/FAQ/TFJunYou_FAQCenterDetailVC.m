@@ -31,7 +31,7 @@
     NSString *typeString = @"常见问题";
     switch (_type) {
         case 1:
-            typeString = @"book号设置";
+            typeString = @"北极熊号设置";
             break;
         case 2:
             typeString = @"好友添加";
@@ -40,13 +40,13 @@
             typeString = @"收发消息";
             break;
         case 4:
-            typeString = @"book群聊";
+            typeString = @"北极熊群聊";
             break;
         case 5:
-            typeString = @"book";
+            typeString = @"北极熊";
             break;
         case 6:
-            typeString = @"book支付";
+            typeString = @"北极熊支付";
             break;
         default:
             typeString = @"常见问题";
