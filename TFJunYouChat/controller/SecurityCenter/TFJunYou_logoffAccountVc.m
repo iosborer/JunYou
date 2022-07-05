@@ -15,6 +15,12 @@
 @interface TFJunYou_logoffAccountVc ()
 @property (nonatomic,strong) TFJunYou_VerifyPayVC *verVC;
 @property (weak, nonatomic) IBOutlet UIButton *cancleBtn;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tipLabel1;
+@property (weak, nonatomic) IBOutlet UIButton *statusBTN;
+@property (weak, nonatomic) IBOutlet UILabel *tipLabel2;
+
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constriHH;
 
 @end
@@ -28,12 +34,17 @@
     self.isGotoBack   = YES;
     
     [self createHeadAndFoot];
-    self.title = @"注销北极熊号";
+    
+    self.title = [NSString stringWithFormat:@"注销%@号", app_name];
     self.tableBody.frame = CGRectZero;
     self.view.backgroundColor = RGB(229, 229, 234);
     _cancleBtn.layer.cornerRadius = 4;
     _cancleBtn.layer.masksToBounds = YES;
     [_cancleBtn addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
+    _titleLabel.text = [NSString stringWithFormat:@"申请注销%@号", app_name];
+    _tipLabel1.text = [NSString stringWithFormat:@"为了您的%@号以及资金安全，在您申请%@号%@团队%@号进行以下验证", app_name, app_name, app_name, app_name];
+    [_statusBTN setTitle:[NSString stringWithFormat:@"%@号处于安全状态", app_name] forState:0];
+    _tipLabel2.text = [NSString stringWithFormat:@"最近两周内，您未进行修改密码，更换手机号等敏感操作，以及您的号没有被盗等异常分险", app_name];
 }
  
 - (void)cancelClick{

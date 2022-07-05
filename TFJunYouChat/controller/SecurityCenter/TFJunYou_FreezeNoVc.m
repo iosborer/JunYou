@@ -23,7 +23,7 @@
     
     [self createHeadAndFoot];
     
-    self.title = @"冻结北极熊号";
+    self.title = [NSString stringWithFormat:@"冻结%@号", app_name];
     self.tableBody.backgroundColor = THEMEBACKCOLOR;
     
     UIImageView *iconImg = [[UIImageView alloc]init];
@@ -35,7 +35,7 @@
     }];
     
     UILabel *titleLabel = [[UILabel alloc]init];
-    titleLabel.text = @"遇到北极熊被盗或手机遗失，你可以申请冻结账号";
+    titleLabel.text = [NSString stringWithFormat: @"遇到%@被盗或手机遗失，你可以申请冻结账号", app_name];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor grayColor];
     titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];

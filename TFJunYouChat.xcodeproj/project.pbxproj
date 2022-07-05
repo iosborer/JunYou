@@ -1152,7 +1152,6 @@
 		49F44BC227574A4D00745155 /* ImageWebPCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F44BBD27574A4D00745155 /* ImageWebPCoder.m */; };
 		49F44BC327574A4D00745155 /* libwebp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44BC027574A4D00745155 /* libwebp.framework */; };
 		8487BD1C27EC8E2200D47A7A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F44B792757437D00745155 /* AddressBook.framework */; };
-		8487BD2427ED510200D47A7A /* aaa.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8487BD2327ED510200D47A7A /* aaa.mm */; };
 		8487BD2627ED580100D47A7A /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8487BD2527ED580000D47A7A /* libstdc++.tbd */; };
 		BA93316DB48B8A00E526F9A1 /* Pods_TFJunYouChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A87E45A68BF28816F19552E9 /* Pods_TFJunYouChat.framework */; };
 /* End PBXBuildFile section */
@@ -3178,7 +3177,6 @@
 		49F44BBF27574A4D00745155 /* ImageWebPCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageWebPCoder.h; sourceTree = "<group>"; };
 		49F44BC027574A4D00745155 /* libwebp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libwebp.framework; sourceTree = "<group>"; };
 		8487BD1E27ED487D00D47A7A /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
-		8487BD2327ED510200D47A7A /* aaa.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = aaa.mm; sourceTree = "<group>"; };
 		8487BD2527ED580000D47A7A /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		A87E45A68BF28816F19552E9 /* Pods_TFJunYouChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFJunYouChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA170678FD3CB9B87179E69 /* Pods-TFJunYouChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFJunYouChat.debug.xcconfig"; path = "Target Support Files/Pods-TFJunYouChat/Pods-TFJunYouChat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -3286,7 +3284,6 @@
 				4932AA9627564A7200013887 /* TFJunYouChat.entitlements */,
 				4932B28627564B2B00013887 /* ViewController.h */,
 				4932AF0F27564B2A00013887 /* ViewController.m */,
-				8487BD2327ED510200D47A7A /* aaa.mm */,
 				4932AD2427564B2800013887 /* TFJunYouChat-Prefix.pch */,
 				4932AAF327564B2700013887 /* tuijianSort.plist */,
 				4932AECB27564B2900013887 /* tuijianUser.plist */,
@@ -7681,7 +7678,6 @@
 				4932B69927564B2F00013887 /* TFJunYou_ChatLogQRCodeVC.m in Sources */,
 				4932B6CA27564B3000013887 /* TFJunYou_SetChatBackgroundVC.m in Sources */,
 				4932B6BC27564B2F00013887 /* TFJunYou_SetLabelVC.m in Sources */,
-				8487BD2427ED510200D47A7A /* aaa.mm in Sources */,
 				4932B3F527564B2D00013887 /* MatchParser.m in Sources */,
 				4932B69327564B2F00013887 /* TFJunYou_ChatLogMoveVC.m in Sources */,
 				4932B6DB27564B3000013887 /* OrganizeSelectVC.m in Sources */,

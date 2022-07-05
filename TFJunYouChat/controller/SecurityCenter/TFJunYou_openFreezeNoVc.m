@@ -23,7 +23,7 @@
     
     [self createHeadAndFoot];
     
-    self.title = @"解冻北极熊号";
+    self.title = [NSString stringWithFormat: @"解冻%@号", app_name];
     self.tableBody.backgroundColor = THEMEBACKCOLOR;
     
     UIImageView *iconImg = [[UIImageView alloc]init];
@@ -35,7 +35,7 @@
     }];
     
     UILabel *titleLabel = [[UILabel alloc]init];
-    titleLabel.text = @"安全问题解决后，您可以申请解冻北极熊账号";
+    titleLabel.text = [NSString stringWithFormat: @"安全问题解决后，您可以申请解冻%@账号", app_name];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor grayColor];
     titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];

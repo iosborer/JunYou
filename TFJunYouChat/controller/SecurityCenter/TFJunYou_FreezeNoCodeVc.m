@@ -30,7 +30,7 @@
     self.isGotoBack   = YES;
     
     [self createHeadAndFoot];
-    self.title = _type == FreezeTypeBlocking ? @"冻结北极熊号" :  @"解冻北极熊号";
+    self.title = [NSString stringWithFormat:@"%@%@号", _type == FreezeTypeBlocking ? @"冻结" : @"解冻", app_name];
     self.tableBody.frame = CGRectZero;
     _constraintHHH.constant = 44;
     _nextBtn.layer.cornerRadius = 5;

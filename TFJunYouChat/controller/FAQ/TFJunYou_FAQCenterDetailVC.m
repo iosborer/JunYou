@@ -31,7 +31,7 @@
     NSString *typeString = @"常见问题";
     switch (_type) {
         case 1:
-            typeString = @"北极熊号设置";
+            typeString = [NSString stringWithFormat:@"%@号设置", app_name];
             break;
         case 2:
             typeString = @"好友添加";
@@ -40,13 +40,13 @@
             typeString = @"收发消息";
             break;
         case 4:
-            typeString = @"北极熊群聊";
+            typeString = [NSString stringWithFormat:@"%@群聊", app_name];
             break;
         case 5:
-            typeString = @"北极熊";
+            typeString = app_name;
             break;
         case 6:
-            typeString = @"北极熊支付";
+            typeString = [NSString stringWithFormat:@"%@支付", app_name];
             break;
         default:
             typeString = @"常见问题";

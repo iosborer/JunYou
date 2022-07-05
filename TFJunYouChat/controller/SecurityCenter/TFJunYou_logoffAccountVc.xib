@@ -13,6 +13,10 @@
             <connections>
                 <outlet property="cancleBtn" destination="ehV-8M-iYT" id="NQv-m5-X1a"/>
                 <outlet property="constriHH" destination="YFJ-FX-1cc" id="W4z-gz-wf0"/>
+                <outlet property="statusBTN" destination="Sry-EF-xSe" id="ym0-zX-qex"/>
+                <outlet property="tipLabel1" destination="wM5-V5-zx6" id="fKB-WQ-TuA"/>
+                <outlet property="tipLabel2" destination="ubl-Z7-mw9" id="qbB-oh-WdB"/>
+                <outlet property="titleLabel" destination="Shk-mr-Ebc" id="696-DT-kYa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -56,7 +60,7 @@
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您已注销或从为开通账户，账号上所有资金问题都已结清" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySx-f3-Yh1">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您已注销或从未开通账户，账号上所有资金问题都已结清" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySx-f3-Yh1">
                     <rect key="frame" x="15" y="432" width="384" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

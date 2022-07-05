@@ -217,7 +217,7 @@
         req.scope = @"snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact";
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         // app名称
-        NSString *titleStr = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+        NSString *titleStr = app_name;
         req.state = titleStr;
         req.openID = g_App.config.appleId;
        [WXApi sendAuthReq:req viewController:self delegate:self completion:^(BOOL success) {}];
